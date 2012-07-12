@@ -1,0 +1,653 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.drivers.olympus &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Drivers" href="index.html" />
+    <link rel="next" title="lantz.drivers.pco" href="lantz.drivers.pco.html" />
+    <link rel="prev" title="lantz.drivers.kentech" href="lantz.drivers.kentech.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.pco.html" title="lantz.drivers.pco"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.kentech.html" title="lantz.drivers.kentech"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Drivers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.drivers.olympus"></span><div class="section" id="lantz-drivers-olympus">
+<h1>lantz.drivers.olympus<a class="headerlink" href="#lantz-drivers-olympus" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">company:</th><td class="field-body">Olympus.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">Research and clinical microscopes.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">website:</th><td class="field-body"><a class="reference external" href="http://www.microscopy.olympus.eu/microscopes/">http://www.microscopy.olympus.eu/microscopes/</a></td>
+</tr>
+</tbody>
+</table>
+<p>&#8212;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.drivers.olympus.IX2">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.olympus.</tt><tt class="descname">IX2</tt><big>(</big><em>port=1</em>, <em>baudrate=19200</em>, <em>bytesize=8</em>, <em>parity='Even'</em>, <em>stopbits=1</em>, <em>flow=0</em>, <em>timeout=None</em>, <em>write_timeout=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.olympus.IX2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.drivers.olympus.ixbx.IXBX</span></tt></p>
+<p>Olympus IX2 Body</p>
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IX2.bottom_port_closed">
+<tt class="descname">bottom_port_closed</tt><a class="headerlink" href="#lantz.drivers.olympus.IX2.bottom_port_closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bottom port</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OUT&#8217;, True: &#8216;IN&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IX2.camera_port_enabled">
+<tt class="descname">camera_port_enabled</tt><a class="headerlink" href="#lantz.drivers.olympus.IX2.camera_port_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prism position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;2&#8217;, True: &#8216;1&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IX2.condensor">
+<tt class="descname">condensor</tt><a class="headerlink" href="#lantz.drivers.olympus.IX2.condensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Condensor position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Get procs:</th><td class="field-body"><ul class="first last simple">
+<li>&lt;class &#8216;int&#8217;&gt;:set procs:   - &lt;class &#8216;str&#8217;&gt;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IX2.filter_wheel">
+<tt class="descname">filter_wheel</tt><a class="headerlink" href="#lantz.drivers.olympus.IX2.filter_wheel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter wheel position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Get procs:</th><td class="field-body"><ul class="first last simple">
+<li>&lt;class &#8216;int&#8217;&gt;:set procs:   - &lt;class &#8216;str&#8217;&gt;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IX2.mirror_unit">
+<tt class="descname">mirror_unit</tt><a class="headerlink" href="#lantz.drivers.olympus.IX2.mirror_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mirror unit position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Get procs:</th><td class="field-body"><ul class="first last simple">
+<li>&lt;class &#8216;int&#8217;&gt;:set procs:   - &lt;class &#8216;str&#8217;&gt;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IX2.shutter1_closed">
+<tt class="descname">shutter1_closed</tt><a class="headerlink" href="#lantz.drivers.olympus.IX2.shutter1_closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shutter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OUT&#8217;, True: &#8216;IN&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IX2.shutter2_closed">
+<tt class="descname">shutter2_closed</tt><a class="headerlink" href="#lantz.drivers.olympus.IX2.shutter2_closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shutter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OUT&#8217;, True: &#8216;IN&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.drivers.olympus.BX2A">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.olympus.</tt><tt class="descname">BX2A</tt><big>(</big><em>port=1</em>, <em>baudrate=19200</em>, <em>bytesize=8</em>, <em>parity='Even'</em>, <em>stopbits=1</em>, <em>flow=0</em>, <em>timeout=None</em>, <em>write_timeout=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.olympus.BX2A" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.drivers.olympus.ixbx.IXBX</span></tt></p>
+<p>Olympus BX2A Body</p>
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.BX2A.aperture_stop_diameter">
+<tt class="descname">aperture_stop_diameter</tt><a class="headerlink" href="#lantz.drivers.olympus.BX2A.aperture_stop_diameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aperture stop diameter (DIA AS UCD)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Get procs:</th><td class="field-body"><ul class="first last simple">
+<li>&lt;class &#8216;int&#8217;&gt;:set procs:   - &lt;class &#8216;str&#8217;&gt;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.BX2A.condenser_top_lens_enabled">
+<tt class="descname">condenser_top_lens_enabled</tt><a class="headerlink" href="#lantz.drivers.olympus.BX2A.condenser_top_lens_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Condenser top lens (UCD)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OUT&#8217;, True: &#8216;IN&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.BX2A.configure_filterwheel">
+<tt class="descname">configure_filterwheel</tt><a class="headerlink" href="#lantz.drivers.olympus.BX2A.configure_filterwheel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure filterwheel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Get procs:</th><td class="field-body"><ul class="first last simple">
+<li>&lt;class &#8216;int&#8217;&gt;:set procs:   - &lt;class &#8216;str&#8217;&gt;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.BX2A.cube">
+<tt class="descname">cube</tt><a class="headerlink" href="#lantz.drivers.olympus.BX2A.cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cube position (RFAA/RLAA)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Get procs:</th><td class="field-body"><ul class="first last simple">
+<li>&lt;class &#8216;int&#8217;&gt;:set procs:   - &lt;class &#8216;str&#8217;&gt;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.BX2A.shutter_closed">
+<tt class="descname">shutter_closed</tt><a class="headerlink" href="#lantz.drivers.olympus.BX2A.shutter_closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shutter RFAA</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OUT&#8217;, True: &#8216;IN&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.BX2A.turret">
+<tt class="descname">turret</tt><a class="headerlink" href="#lantz.drivers.olympus.BX2A.turret" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turret position (UCD)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Get procs:</th><td class="field-body"><ul class="first last simple">
+<li>&lt;class &#8216;int&#8217;&gt;:set procs:   - &lt;class &#8216;str&#8217;&gt;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.drivers.olympus.IXBX">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.olympus.</tt><tt class="descname">IXBX</tt><big>(</big><em>port=1</em>, <em>baudrate=19200</em>, <em>bytesize=8</em>, <em>parity='Even'</em>, <em>stopbits=1</em>, <em>flow=0</em>, <em>timeout=None</em>, <em>write_timeout=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.olympus.IXBX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/interfaces.html#lantz.serial.SerialDriver" title="lantz.serial.SerialDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.serial.SerialDriver</span></tt></a></p>
+<p>IX or BX Olympus microscope body.</p>
+<dl class="method">
+<dt id="lantz.drivers.olympus.IXBX.init_origin">
+<tt class="descname">init_origin</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.olympus.IXBX.init_origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Init origin</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.olympus.IXBX.lamp_status">
+<tt class="descname">lamp_status</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.olympus.IXBX.lamp_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.olympus.IXBX.move_relative_async">
+<tt class="descname">move_relative_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.olympus.IXBX.move_relative_async" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.olympus.IXBX.query">
+<tt class="descname">query</tt><big>(</big><em>command</em>, <em>send_args</em>, <em>recv_args</em><big>)</big><a class="headerlink" href="#lantz.drivers.olympus.IXBX.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query the instrument and parse the response.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body">InstrumentError</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.olympus.IXBX.stop">
+<tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.olympus.IXBX.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop any currently executing motion</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.RECV_TERMINATION">
+<tt class="descname">RECV_TERMINATION</tt><em class="property"> = '\r\n'</em><a class="headerlink" href="#lantz.drivers.olympus.IXBX.RECV_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.SEND_TERMINATION">
+<tt class="descname">SEND_TERMINATION</tt><em class="property"> = '\r\n'</em><a class="headerlink" href="#lantz.drivers.olympus.IXBX.SEND_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.body_locked">
+<tt class="descname">body_locked</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.body_locked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn the currently selected lamp on and off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OFF&#8217;, True: &#8216;ON&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.fluo_shutter">
+<tt class="descname">fluo_shutter</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.fluo_shutter" title="Permalink to this definition">¶</a></dt>
+<dd><p>External shutter for the fluorescent light source</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;0&#8217;, True: &#8216;1&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.focus_locked">
+<tt class="descname">focus_locked</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.focus_locked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn the currently selected lamp on and off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OFF&#8217;, True: &#8216;ON&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.idn">
+<tt class="descname">idn</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.idn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Microscope identification</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.jog_dial">
+<tt class="descname">jog_dial</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.jog_dial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Jog selection (Handle/BLA) ???</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;FRM&#8217;, True: &#8216;FH&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.jog_enabled">
+<tt class="descname">jog_enabled</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.jog_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Jog enabled</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OFF&#8217;, True: &#8216;ON&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.jog_limit_enabled">
+<tt class="descname">jog_limit_enabled</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.jog_limit_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Jog limit enabled</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OFF&#8217;, True: &#8216;ON&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.jog_sensitivity">
+<tt class="descname">jog_sensitivity</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.jog_sensitivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Jog sensitivity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Get procs:</th><td class="field-body"><ul class="first last simple">
+<li>&lt;class &#8216;int&#8217;&gt;:set procs:   - &lt;class &#8216;str&#8217;&gt;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.lamp_enabled">
+<tt class="descname">lamp_enabled</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.lamp_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn the currently selected lamp onf and off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OFF&#8217;, True: &#8216;ON&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.lamp_epi_enabled">
+<tt class="descname">lamp_epi_enabled</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.lamp_epi_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Illumination source lamp.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;DIA&#8217;, True: &#8216;EPI&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.lamp_intensity">
+<tt class="descname">lamp_intensity</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.lamp_intensity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transmitted light intensity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Get procs:</th><td class="field-body"><ul class="first last simple">
+<li>&lt;class &#8216;int&#8217;&gt;:set procs:   - &lt;class &#8216;str&#8217;&gt;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.move_relative">
+<tt class="descname">move_relative</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a79870&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.olympus.IXBX.move_relative" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.move_to_start_enabled">
+<tt class="descname">move_to_start_enabled</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.move_to_start_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets / cancels returning operation to the start position after initializing the origin.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;OFF&#8217;, True: &#8216;ON&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.movement_status">
+<tt class="descname">movement_status</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.movement_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.objective">
+<tt class="descname">objective</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.objective" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objective nosepiece position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Get procs:</th><td class="field-body"><ul class="first last simple">
+<li>&lt;class &#8216;int&#8217;&gt;:set procs:   - &lt;class &#8216;str&#8217;&gt;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.soft_limits">
+<tt class="descname">soft_limits</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.soft_limits" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">(&lt;Quantity(0.01, &#8216;micrometer&#8217;)&gt;, &lt;Quantity(0.01, &#8216;micrometer&#8217;)&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.olympus.IXBX.z">
+<tt class="descname">z</tt><a class="headerlink" href="#lantz.drivers.olympus.IXBX.z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Position of the objective.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">0.01 micrometer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lantz.drivers.kentech.html"
+                        title="previous chapter">lantz.drivers.kentech</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lantz.drivers.pco.html"
+                        title="next chapter">lantz.drivers.pco</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/drivers/lantz.drivers.olympus.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.pco.html" title="lantz.drivers.pco"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.kentech.html" title="lantz.drivers.kentech"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Drivers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

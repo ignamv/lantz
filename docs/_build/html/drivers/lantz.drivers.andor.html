@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.drivers.andor &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Drivers" href="index.html" />
+    <link rel="next" title="lantz.drivers.coherent" href="lantz.drivers.coherent.html" />
+    <link rel="prev" title="lantz.drivers.aeroflex" href="lantz.drivers.aeroflex.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.coherent.html" title="lantz.drivers.coherent"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.aeroflex.html" title="lantz.drivers.aeroflex"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Drivers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.drivers.andor"></span><div class="section" id="lantz-drivers-andor">
+<h1>lantz.drivers.andor<a class="headerlink" href="#lantz-drivers-andor" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">company:</th><td class="field-body">Andor</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">Scientific cameras.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">website:</th><td class="field-body"><a class="reference external" href="http://www.andor.com/">http://www.andor.com/</a></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.drivers.andor.Andor">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.andor.</tt><tt class="descname">Andor</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/interfaces.html#lantz.foreign.LibraryDriver" title="lantz.foreign.LibraryDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.foreign.LibraryDriver</span></tt></a></p>
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.close_async">
+<tt class="descname">close_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.close_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Close camera self.AT_H.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.command">
+<tt class="descname">command</tt><big>(</big><em>strcommand</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.finalize">
+<tt class="descname">finalize</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.finalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finalise Library. Concluding function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.getbool">
+<tt class="descname">getbool</tt><big>(</big><em>strcommand</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.getbool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run command and get Bool return value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.getenumerated">
+<tt class="descname">getenumerated</tt><big>(</big><em>strcommand</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.getenumerated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run command and set Enumerated return value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.getfloat">
+<tt class="descname">getfloat</tt><big>(</big><em>strcommand</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.getfloat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run command and get Int return value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.getint">
+<tt class="descname">getint</tt><big>(</big><em>strcommand</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.getint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run command and get Int return value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.initialize">
+<tt class="descname">initialize</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise Library.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.is_implemented">
+<tt class="descname">is_implemented</tt><big>(</big><em>strcommand</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.is_implemented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if command is implemented.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.is_writable">
+<tt class="descname">is_writable</tt><big>(</big><em>strcommand</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.is_writable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if command is writable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.open_async">
+<tt class="descname">open_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.open_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Open camera self.AT_H.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.queuebuffer">
+<tt class="descname">queuebuffer</tt><big>(</big><em>bufptr</em>, <em>value</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.queuebuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put buffer in queue.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.setbool">
+<tt class="descname">setbool</tt><big>(</big><em>strcommand</em>, <em>value</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.setbool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set command with Bool value parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.setenumerated">
+<tt class="descname">setenumerated</tt><big>(</big><em>strcommand</em>, <em>value</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.setenumerated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set command with Enumerated value parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.setenumstring">
+<tt class="descname">setenumstring</tt><big>(</big><em>strcommand</em>, <em>item</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.setenumstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set command with EnumeratedString value parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.setfloat">
+<tt class="descname">setfloat</tt><big>(</big><em>strcommand</em>, <em>value</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.setfloat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set command with Float value parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.setint">
+<tt class="descname">setint</tt><big>(</big><em>strcommand</em>, <em>value</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.setint" title="Permalink to this definition">¶</a></dt>
+<dd><p>SetInt function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Andor.waitbuffer">
+<tt class="descname">waitbuffer</tt><big>(</big><em>ptr</em>, <em>bufsize</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Andor.waitbuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for next buffer ready.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Andor.LIBRARY_NAME">
+<tt class="descname">LIBRARY_NAME</tt><em class="property"> = 'atcore.dll'</em><a class="headerlink" href="#lantz.drivers.andor.Andor.LIBRARY_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Andor.close">
+<tt class="descname">close</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x154dad0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.andor.Andor.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Andor.open">
+<tt class="descname">open</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x154daf0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.andor.Andor.open" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.drivers.andor.Neo">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.andor.</tt><tt class="descname">Neo</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Neo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.drivers.andor.andor.Andor</span></tt></p>
+<p>Neo Andor CMOS Camera</p>
+<dl class="method">
+<dt id="lantz.drivers.andor.Neo.initialize">
+<tt class="descname">initialize</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Neo.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.andor.Neo.take_image_async">
+<tt class="descname">take_image_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.andor.Neo.take_image_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Image acquisition with circular buffer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Neo.clock_rate">
+<tt class="descname">clock_rate</tt><a class="headerlink" href="#lantz.drivers.andor.Neo.clock_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pixel clock rate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{200: &#8216;200 MHz&#8217;, 280: &#8216;280 MHz&#8217;, 100: &#8216;100 MHz&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Neo.exposure_time">
+<tt class="descname">exposure_time</tt><a class="headerlink" href="#lantz.drivers.andor.Neo.exposure_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get exposure time.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Neo.fan_peed">
+<tt class="descname">fan_peed</tt><a class="headerlink" href="#lantz.drivers.andor.Neo.fan_peed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fan speed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Neo.pixel_encoding">
+<tt class="descname">pixel_encoding</tt><a class="headerlink" href="#lantz.drivers.andor.Neo.pixel_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pixel encoding.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{32: &#8216;Mono32&#8217;, 64: &#8216;Mono64&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Neo.roi">
+<tt class="descname">roi</tt><a class="headerlink" href="#lantz.drivers.andor.Neo.roi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set region of interest</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Neo.sensor_size">
+<tt class="descname">sensor_size</tt><a class="headerlink" href="#lantz.drivers.andor.Neo.sensor_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Neo.sensor_temp">
+<tt class="descname">sensor_temp</tt><a class="headerlink" href="#lantz.drivers.andor.Neo.sensor_temp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sensor temperature.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.andor.Neo.take_image">
+<tt class="descname">take_image</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x19b2c10&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.andor.Neo.take_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lantz.drivers.aeroflex.html"
+                        title="previous chapter">lantz.drivers.aeroflex</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lantz.drivers.coherent.html"
+                        title="next chapter">lantz.drivers.coherent</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/drivers/lantz.drivers.andor.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.coherent.html" title="lantz.drivers.coherent"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.aeroflex.html" title="lantz.drivers.aeroflex"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Drivers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.serial &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="lantz" href="../lantz.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><img src="../../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../lantz.html" accesskey="U">lantz</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for lantz.serial</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    lantz.serial</span>
+<span class="sd">    ~~~~~~~~~~~~</span>
+
+<span class="sd">    Implements base classes for drivers that communicate with instruments</span>
+<span class="sd">    via serial or parallel port.</span>
+
+<span class="sd">    :copyright: 2012 by Lantz Authors, see AUTHORS for more details.</span>
+<span class="sd">    :license: BSD, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">serial</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Driver</span>
+<span class="kn">from</span> <span class="nn">.driver</span> <span class="kn">import</span> <span class="n">TextualMixin</span>
+<span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">LantzTimeoutError</span>
+
+<span class="kn">from</span> <span class="nn">serial</span> <span class="kn">import</span> <span class="n">SerialTimeoutException</span>
+
+
+<span class="k">class</span> <span class="nc">LantzSerialTimeoutError</span><span class="p">(</span><span class="n">SerialTimeoutException</span><span class="p">,</span> <span class="n">LantzTimeoutError</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="n">BYTESIZE</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">FIVEBITS</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">SIXBITS</span><span class="p">,</span>
+            <span class="mi">7</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">SEVENBITS</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">EIGHTBITS</span><span class="p">}</span>
+
+<span class="n">PARITY</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;none&#39;</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">PARITY_NONE</span><span class="p">,</span> <span class="s">&#39;even&#39;</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">PARITY_EVEN</span><span class="p">,</span>
+          <span class="s">&#39;odd&#39;</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">PARITY_ODD</span><span class="p">,</span> <span class="s">&#39;mark&#39;</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">PARITY_MARK</span><span class="p">,</span>
+          <span class="s">&#39;space&#39;</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">PARITY_SPACE</span><span class="p">}</span>
+
+<span class="n">STOPBITS</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">STOPBITS_ONE</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">STOPBITS_ONE_POINT_FIVE</span><span class="p">,</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">STOPBITS_TWO</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="SerialDriver"><a class="viewcode-back" href="../../api/interfaces.html#lantz.serial.SerialDriver">[docs]</a><span class="k">class</span> <span class="nc">SerialDriver</span><span class="p">(</span><span class="n">TextualMixin</span><span class="p">,</span> <span class="n">Driver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for drivers that communicate with instruments</span>
+<span class="sd">    via serial or parallel port using pyserial</span>
+
+<span class="sd">    :param port: Device name or port number</span>
+<span class="sd">    :param baudrate: Baud rate such as 9600 or 115200</span>
+<span class="sd">    :param bytesize: Number of data bits. Possible values = (5, 6, 7, 8)</span>
+<span class="sd">    :param parity: Enable parity checking. Possible values = (&#39;None&#39;, &#39;Even&#39;, &#39;Odd&#39;, &#39;Mark&#39;, &#39;Space&#39;)</span>
+<span class="sd">    :param stopbits: Number of stop bits. Possible values = (1, 1.5, 2)</span>
+<span class="sd">    :param xonoff: xonoff flow control enabled.</span>
+<span class="sd">    :param rtscts: rtscts flow control enabled.</span>
+<span class="sd">    :param dsrdtr: dsrdtr flow control enabled</span>
+<span class="sd">    :param timeout: value in seconds, None to wait for ever or 0 for non-blocking mode</span>
+<span class="sd">    :param write_timeout: see timeout</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">RECV_TERMINATION</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="n">SEND_TERMINATION</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="n">ENCODING</span> <span class="o">=</span> <span class="s">&#39;ascii&#39;</span>
+
+    <span class="c">#: -1 is mapped to get the number of bytes pending.</span>
+    <span class="n">RECV_CHUNK</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="c">#: comunication parameters</span>
+    <span class="n">BAUDRATE</span> <span class="o">=</span> <span class="mi">9600</span>
+    <span class="n">BYTESIZE</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">PARITY</span> <span class="o">=</span> <span class="s">&#39;none&#39;</span>
+    <span class="n">STOPBITS</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c">#: flow control flags</span>
+    <span class="n">RTSCTS</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">DSRDTR</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">XONXOFF</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">write_timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;baudrate&#39;</span><span class="p">,</span> <span class="s">&#39;bytesize&#39;</span><span class="p">,</span> <span class="s">&#39;parity&#39;</span><span class="p">,</span> <span class="s">&#39;stopbits&#39;</span><span class="p">,</span>
+                    <span class="s">&#39;rtscts&#39;</span><span class="p">,</span> <span class="s">&#39;dsrdtr&#39;</span><span class="p">,</span> <span class="s">&#39;xonxoff&#39;</span><span class="p">):</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">upper</span><span class="p">()))</span>
+
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;bytesize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BYTESIZE</span><span class="p">[</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;bytesize&#39;</span><span class="p">]]</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;parity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PARITY</span><span class="p">[</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;parity&#39;</span><span class="p">]]</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;stopbits&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">STOPBITS</span><span class="p">[</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;stopbits&#39;</span><span class="p">]]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">serial</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">writeTimeout</span><span class="o">=</span><span class="n">write_timeout</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Created pyserial port {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SerialDriver.raw_send"><a class="viewcode-back" href="../../api/interfaces.html#lantz.serial.SerialDriver.raw_send">[docs]</a>    <span class="k">def</span> <span class="nf">raw_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send raw bytes to the instrument.</span>
+
+<span class="sd">        :param data: bytes to be sent to the instrument</span>
+<span class="sd">        :param data: bytes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">serial</span><span class="o">.</span><span class="n">SerialTimeoutException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LantzSerialTimeoutError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="SerialDriver.raw_recv"><a class="viewcode-back" href="../../api/interfaces.html#lantz.serial.SerialDriver.raw_recv">[docs]</a>    <span class="k">def</span> <span class="nf">raw_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Receive raw bytes to the instrument.</span>
+
+<span class="sd">        :param size: number of bytes to receive</span>
+<span class="sd">        :return: received bytes</span>
+<span class="sd">        :return type: bytes</span>
+
+<span class="sd">        If a timeout is set, it may return less bytes than requested.</span>
+<span class="sd">        If size == -1, then the number of available bytes will be read.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">size</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">inWaiting</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c">#self.log_debug(&#39;waiting {}&#39;.format(size))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        <span class="c">#self.log_debug(data)</span>
+        <span class="k">return</span> <span class="n">data</span>
+</div>
+<div class="viewcode-block" id="SerialDriver.initialize"><a class="viewcode-back" href="../../api/interfaces.html#lantz.serial.SerialDriver.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Open port</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">isOpen</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Opening port {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">port</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Port {} is already open&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">port</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="SerialDriver.finalize"><a class="viewcode-back" href="../../api/interfaces.html#lantz.serial.SerialDriver.finalize">[docs]</a>    <span class="k">def</span> <span class="nf">finalize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close port</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Closing port {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">port</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</div>
+    <span class="k">def</span> <span class="nf">is_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">isOpen</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../../index.html">
+  <img src="../../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><img src="../../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../lantz.html" >lantz</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,609 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>UI &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="API" href="index.html" />
+    <link rel="next" title="Support" href="support.html" />
+    <link rel="prev" title="Interfacing to instruments" href="interfaces.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="support.html" title="Support"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="interfaces.html" title="Interfacing to instruments"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-lantz.ui.qtwidgets">
+<span id="ui"></span><h1>UI<a class="headerlink" href="#module-lantz.ui.qtwidgets" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="lantz-ui-qtwidgets">
+<h2>lantz.ui.qtwidgets<a class="headerlink" href="#lantz-ui-qtwidgets" title="Permalink to this headline">¶</a></h2>
+<p>Implements UI widgets based on Qt widgets. To achieve functionality,
+instances of QtWidgets are patched.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.ui.qtwidgets.ChildrenWidgets">
+<em class="property">class </em><tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">ChildrenWidgets</tt><big>(</big><em>parent</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#ChildrenWidgets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.ChildrenWidgets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience class to iterate children.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> &#8211; parent widget.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.ui.qtwidgets.DictFeatWidget">
+<em class="property">class </em><tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">DictFeatWidget</tt><big>(</big><em>parent</em>, <em>target</em>, <em>feat</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DictFeatWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DictFeatWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget to show a DictFeat.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> &#8211; parent widget.</li>
+<li><strong>target</strong> &#8211; driver object to connect.</li>
+<li><strong>feat</strong> &#8211; DictFeat to connect.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.DictFeatWidget.setReadOnly">
+<tt class="descname">setReadOnly</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DictFeatWidget.setReadOnly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DictFeatWidget.setReadOnly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set read only s</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.DictFeatWidget.setValue">
+<tt class="descname">setValue</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DictFeatWidget.setValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DictFeatWidget.setValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set widget value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.DictFeatWidget.value">
+<tt class="descname">value</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DictFeatWidget.value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DictFeatWidget.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get widget value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.DictFeatWidget.lantz_target">
+<tt class="descname">lantz_target</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DictFeatWidget.lantz_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DictFeatWidget.lantz_target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Driver connected to this widget.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.DictFeatWidget.readable">
+<tt class="descname">readable</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DictFeatWidget.readable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DictFeatWidget.readable" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the Feat associated with the widget can be read (get).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.DictFeatWidget.writable">
+<tt class="descname">writable</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DictFeatWidget.writable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DictFeatWidget.writable" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the Feat associated with the widget can be written (set).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.ui.qtwidgets.DriverTestWidget">
+<em class="property">class </em><tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">DriverTestWidget</tt><big>(</big><em>parent</em>, <em>target</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DriverTestWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DriverTestWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget that is automatically filled to control all Feats of a given driver.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> &#8211; parent widget.</li>
+<li><strong>target</strong> &#8211; driver object to map.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.DriverTestWidget.update_on_change">
+<tt class="descname">update_on_change</tt><big>(</big><em>new_state</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DriverTestWidget.update_on_change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DriverTestWidget.update_on_change" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the &#8216;update_on_change&#8217; flag to new_state in each writable widget
+within this widget. If True, the driver will be updated after each change.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.DriverTestWidget.widgets_values_as_dict">
+<tt class="descname">widgets_values_as_dict</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DriverTestWidget.widgets_values_as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DriverTestWidget.widgets_values_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary mapping each writable feat name to the current
+value of the widget.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.DriverTestWidget.lantz_target">
+<tt class="descname">lantz_target</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#DriverTestWidget.lantz_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.DriverTestWidget.lantz_target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Driver connected to this widget.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.ui.qtwidgets.FeatWidget">
+<em class="property">class </em><tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">FeatWidget</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#FeatWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.FeatWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget to show a Feat.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> &#8211; parent widget.</li>
+<li><strong>target</strong> &#8211; driver object to connect.</li>
+<li><strong>feat</strong> &#8211; Feat to connect.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.ui.qtwidgets.LabeledFeatWidget">
+<em class="property">class </em><tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">LabeledFeatWidget</tt><big>(</big><em>parent</em>, <em>target</em>, <em>feat</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#LabeledFeatWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.LabeledFeatWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget containing a label, a control, and a get a set button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> &#8211; parent widget.</li>
+<li><strong>target</strong> &#8211; driver object to connect.</li>
+<li><strong>feat</strong> &#8211; Feat to connect.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.LabeledFeatWidget.label_width">
+<tt class="descname">label_width</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#LabeledFeatWidget.label_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.LabeledFeatWidget.label_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width of the label</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.LabeledFeatWidget.lantz_target">
+<tt class="descname">lantz_target</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#LabeledFeatWidget.lantz_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.LabeledFeatWidget.lantz_target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Driver connected to this widget.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.LabeledFeatWidget.readable">
+<tt class="descname">readable</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#LabeledFeatWidget.readable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.LabeledFeatWidget.readable" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the Feat associated with the widget can be read (get).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.LabeledFeatWidget.writable">
+<tt class="descname">writable</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#LabeledFeatWidget.writable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.LabeledFeatWidget.writable" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the Feat associated with the widget can be written (set).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.ui.qtwidgets.SetupTestWidget">
+<em class="property">class </em><tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">SetupTestWidget</tt><big>(</big><em>parent</em>, <em>targets</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#SetupTestWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.SetupTestWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Widget to control multiple drivers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> &#8211; parent widget.</li>
+<li><strong>targets</strong> &#8211; iterable of driver object to map.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.ui.qtwidgets.UnitInputDialog">
+<em class="property">class </em><tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">UnitInputDialog</tt><big>(</big><em>units</em>, <em>parent=None</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#UnitInputDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.UnitInputDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dialog to select new units. Checks compatibility while typing
+and does not allow to continue if incompatible.</p>
+<p>Returns None if cancelled.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>units</strong> &#8211; current units.</li>
+<li><strong>parent</strong> &#8211; parent widget.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">new_units</span> <span class="o">=</span> <span class="n">UnitInputDialog</span><span class="o">.</span><span class="n">get_units</span><span class="p">(</span><span class="s">&#39;ms&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="staticmethod">
+<dt id="lantz.ui.qtwidgets.UnitInputDialog.get_units">
+<em class="property">static </em><tt class="descname">get_units</tt><big>(</big><em>units</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#UnitInputDialog.get_units"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.UnitInputDialog.get_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and display a UnitInputDialog and return new units.</p>
+<p>Return None if the user cancelled.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.ui.qtwidgets.WidgetMixin">
+<em class="property">class </em><tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">WidgetMixin</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mixin class to provide extra functionality to QWidget derived controls.</p>
+<p>Derived class must override _WRAPPED to indicate with which classes it
+can be mixed.</p>
+<p>To wrap an existing widget object use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">WidgetMixin</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you want lantz to provide an appropriate wrapped widget for a given feat:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span> <span class="o">=</span> <span class="n">WidgetMixin</span><span class="o">.</span><span class="n">from_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In any case, after wrapping a widget you need to bind it to a feat:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">_lantz_feat</span><span class="p">[</span><span class="n">feat_name</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span><span class="o">.</span><span class="n">bind_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, you need to</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span><span class="o">.</span><span class="n">lantz_target</span> <span class="o">=</span> <span class="n">driver</span>
+</pre></div>
+</div>
+<dl class="classmethod">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.from_feat">
+<em class="property">classmethod </em><tt class="descname">from_feat</tt><big>(</big><em>feat</em>, <em>parent=None</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.from_feat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.from_feat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a widget appropriate to represent a lantz feature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>feat</strong> &#8211; a lantz feature, the result of inst._lantz_feat[feat_name].</li>
+<li><strong>parent</strong> &#8211; parent widget.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.keyPressEvent">
+<tt class="descname">keyPressEvent</tt><big>(</big><em>event</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.keyPressEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>When &#8216;u&#8217; is pressed, request new units.
+When &#8216;r&#8217; is pressed, get new value from the driver.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.on_feat_value_changed">
+<tt class="descname">on_feat_value_changed</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.on_feat_value_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.on_feat_value_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the driver value is changed, update the widget if necessary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.on_widget_value_changed">
+<tt class="descname">on_widget_value_changed</tt><big>(</big><em>new_value</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.on_widget_value_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.on_widget_value_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the widget is changed by the user, update the driver with
+the new value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.setReadOnly">
+<tt class="descname">setReadOnly</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.setReadOnly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.setReadOnly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set read only s</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.setValue">
+<tt class="descname">setValue</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.setValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.setValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set widget value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.value">
+<tt class="descname">value</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get widget value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.value_from_feat">
+<tt class="descname">value_from_feat</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.value_from_feat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.value_from_feat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the widget value with the current Feat value of the driver.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.value_to_feat">
+<tt class="descname">value_to_feat</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.value_to_feat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.value_to_feat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the Feat value of the driver with the widget value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.feat_key">
+<tt class="descname">feat_key</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.feat_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.feat_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Key associated with the DictFeat.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.lantz_target">
+<tt class="descname">lantz_target</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.lantz_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.lantz_target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Driver connected to the widget.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.readable">
+<tt class="descname">readable</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.readable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.readable" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the Feat associated with the widget can be read (get).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.ui.qtwidgets.WidgetMixin.writable">
+<tt class="descname">writable</tt><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.writable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.writable" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the Feat associated with the widget can be written (set).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.ui.qtwidgets.connect_driver">
+<tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">connect_driver</tt><big>(</big><em>parent</em>, <em>target</em>, <em>prefix</em>, <em>sep</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#connect_driver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.connect_driver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect all children widgets to their corresponding lantz feature
+matching by name. Non-matching names are ignored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> &#8211; parent widget.</li>
+<li><strong>target</strong> &#8211; the driver.</li>
+<li><strong>prefix</strong> &#8211; prefix to be prepended to the lantz feature (default = &#8216;&#8217;)</li>
+<li><strong>sep</strong> &#8211; separator between prefix, name and suffix</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.ui.qtwidgets.connect_feat">
+<tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">connect_feat</tt><big>(</big><em>widget</em>, <em>target</em>, <em>feat_name=None</em>, <em>feat_key=MISSING</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#connect_feat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.connect_feat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect a feature from a given driver to a widget. Calling this
+function also patches the widget is necessary.</p>
+<p>If applied two times with the same widget, it will connect to the target
+provided in the second call. This behaviour can be useful to change the
+connection target without rebuilding the whole UI. Alternative, after
+connect has been called the first time, widget will have a property
+<cite>lantz_target</cite> that can be used to achieve the same thing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>widget</strong> &#8211; widget instance.</li>
+<li><strong>target</strong> &#8211; driver instance.</li>
+<li><strong>feat_name</strong> &#8211; feature name. If None, connect using widget name.</li>
+<li><strong>feat_key</strong> &#8211; For a DictFeat, this defines which key to show.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.ui.qtwidgets.connect_setup">
+<tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">connect_setup</tt><big>(</big><em>parent</em>, <em>targets</em>, <em>prefix</em>, <em>sep</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#connect_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.connect_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect all children widget to their corresponding</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> &#8211; parent widget.</li>
+<li><strong>targets</strong> &#8211; iterable of drivers.</li>
+<li><strong>prefix</strong> &#8211; prefix to be prepended to the lantz feature name
+if None, the driver name will be used (default)
+if it is a dict, the driver name will be used to obtain
+he prefix.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.ui.qtwidgets.register_wrapper">
+<tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">register_wrapper</tt><big>(</big><em>cls</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#register_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.register_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a class as lantz wrapper for QWidget subclasses.</p>
+<p>The class must contain a field (_WRAPPERS) with a tuple of the
+QWidget subclasses that it wraps.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.ui.qtwidgets.request_new_units">
+<tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">request_new_units</tt><big>(</big><em>current_units</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#request_new_units"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.request_new_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask for new units using a dialog box and return them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>current_units</strong> (<em>Quantity</em>) &#8211; current units or magnitude.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.ui.qtwidgets.start_test_app">
+<tt class="descclassname">lantz.ui.qtwidgets.</tt><tt class="descname">start_test_app</tt><big>(</big><em>target</em>, <em>width=500</em>, <em>*args</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#start_test_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.start_test_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a single window test application with a form automatically
+generated for the driver.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>target</strong> &#8211; a driver object or a collection of drivers.</li>
+<li><strong>width</strong> &#8211; to be used as minimum width of the window.</li>
+<li><strong>args</strong> &#8211; arguments to be passed to QApplication.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">UI</a><ul>
+<li><a class="reference internal" href="#lantz-ui-qtwidgets">lantz.ui.qtwidgets</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="interfaces.html"
+                        title="previous chapter">Interfacing to instruments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="support.html"
+                        title="next chapter">Support</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/ui.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="support.html" title="Support"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="interfaces.html" title="Interfacing to instruments"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

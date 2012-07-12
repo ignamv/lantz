@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Connecting two (or more) drivers &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Guides" href="index.html" />
+    <link rel="next" title="FAQs" href="../faq.html" />
+    <link rel="prev" title="Connecting two (or more) widgets to the same feat" href="ui-feat-two-widgets.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../faq.html" title="FAQs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ui-feat-two-widgets.html" title="Connecting two (or more) widgets to the same feat"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Guides</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="connecting-two-or-more-drivers">
+<span id="ui-two-drivers"></span><h1>Connecting two (or more) drivers<a class="headerlink" href="#connecting-two-or-more-drivers" title="Permalink to this headline">¶</a></h1>
+<p>Real application consists not only of a single instrument but many. In a custom UI, you can connect different drivers to different widgets. Consider the following interace for two signal generators.</p>
+<img alt="Two signal generators" src="../_images/ui-two-drivers-1.png" />
+<p>(We use twice the same kind for simplicity, but it is not necessary).</p>
+<p>The widgets are named <cite>fungen1__frequency</cite> and <cite>fungen2__frequency</cite>.</p>
+<div class="section" id="the-long-way">
+<h2>The long way<a class="headerlink" href="#the-long-way" title="Permalink to this headline">¶</a></h2>
+<p>Get a reference to each widget and connect them manually:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Import lantz.ui register an import hook that will replace calls to Qt by PyQt4 or PySide ...</span>
+<span class="kn">import</span> <span class="nn">lantz.ui</span>
+
+<span class="c"># and here we just use Qt and will work with both bindings!</span>
+<span class="kn">from</span> <span class="nn">Qt.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QWidget</span>
+<span class="kn">from</span> <span class="nn">Qt.uic</span> <span class="kn">import</span> <span class="n">loadUi</span>
+
+<span class="c"># From lantz we import the driver ...</span>
+<span class="kn">from</span> <span class="nn">lantz.drivers.examples.fungen</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+
+<span class="c"># and a function named connect_feat that does the work.</span>
+<span class="kn">from</span> <span class="nn">lantz.ui.qtwidgets</span> <span class="kn">import</span> <span class="n">connect_feat</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+<span class="c"># We load the UI from the QtDesigner file. You can also use pyuic4 to generate a class.</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">loadUi</span><span class="p">(</span><span class="s">&#39;ui-two-drivers.ui&#39;</span><span class="p">)</span>
+
+<span class="c"># We get a reference to each of the widgets.</span>
+<span class="n">freq1</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">findChild</span><span class="p">((</span><span class="n">QWidget</span><span class="p">,</span> <span class="p">),</span> <span class="s">&#39;fungen1__frequency&#39;</span><span class="p">)</span>
+<span class="n">freq2</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">findChild</span><span class="p">((</span><span class="n">QWidget</span><span class="p">,</span> <span class="p">),</span> <span class="s">&#39;fungen2__frequency&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst1</span><span class="p">,</span> \
+     <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5679</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst2</span><span class="p">:</span>
+
+    <span class="c"># We connect each widget to each feature</span>
+    <span class="c"># The syntax arguments are widget, target (driver), Feat name</span>
+    <span class="n">connect_feat</span><span class="p">(</span><span class="n">freq1</span><span class="p">,</span> <span class="n">inst1</span><span class="p">,</span> <span class="s">&#39;frequency&#39;</span><span class="p">)</span>
+    <span class="n">connect_feat</span><span class="p">(</span><span class="n">freq2</span><span class="p">,</span> <span class="n">inst2</span><span class="p">,</span> <span class="s">&#39;frequency&#39;</span><span class="p">)</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="nb">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-not-so-long-way">
+<h2>The not so long way<a class="headerlink" href="#the-not-so-long-way" title="Permalink to this headline">¶</a></h2>
+<p>If you have use a prefix to solve the name collision you can use it and connect the driver:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Import lantz.ui register an import hook that will replace calls to Qt by PyQt4 or PySide ...</span>
+<span class="kn">import</span> <span class="nn">lantz.ui</span>
+
+<span class="c"># and here we just use Qt and will work with both bindings!</span>
+<span class="kn">from</span> <span class="nn">Qt.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QWidget</span>
+<span class="kn">from</span> <span class="nn">Qt.uic</span> <span class="kn">import</span> <span class="n">loadUi</span>
+
+<span class="c"># From lantz we import the driver ...</span>
+<span class="kn">from</span> <span class="nn">lantz.drivers.examples.fungen</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+
+<span class="c"># and a function named connect_feat that does the work.</span>
+<span class="kn">from</span> <span class="nn">lantz.ui.qtwidgets</span> <span class="kn">import</span> <span class="n">connect_feat</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+<span class="c"># We load the UI from the QtDesigner file. You can also use pyuic4 to generate a class.</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">loadUi</span><span class="p">(</span><span class="s">&#39;ui-two-drivers.ui&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst1</span><span class="p">,</span> \
+     <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5679</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst2</span><span class="p">:</span>
+
+    <span class="c"># We connect each widget to each feature</span>
+    <span class="c"># The syntax arguments are widget, target (driver), Feat name</span>
+    <span class="n">connect_driver</span><span class="p">(</span><span class="n">main</span><span class="p">,</span> <span class="n">inst1</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#39;fungen1&#39;</span><span class="p">)</span>
+    <span class="n">connect_driver</span><span class="p">(</span><span class="n">main</span><span class="p">,</span> <span class="n">inst2</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#39;fungen1&#39;</span><span class="p">)</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="nb">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>This does not look like too much saving but if more than one Feat per driver to connect, <cite>connect_driver</cite> will do them all for you. Under the hood, <cite>connect_driver</cite> is iterating over all widgets and checking if the driver contains a Feat with the widget name prefixed by <cite>prefix</cite>. Note that we have used <cite>fungen1</cite> instead of <cite>fungen1__</cite> as the prefix. That is because <cite>connect_driver</cite> uses the double underscore as a separator by default. You can change it by passing the <cite>sep</cite> keyword argument.</p>
+</div>
+<div class="section" id="the-short-way">
+<h2>The short way<a class="headerlink" href="#the-short-way" title="Permalink to this headline">¶</a></h2>
+<p>If you have named the widgets according to the Feat name and added a prefix corresponding to the feat:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Import lantz.ui register an import hook that will replace calls to Qt by PyQt4 or PySide ...</span>
+<span class="kn">import</span> <span class="nn">lantz.ui</span>
+
+<span class="c"># and here we just use Qt and will work with both bindings!</span>
+<span class="kn">from</span> <span class="nn">Qt.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QWidget</span>
+<span class="kn">from</span> <span class="nn">Qt.uic</span> <span class="kn">import</span> <span class="n">loadUi</span>
+
+<span class="c"># From lantz we import the driver ...</span>
+<span class="kn">from</span> <span class="nn">lantz.drivers.examples.fungen</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+
+<span class="c"># and a function named connect_feat that does the work.</span>
+<span class="kn">from</span> <span class="nn">lantz.ui.qtwidgets</span> <span class="kn">import</span> <span class="n">connect_feat</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+<span class="c"># We load the UI from the QtDesigner file. You can also use pyuic4 to generate a class.</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">loadUi</span><span class="p">(</span><span class="s">&#39;ui-two-drivers.ui&#39;</span><span class="p">)</span>
+
+<span class="c"># Notice that now we specify the instrument name!</span>
+<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;fungen1&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst1</span><span class="p">,</span> \
+     <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5679</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;fungen2&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst2</span><span class="p">:</span>
+
+    <span class="c"># We connect the whole main widget, and we give a list of drivers.</span>
+    <span class="n">connect_setup</span><span class="p">(</span><span class="n">main</span><span class="p">,</span> <span class="p">[</span><span class="n">inst1</span><span class="p">,</span> <span class="n">inst2</span><span class="p">])</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="nb">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Under the hood, <cite>connect_setup</cite> iterates over all drivers in the second argument and executes <cite>connect_driver</cite> using the driver name.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference internal" href="ui-driver.html#ui-driver"><em>Connecting a custom UI to a driver</em></a></p>
+<p class="last"><a class="reference internal" href="ui-feat-two-widgets.html#ui-feat-two-widgets"><em>Connecting two (or more) widgets to the same feat</em></a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Connecting two (or more) drivers</a><ul>
+<li><a class="reference internal" href="#the-long-way">The long way</a></li>
+<li><a class="reference internal" href="#the-not-so-long-way">The not so long way</a></li>
+<li><a class="reference internal" href="#the-short-way">The short way</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ui-feat-two-widgets.html"
+                        title="previous chapter">Connecting two (or more) widgets to the same feat</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../faq.html"
+                        title="next chapter">FAQs</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/guides/ui-two-drivers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../faq.html" title="FAQs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ui-feat-two-widgets.html" title="Connecting two (or more) widgets to the same feat"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

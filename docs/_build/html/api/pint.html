@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pint &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Support" href="support.html" />
+    <link rel="next" title="lantz.stringparser" href="stringparser.html" />
+    <link rel="prev" title="lantz.visalib" href="visalib.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="stringparser.html" title="lantz.stringparser"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="visalib.html" title="lantz.visalib"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li>
+          <li><a href="support.html" accesskey="U">Support</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.pint"></span><div class="section" id="pint">
+<h1>pint<a class="headerlink" href="#pint" title="Permalink to this headline">¶</a></h1>
+<p>Pint is Python module/package to define, operate and manipulate
+<strong>physical quantities</strong>: the product of a numerical value and a
+unit of measurement. It allows arithmetic operations between them
+and conversions from and to different units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Hernan E. Grecco.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="lantz.pint.DimensionalityError">
+<em class="property">exception </em><tt class="descclassname">lantz.pint.</tt><tt class="descname">DimensionalityError</tt><big>(</big><em>units1</em>, <em>units2</em>, <em>dim1=None</em>, <em>dim2=None</em><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#DimensionalityError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.DimensionalityError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when trying to convert between incompatible units.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="lantz.pint.UndefinedUnitError">
+<em class="property">exception </em><tt class="descclassname">lantz.pint.</tt><tt class="descname">UndefinedUnitError</tt><big>(</big><em>unit_names</em><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#UndefinedUnitError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UndefinedUnitError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when the units are not defined in the unit registry.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.pint.UnitRegistry">
+<em class="property">class </em><tt class="descclassname">lantz.pint.</tt><tt class="descname">UnitRegistry</tt><big>(</big><em>filename=''</em><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unit registry stores the definitions and relationships between
+units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> &#8211; path of the units definition file to load.
+Empty to load the default definition file.
+None to leave the UnitRegistry empty.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.pint.UnitRegistry.Quantity">
+<em class="property">class </em><tt class="descname">Quantity</tt><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.Quantity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.Quantity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quantity object constituted by magnitude and units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>str, Quantity or any numeric type.</em>) &#8211; value of the physical quantity to be created.</li>
+<li><strong>units</strong> (<em>UnitsContainer, str or Quantity.</em>) &#8211; units of the physical quantity to be created.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.pint.UnitRegistry.Quantity.convert_to_reference">
+<tt class="descname">convert_to_reference</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.Quantity.convert_to_reference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.Quantity.convert_to_reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return Quantity rescaled to reference units.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.pint.UnitRegistry.Quantity.ito">
+<tt class="descname">ito</tt><big>(</big><em>other=None</em><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.Quantity.ito"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.Quantity.ito" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inplace rescale to different units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<em>Quantity or str.</em>) &#8211; destination units.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.pint.UnitRegistry.Quantity.to">
+<tt class="descname">to</tt><big>(</big><em>other=None</em><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.Quantity.to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.Quantity.to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return Quantity rescaled to different units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<em>Quantity or str.</em>) &#8211; destination units.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.pint.UnitRegistry.Quantity.dimensionality">
+<tt class="descname">dimensionality</tt><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.Quantity.dimensionality"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.Quantity.dimensionality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quantity&#8217;s dimensionality (e.g. {length: 1, time: -1})</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.pint.UnitRegistry.Quantity.dimensionless">
+<tt class="descname">dimensionless</tt><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.Quantity.dimensionless"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.Quantity.dimensionless" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if the quantity is dimensionless.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.pint.UnitRegistry.Quantity.magnitude">
+<tt class="descname">magnitude</tt><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.Quantity.magnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.Quantity.magnitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quantity&#8217;s magnitude.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.pint.UnitRegistry.Quantity.unitless">
+<tt class="descname">unitless</tt><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.Quantity.unitless"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.Quantity.unitless" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if the quantity does not have units.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.pint.UnitRegistry.Quantity.units">
+<tt class="descname">units</tt><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.Quantity.units"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.Quantity.units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quantity&#8217;s units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">UnitContainer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.pint.UnitRegistry.add_from_file">
+<tt class="descclassname">UnitRegistry.</tt><tt class="descname">add_from_file</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.add_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.add_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add units and prefixes defined in a definition text file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.pint.UnitRegistry.add_prefix">
+<tt class="descclassname">UnitRegistry.</tt><tt class="descname">add_prefix</tt><big>(</big><em>name</em>, <em>value</em>, <em>aliases=()</em><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.add_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.add_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add prefix to the registry.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.pint.UnitRegistry.add_unit">
+<tt class="descclassname">UnitRegistry.</tt><tt class="descname">add_unit</tt><big>(</big><em>name</em>, <em>value</em>, <em>aliases=()</em>, <em>**modifiers</em><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#UnitRegistry.add_unit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitRegistry.add_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add unit to the registry.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.pint.UnitsContainer">
+<em class="property">class </em><tt class="descclassname">lantz.pint.</tt><tt class="descname">UnitsContainer</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#UnitsContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.UnitsContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The UnitsContainer stores the product of units and their respective
+exponent and implements the corresponding operations</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.pint.solve_dependencies">
+<tt class="descclassname">lantz.pint.</tt><tt class="descname">solve_dependencies</tt><big>(</big><em>dependencies</em><big>)</big><a class="reference internal" href="../_modules/lantz/pint.html#solve_dependencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.pint.solve_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve a dependency graph.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dependencies</strong> &#8211; dependency dictionary. For each key, the value is
+an iterable indicating its dependencies.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of sets, each containing keys of independents tasks dependent</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="visalib.html"
+                        title="previous chapter">lantz.visalib</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="stringparser.html"
+                        title="next chapter">lantz.stringparser</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pint.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="stringparser.html" title="lantz.stringparser"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="visalib.html" title="lantz.visalib"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li>
+          <li><a href="support.html" >Support</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

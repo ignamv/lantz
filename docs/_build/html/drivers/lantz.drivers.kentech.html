@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.drivers.kentech &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Drivers" href="index.html" />
+    <link rel="next" title="lantz.drivers.olympus" href="lantz.drivers.olympus.html" />
+    <link rel="prev" title="lantz.drivers.examples" href="lantz.drivers.examples.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.olympus.html" title="lantz.drivers.olympus"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.examples.html" title="lantz.drivers.examples"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Drivers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.drivers.kentech"></span><div class="section" id="lantz-drivers-kentech">
+<h1>lantz.drivers.kentech<a class="headerlink" href="#lantz-drivers-kentech" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">company:</th><td class="field-body">Kentech Instruments Ltd.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">Manufacturers of specialised and custom built electronics and imaging equipment.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">website:</th><td class="field-body"><a class="reference external" href="http://www.kentech.co.uk/">http://www.kentech.co.uk/</a></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.drivers.kentech.HRI">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.kentech.</tt><tt class="descname">HRI</tt><big>(</big><em>port=1</em>, <em>timeout=1</em>, <em>write_timeout=1</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.kentech.HRI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/interfaces.html#lantz.serial.SerialDriver" title="lantz.serial.SerialDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.serial.SerialDriver</span></tt></a></p>
+<p>Kentech High Repetition Rate Image Intensifier.</p>
+<dl class="method">
+<dt id="lantz.drivers.kentech.HRI.clear_async">
+<tt class="descname">clear_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.kentech.HRI.clear_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Clear the buffer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.kentech.HRI.query">
+<tt class="descname">query</tt><big>(</big><em>command</em>, <em>send_args</em>, <em>recv_args</em><big>)</big><a class="headerlink" href="#lantz.drivers.kentech.HRI.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send query to the instrument and return the answer.
+Set remote mode if needed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.kentech.HRI.query_expect">
+<tt class="descname">query_expect</tt><big>(</big><em>command</em>, <em>recv_termination=None</em>, <em>expected='ok'</em><big>)</big><a class="headerlink" href="#lantz.drivers.kentech.HRI.query_expect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.ENCODING">
+<tt class="descname">ENCODING</tt><em class="property"> = 'ascii'</em><a class="headerlink" href="#lantz.drivers.kentech.HRI.ENCODING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.RECV_TERMINATION">
+<tt class="descname">RECV_TERMINATION</tt><em class="property"> = '\n'</em><a class="headerlink" href="#lantz.drivers.kentech.HRI.RECV_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.SEND_TERMINATION">
+<tt class="descname">SEND_TERMINATION</tt><em class="property"> = '\r'</em><a class="headerlink" href="#lantz.drivers.kentech.HRI.SEND_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.average_voltage">
+<tt class="descname">average_voltage</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.average_voltage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cathode potential bias with respect of MCP.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">volt</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(-50, 50)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.clamp_voltage">
+<tt class="descname">clamp_voltage</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.clamp_voltage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Most negative value of the gate pulse.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">volt</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(-50, 50)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.clear">
+<tt class="descname">clear</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a6f1f0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.kentech.HRI.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.enabled">
+<tt class="descname">enabled</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>MCP Enabled</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False, True}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.mcp">
+<tt class="descname">mcp</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.mcp" title="Permalink to this definition">¶</a></dt>
+<dd><p>MCP Voltage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">volt</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(0, 1700)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.mode">
+<tt class="descname">mode</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gain modulation mode.</p>
+<blockquote>
+<div>HRI Machine Modes and Mode Indices
+None     Mode
+0        INHIBIT
+2-10     COMB modes 200 ps to 1 ns inclusive (High rate operation)
+11-20    COMB modes 100 ps to 3 ns inclusive (Low rate (+GOI) operation)
+21       RF
+22       logic low duty cycle (LDC)
+23       logic high duty cycle
+24       DC
+25-28    user modes 1 to 4</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{&#8216;ldc&#8217;: 22, &#8216;inhibit&#8217;: 0, &#8216;hdc&#8217;: 23, &#8216;user3&#8217;: 27, &#8216;user1&#8217;: 25, &#8216;user2&#8217;: 26, &#8216;rf&#8217;: 21, &#8216;user4&#8217;: 28, &#8216;dc&#8217;: 24}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.remote">
+<tt class="descname">remote</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.remote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remote or local.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False, True}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.revision">
+<tt class="descname">revision</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.revision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Revision.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.rfgain">
+<tt class="descname">rfgain</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.rfgain" title="Permalink to this definition">¶</a></dt>
+<dd><p>RF Gain.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.status">
+<tt class="descname">status</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get status.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.temperature">
+<tt class="descname">temperature</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Temperature.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.trigger_ecl_level">
+<tt class="descname">trigger_ecl_level</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.trigger_ecl_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger level for ECL logic, mode level.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">centivolt</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(-40, 40, 1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.trigger_ecl_mode">
+<tt class="descname">trigger_ecl_mode</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.trigger_ecl_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger mode for ECL logic.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{&#8216;log&#8217;: &#8216;LOGTRIG}&#8217;, &#8216;level&#8217;: &#8216;LVLTRIG&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.trigger_edge">
+<tt class="descname">trigger_edge</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.trigger_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger on rising or falling edge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{&#8216;falling&#8217;: &#8216;-VETRIG}&#8217;, &#8216;rising&#8217;: &#8216;+VETRIG&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.trigger_logic">
+<tt class="descname">trigger_logic</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.trigger_logic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger logic.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{&#8216;ecl&#8217;: &#8216;ECLTRIG&#8217;, &#8216;ttl&#8217;: &#8216;TTLTRIG&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.kentech.HRI.trigger_ttl_termination">
+<tt class="descname">trigger_ttl_termination</tt><a class="headerlink" href="#lantz.drivers.kentech.HRI.trigger_ttl_termination" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger termination for TTL logic (for ECL is fixed to 50 ohm).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{&#8216;high&#8217;: &#8216;HITRIG&#8217;, &#8216;50ohm&#8217;: &#8216;50TRIG}&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lantz.drivers.examples.html"
+                        title="previous chapter">lantz.drivers.examples</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lantz.drivers.olympus.html"
+                        title="next chapter">lantz.drivers.olympus</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/drivers/lantz.drivers.kentech.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.olympus.html" title="lantz.drivers.olympus"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.examples.html" title="lantz.drivers.examples"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Drivers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

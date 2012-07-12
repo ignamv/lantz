@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>General &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="API" href="index.html" />
+    <link rel="next" title="Interfacing to instruments" href="interfaces.html" />
+    <link rel="prev" title="API" href="index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="interfaces.html" title="Interfacing to instruments"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="API"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="general">
+<h1>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lantz.Driver">
+<em class="property">class </em><tt class="descclassname">lantz.</tt><tt class="descname">Driver</tt><a class="headerlink" href="#lantz.Driver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all drivers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Params name:</th><td class="field-body">easy to remember identifier given to the instance for logging
+purposes</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.Driver.add_on_changed">
+<tt class="descname">add_on_changed</tt><big>(</big><em>feat_name</em>, <em>func</em>, <em>key=MISSING</em><big>)</big><a class="headerlink" href="#lantz.Driver.add_on_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add callback to be triggered when a Feat/DictFeat value changes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>feat_name</strong> &#8211; name of the Feat/DictFeat.</li>
+<li><strong>func</strong> &#8211; callback that takes a single value</li>
+<li><strong>key</strong> &#8211; (optional) For DictFeat, indicates the key to be monitored.
+Use None to trigger the callback when any key us changed.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.del_on_changed">
+<tt class="descname">del_on_changed</tt><big>(</big><em>feat_name</em>, <em>func</em>, <em>key=MISSING</em><big>)</big><a class="headerlink" href="#lantz.Driver.del_on_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete callback. See add_on_changed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>feat_name</strong> &#8211; name of the Feat/DictFeat.</li>
+<li><strong>func</strong> &#8211; callback that takes a single value</li>
+<li><strong>key</strong> &#8211; (optional) For DictFeat, indicates the key to be monitored.
+Use None to trigger the callback when any key us changed.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.log">
+<tt class="descname">log</tt><big>(</big><em>level</em>, <em>msg</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.Driver.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log with the integer severity &#8216;level&#8217;
+on the logger corresponding to this instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>level</strong> &#8211; severity level for this event.</li>
+<li><strong>msg</strong> &#8211; message to be logged (can contain PEP3101 formatting codes)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.log_critical">
+<tt class="descname">log_critical</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.Driver.log_critical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log with the severity &#8216;CRITICAL&#8217;
+on the logger corresponding to this instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> &#8211; message to be logged (can contain PEP3101 formatting codes)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.log_debug">
+<tt class="descname">log_debug</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.Driver.log_debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log with the severity &#8216;DEBUG&#8217;
+on the logger corresponding to this instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> &#8211; message to be logged (can contain PEP3101 formatting codes)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.Driver.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log with the severity &#8216;ERROR&#8217;
+on the logger corresponding to this instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> &#8211; message to be logged (can contain PEP3101 formatting codes)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.log_info">
+<tt class="descname">log_info</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.Driver.log_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log with the severity &#8216;INFO&#8217;
+on the logger corresponding to this instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> &#8211; message to be logged (can contain PEP3101 formatting codes)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.log_warning">
+<tt class="descname">log_warning</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.Driver.log_warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log with the severity &#8216;WARNING&#8217;
+on the logger corresponding to this instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> &#8211; message to be logged (can contain PEP3101 formatting codes)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.recall">
+<tt class="descname">recall</tt><big>(</big><em>keys=None</em><big>)</big><a class="headerlink" href="#lantz.Driver.recall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the last value seen for a feat or a collection of feats.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> (<em>str, list, tuple, dict.</em>) &#8211; a string or list of strings with the properties to refresh.
+Default None all properties.
+If keys is a string, returns the value.
+If keys is a list, returns a dictionary.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.refresh">
+<tt class="descname">refresh</tt><big>(</big><em>keys=None</em><big>)</big><a class="headerlink" href="#lantz.Driver.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refresh cache by reading values from the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> (<em>str or list or tuple or dict</em>) &#8211; a string or list of strings with the properties to refresh.
+Default None, meaning all properties.
+If keys is a string, returns the value.
+If keys is a list/tuple, returns a tuple.
+If keys is a dict, returns a dict.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.refresh_async">
+<tt class="descname">refresh_async</tt><big>(</big><em>keys</em>, <em>callback=None</em><big>)</big><a class="headerlink" href="#lantz.Driver.refresh_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asynchronous refresh cache by reading values from the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> (<em>str or list or tuple or dict</em>) &#8211; a string or list of strings with the properties to refresh
+Default None, meaning all properties.
+If keys is a string, returns the value.
+If keys is a list, returns a dictionary.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">concurrent.future.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.update">
+<tt class="descname">update</tt><big>(</big><em>newstate</em>, <em>force=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.Driver.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update driver.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>newstate</strong> (<em>dict.</em>) &#8211; a dictionary containing the new driver state.</li>
+<li><strong>force</strong> &#8211; apply change even when the cache says it is not necessary.</li>
+<li><strong>force</strong> &#8211; boolean.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises :</th><td class="field-body"><p class="first last">ValueError if called with an empty dictionary.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.Driver.update_async">
+<tt class="descname">update_async</tt><big>(</big><em>newstate</em>, <em>force</em>, <em>callback=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.Driver.update_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asynchronous update driver.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>newstate</strong> (<em>dict.</em>) &#8211; driver state.</li>
+<li><strong>force</strong> (<em>boolean.</em>) &#8211; apply change even when the cache says it is not necessary.</li>
+<li><strong>callback</strong> (<em>callable.</em>) &#8211; Called when the update finishes.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">concurrent.future</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body"><p class="first last">ValueError if called with an empty dictionary.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.Feat">
+<em class="property">class </em><tt class="descclassname">lantz.</tt><tt class="descname">Feat</tt><big>(</big><em>fget</em>, <em>fset</em>, <em>doc</em>, <em>values</em>, <em>units</em>, <em>limits=MISSING</em>, <em>procs=None</em>, <em>read_once=None</em><big>)</big><a class="headerlink" href="#lantz.Feat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pimped Python property for interfacing with instruments. Can be used as
+a decorator.</p>
+<p>Processors can registered for each arguments to modify their values before
+they are passed to the body of the method. Two standard processors are
+defined: <cite>values</cite> and <cite>units</cite> and others can be given as callables in the
+<cite>procs</cite> parameter.</p>
+<p>If a method contains multiple arguments, use a tuple. None can be used as
+<cite>do not change</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fget</strong> &#8211; getter function.</li>
+<li><strong>fset</strong> &#8211; setter function.</li>
+<li><strong>doc</strong> &#8211; docstring, if missing fget or fset docstring will be used.</li>
+<li><strong>values</strong> &#8211; A dictionary to map key to values.
+A set to restrict the values.
+If a list/tuple instead of a dict is given, the value is not
+changed but only tested to belong to the container.</li>
+<li><strong>units</strong> &#8211; <cite>Quantity</cite> or string that can be interpreted as units.</li>
+<li><strong>procs</strong> &#8211; Other callables to be applied to input arguments.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.DictFeat">
+<em class="property">class </em><tt class="descclassname">lantz.</tt><tt class="descname">DictFeat</tt><big>(</big><em>fget</em>, <em>fset=MISSING</em>, <em>doc=None</em>, <em>keys=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.DictFeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pimped Python property with getitem access for interfacing with
+instruments. Can be used as a decorator.</p>
+<p>Takes the same parameters as <cite>Feat</cite>, plus:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> &#8211; List/tuple restricts the keys to the specified ones.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.Action">
+<em class="property">class </em><tt class="descclassname">lantz.</tt><tt class="descname">Action</tt><big>(</big><em>func</em>, <em>values</em>, <em>units</em>, <em>limits</em>, <em>procs=None</em><big>)</big><a class="headerlink" href="#lantz.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps a Driver method with Lantz. Can be used as a decorator.</p>
+<p>Processors can registered for each arguments to modify their values before
+they are passed to the body of the method. Two standard processors are
+defined: <cite>values</cite> and <cite>units</cite> and others can be given as callables in the
+<cite>procs</cite> parameter.</p>
+<p>If a method contains multiple arguments, use a tuple. None can be used as
+<cite>do not change</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>func</strong> &#8211; driver method to be wrapped.</li>
+<li><strong>values</strong> &#8211; A dictionary to values key to values.
+If a list/tuple instead of a dict is given, the value is not
+changed but only tested to belong to the container.</li>
+<li><strong>units</strong> &#8211; <cite>Quantity</cite> or string that can be interpreted as units.</li>
+<li><strong>procs</strong> &#8211; Other callables to be applied to input arguments.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="interfaces.html"
+                        title="next chapter">Interfacing to instruments</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/general.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="interfaces.html" title="Interfacing to instruments"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="API"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

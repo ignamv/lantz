@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.drivers.pco &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Drivers" href="index.html" />
+    <link rel="next" title="lantz.drivers.sutter" href="lantz.drivers.sutter.html" />
+    <link rel="prev" title="lantz.drivers.olympus" href="lantz.drivers.olympus.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.sutter.html" title="lantz.drivers.sutter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.olympus.html" title="lantz.drivers.olympus"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Drivers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.drivers.pco"></span><div class="section" id="lantz-drivers-pco">
+<h1>lantz.drivers.pco<a class="headerlink" href="#lantz-drivers-pco" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">company:</th><td class="field-body">PCO.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">High performance CCD-, CMOS- and sCMOS camera systems.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">website:</th><td class="field-body"><a class="reference external" href="http://www.pco.de">http://www.pco.de</a></td>
+</tr>
+</tbody>
+</table>
+<p>&#8212;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.drivers.pco.Sensicam">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.pco.</tt><tt class="descname">Sensicam</tt><big>(</big><em>board</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.pco.Sensicam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/interfaces.html#lantz.foreign.LibraryDriver" title="lantz.foreign.LibraryDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.foreign.LibraryDriver</span></tt></a></p>
+<p>PCO Sensicam</p>
+<dl class="method">
+<dt id="lantz.drivers.pco.Sensicam.expose_async">
+<tt class="descname">expose_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.pco.Sensicam.expose_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Expose.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>exposure</strong> &#8211; exposure time.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.pco.Sensicam.finalize">
+<tt class="descname">finalize</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.pco.Sensicam.finalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.pco.Sensicam.initialize">
+<tt class="descname">initialize</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.pco.Sensicam.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.pco.Sensicam.read_out_async">
+<tt class="descname">read_out_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.pco.Sensicam.read_out_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Readout image from the CCD.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">NumPy array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.pco.Sensicam.run_coc_async">
+<tt class="descname">run_coc_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.pco.Sensicam.run_coc_async" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.pco.Sensicam.stop_coc_async">
+<tt class="descname">stop_coc_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.pco.Sensicam.stop_coc_async" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.pco.Sensicam.take_image_async">
+<tt class="descname">take_image_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.pco.Sensicam.take_image_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Take image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>exposure</strong> &#8211; exposure time.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">NumPy array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.LIBRARY_NAME">
+<tt class="descname">LIBRARY_NAME</tt><em class="property"> = 'senntcam.dll'</em><a class="headerlink" href="#lantz.drivers.pco.Sensicam.LIBRARY_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.bel_time">
+<tt class="descname">bel_time</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.bel_time" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">microseconds</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.binning">
+<tt class="descname">binning</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.binning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binning in pixels as a 2-element tuple (horizontal, vertical).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.coc">
+<tt class="descname">coc</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.coc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Command Operation Code</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.coc_time">
+<tt class="descname">coc_time</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.coc_time" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">microseconds</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.delay_time">
+<tt class="descname">delay_time</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.delay_time" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">microseconds</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.exp_time">
+<tt class="descname">exp_time</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.exp_time" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">microseconds</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.expose">
+<tt class="descname">expose</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a882f0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.pco.Sensicam.expose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.exposure_time">
+<tt class="descname">exposure_time</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.exposure_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exposure time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">ms</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.image_size">
+<tt class="descname">image_size</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.image_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Image size in pixels (width, height).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.image_status">
+<tt class="descname">image_status</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.image_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Image status</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.mode">
+<tt class="descname">mode</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Imaging mode as a 3-element tuple (type, gain and submode).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.read_out">
+<tt class="descname">read_out</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1544510&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.pco.Sensicam.read_out" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.roi">
+<tt class="descname">roi</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.roi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Region of interest in pixels as a 4-element tuple (x1, x2, y1, y2).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.run_coc">
+<tt class="descname">run_coc</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a881d0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.pco.Sensicam.run_coc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.status">
+<tt class="descname">status</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.stop_coc">
+<tt class="descname">stop_coc</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a88190&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.pco.Sensicam.stop_coc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.table">
+<tt class="descname">table</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.table" title="Permalink to this definition">¶</a></dt>
+<dd><p>COC table</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.take_image">
+<tt class="descname">take_image</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1544530&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.pco.Sensicam.take_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.pco.Sensicam.trigger">
+<tt class="descname">trigger</tt><a class="headerlink" href="#lantz.drivers.pco.Sensicam.trigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Triger mode.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lantz.drivers.olympus.html"
+                        title="previous chapter">lantz.drivers.olympus</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lantz.drivers.sutter.html"
+                        title="next chapter">lantz.drivers.sutter</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/drivers/lantz.drivers.pco.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.sutter.html" title="lantz.drivers.sutter"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.olympus.html" title="lantz.drivers.olympus"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Drivers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

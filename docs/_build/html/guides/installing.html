@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installing &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Guides" href="index.html" />
+    <link rel="next" title="Connecting a custom UI to a driver" href="ui-driver.html" />
+    <link rel="prev" title="Guides" href="index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ui-driver.html" title="Connecting a custom UI to a driver"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Guides"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Guides</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installing">
+<span id="id1"></span><h1>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h1>
+<p>Lantz core requires only Python 3.2+. This guide also assumes that you have installed <a class="reference external" href="http://www.virtualenv.org/en/latest/index.html">virtualenv</a> and <a class="reference external" href="http://www.pip-installer.org/en/latest/index.html">pip</a>. If not, please install them by typing:</p>
+<div class="highlight-python"><pre>$ easy_install virtualenv pip</pre>
+</div>
+<p>(By the way, check out virtualenv wrapper as a way to easy handle your virtual environments)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remember that if you have multiple version of python installed in your system, you must always use python 3.
+Instead of <cite>pip</cite> you need to write <cite>pip-3.2</cite> and instead of <cite>easy_install</cite> you need to write <cite>easy_install-3.2</cite>.</p>
+</div>
+<div class="section" id="optional-requirements">
+<h2>Optional requirements<a class="headerlink" href="#optional-requirements" title="Permalink to this headline">¶</a></h2>
+<p>Some lantz subpackages have other requirements which are listed below together with a small explanation of where are used.
+Short installation instructions are given, but we refer you to the package documentation for more information. For some
+packages, a link to the binary distribution is given.</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><a class="reference external" href="http://pypi.python.org/pypi/colorama/">Colorama</a> is used to colorize terminal output.
+It is optional when logging to screen and mandatory if you want to use <cite>lantz-monitor</cite>, the text-based log viewer.
+You can install it using:</p>
+<div class="highlight-python"><pre>$ pip install colorama</pre>
+</div>
+</li>
+<li><p class="first"><a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> is used generate the documentation.
+It is optional and only needed if you want to generate the documentation yourself.
+You can install it using:</p>
+<div class="highlight-python"><pre>$ pip install sphinx</pre>
+</div>
+</li>
+<li><p class="first"><a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> is used to transform the RST documentation to HTML which is then provided as tooltips in the GUI.
+It is optional. If not installed, unformatted documentation will be shown as tooltips.
+It will be already installed if you install Sphinx. To install it independently:</p>
+<div class="highlight-python"><pre>$ pip install docutils</pre>
+</div>
+</li>
+<li><p class="first"><a class="reference external" href="http://pyserial.sourceforge.net/">pySerial</a> it is to communicate via serial port.
+It is optional and only needed if you are using a driver that uses lantz.serial.
+You can install it using:</p>
+<div class="highlight-python"><pre>$ pip install pyserial</pre>
+</div>
+<p>Or use the <a class="reference external" href="http://pyserial.sourceforge.net/pyserial.html#packages">PySerial binaries</a></p>
+</li>
+<li><p class="first"><a class="reference external" href="http://qt.nokia.com/products/">Qt4</a> is used to generate the graphical user interfaces. Due to a license issue there
+are two python bindings for Qt: <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt">PyQt</a> and <a class="reference external" href="http://www.pyside.org/">PySide</a>.
+Both are compatible with Lantz.
+To install pyQt:</p>
+<div class="highlight-python"><pre>$ pip install pyqt</pre>
+</div>
+<p>or use the <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download/">PyQt binaries</a></p>
+<blockquote>
+<div><p>$ pip install pyside</p>
+</div></blockquote>
+<p>or use the <a class="reference external" href="http://qt-project.org/wiki/Category:LanguageBindings::PySide::Downloads">PySide binaries</a></p>
+</li>
+<li><p class="first"><a class="reference external" href="http://numpy.scipy.org/">NumPy</a> is used by many drivers to perform numerical calculations.
+You can install it using:</p>
+<div class="highlight-python"><pre>$ pip install numpy</pre>
+</div>
+<p>or use the <a class="reference external" href="http://sourceforge.net/projects/numpy/files/">NumPy binaries</a></p>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="installing-lantz">
+<h3>Installing Lantz<a class="headerlink" href="#installing-lantz" title="Permalink to this headline">¶</a></h3>
+<p>If you just want want to use <cite>Lantz</cite>, you can just:</p>
+<div class="highlight-python"><pre>$ pip install git+gitolite@glugcen.dc.uba.ar:lantz.git#egg=lantz</pre>
+</div>
+<p>or from <a class="reference external" href="https://github.com/hgrecco/lantz">Lantz at Github</a>:</p>
+<div class="highlight-python"><pre>$ pip install git+git://github.com/hgrecco/lantz.git#egg=lantz</pre>
+</div>
+</div>
+<div class="section" id="building-your-lantz-development-environment">
+<h3>Building your Lantz development environment<a class="headerlink" href="#building-your-lantz-development-environment" title="Permalink to this headline">¶</a></h3>
+<p>If you want to develop <cite>Lantz</cite>, install the sources.</p>
+</div>
+</div>
+<div class="section" id="linux-or-mac">
+<h2>Linux or Mac<a class="headerlink" href="#linux-or-mac" title="Permalink to this headline">¶</a></h2>
+<p>Open a terminal and change to the folder where you will create your virtual environment. In this case, we have chosen the home directory:</p>
+<div class="highlight-python"><pre>$ cd ~
+$ virtualenv -p python3 --system-site-packages lantzenv
+$ cd lantzenv
+$ source bin/activate</pre>
+</div>
+<p>and then install an editable package:</p>
+<div class="highlight-python"><pre>$ pip install -e git+gitolite@glugcen.dc.uba.ar:lantz.git#egg=lantz</pre>
+</div>
+<p>You will find the code in <cite>~/lantzenv/src/lantz</cite>.</p>
+</div>
+<div class="section" id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<p>Open a command windows and change to the folder where you will create your virtual environemnt. In this case, we have chosen the desktop:</p>
+<div class="highlight-python"><pre>cd  %USERPROFILE%\Desktop
+C:\Python32\Scripts\virtualenv --system-site-packages lantzenv
+cd lantzenv\Scripts
+activate</pre>
+</div>
+<p>and then install an editable package:</p>
+<div class="highlight-python"><pre>pip install -e git+gitolite@glugcen.dc.uba.ar:lantz.git#egg=lantz</pre>
+</div>
+<p>You will find the code in <cite>%USERPROFILE%\Desktop\lantzenv\src\lantz</cite>.</p>
+<p>The folder is a normal git repository from where you can pull and push to keep the repo in sync.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installing</a><ul>
+<li><a class="reference internal" href="#optional-requirements">Optional requirements</a><ul>
+<li><a class="reference internal" href="#installing-lantz">Installing Lantz</a></li>
+<li><a class="reference internal" href="#building-your-lantz-development-environment">Building your Lantz development environment</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#linux-or-mac">Linux or Mac</a></li>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Guides</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ui-driver.html"
+                        title="next chapter">Connecting a custom UI to a driver</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/guides/installing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ui-driver.html" title="Connecting a custom UI to a driver"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Guides"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

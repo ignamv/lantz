@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Using lantz drivers &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="index.html" />
+    <link rel="next" title="2. Building your own drivers" href="building.html" />
+    <link rel="prev" title="Tutorials" href="index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="building.html" title="2. Building your own drivers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Tutorials"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="using-lantz-drivers">
+<span id="tutorial-using"></span><h1>1. Using lantz drivers<a class="headerlink" href="#using-lantz-drivers" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, you will learn how to use Lantz drivers to control an instrument. Lantz is shipped with drivers for common laboratory instruments. Each instrument has different capabilities, and these reflect in the drivers being different. However, all Lantz drivers share a common structure and learning about it allows you to use them in a more efficient way.</p>
+<p>Following a tutorial about using a driver to communicate with an instrument that you do not have is not much fun. That&#8217;s why we have created a virtual version of this instrument. From the command line, run the following command:</p>
+<div class="highlight-python"><pre>$ sim-fungen.py</pre>
+</div>
+<p>This will start an application (i.e. your instrument) that listens for incoming TCP packages (commands) on port 5678 from <cite>localhost</cite>. In the screen you will see the commands received and sent by the instrument.</p>
+<p>Your program and the instrument will communicate by exchanging text commands via TCP. But having a Lantz driver already built for your particular instrument releases you for the burden of sending and receiving the messages. Let&#8217;s start by finding the driver. Lantz drivers are organized inside packages, each package named after the manufacturer. So the <cite>Coherent Argon Laser Innova</cite> 300C driver is in <cite>lantz.drivers.coherent</cite> under the name <cite>ArgonInnova300C</cite>. We follow Python style guide (PEP8) to name packages and modules (lowercase) and classes (CamelCase).</p>
+<p>Our simulated device is under the company <cite>examples</cite> and is named <cite>LantzSignalGenerator</cite>. Create a python script named <cite>test_fungen.py</cite> and type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+
+<span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
+<span class="n">inst</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
+<span class="n">inst</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Let&#8217;s look at the code line-by-line. First we import the class into our script:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+</pre></div>
+</div>
+<p>Then we create an instance of the class, setting the address to localhost and port to 5678:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This does not connects to the device. To do so, you call the <cite>initialize</cite> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">inst</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>All Lantz drivers have an <cite>initialize</cite> method. Drivers that communicate through a port (e.g. a Serial port) will open the port in this call. Then we query the instrument for it&#8217;s identification and we print it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At the end, we call the <cite>finalize</cite> method to clean up all resources (e.g. close ports):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">inst</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Just like the <cite>initialize</cite> method, all Lantz drivers have a <cite>finalize</cite>. Save the python script and run it by:</p>
+<div class="highlight-python"><pre>$ python test_fungen.py</pre>
+</div>
+<p>and you will get the following output:</p>
+<div class="highlight-python"><pre>FunctionGenerator Serial #12345</pre>
+</div>
+<p>In the window where <cite>sim-fungen.py</cite> is running you will see the message exchange. You normally don&#8217;t see this in real instruments. Having a simulated instrument allow us to peek into it and understand what is going on: when we called <cite>inst.idn</cite>, the driver sent message (<cite>?IDN</cite>) to the instrument and it answered back (<cite>FunctionGenerator Serial #12345</cite>). Notice that end of line characters were stripped by the driver.</p>
+<blockquote>
+<div><p>To find out which other properties and methods are available checkout the documentation. A nice feature of Lantz (thanks to sphinx) is that useful documentation is generated from the driver itself. <cite>idn</cite> is a <cite>Feat</cite> of the driver. Think of a <cite>Feat</cite> as a pimped property. It works just like python properties but it wraps its call with some utilities (more on this later). <cite>idn</cite> is a read-only and as the documentation states it gets the identification information from the device. As <cite>idn</cite> is read-only, the following code will raise an exception:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+
+<span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
+<span class="n">inst</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+<span class="n">inst</span><span class="o">.</span><span class="n">idn</span> <span class="o">=</span> <span class="s">&#39;A new identification&#39;</span> <span class="c"># &lt;- This will fail as idn is read-only</span>
+<span class="n">inst</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The problem is that finalize will never be called possibly leaving resources open. You need to wrap your possible failing code into a try-except-finally structure:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+
+<span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
+<span class="n">inst</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">inst</span><span class="o">.</span><span class="n">idn</span> <span class="o">=</span> <span class="s">&#39;A new identification&#39;</span> <span class="c"># &lt;- This will fail as idn is read-only</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">inst</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>All lantz drivers are also context managers and there fore you can write this in a much more compact way:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="n">inst</span><span class="o">.</span><span class="n">idn</span> <span class="o">=</span> <span class="s">&#39;A new identification&#39;</span> <span class="c"># &lt;- This will fail as idn is read-only</span>
+</pre></div>
+</div>
+<p>The with statement will create an instance, assign it to <cite>inst</cite> and call <cite>initialize</cite>. The <cite>finalize</cite> will be called independently if there is an exception or not.</p>
+<div class="section" id="lantz-feat-in-depth">
+<h2>1.1. Lantz Feat in depth<a class="headerlink" href="#lantz-feat-in-depth" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s query all parameters and print them state:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;idn: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;frequency: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">frequency</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;amplitude: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;offset: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">offset</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;output_enabled: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">output_enabled</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;waveform: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">waveform</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;dout[{}]: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">inst</span><span class="o">.</span><span class="n">dout</span><span class="p">[</span><span class="n">channel</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;din[{}]: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">inst</span><span class="o">.</span><span class="n">din</span><span class="p">[</span><span class="n">channel</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>If you run the program you will get something like:</p>
+<div class="highlight-python"><pre>idn: FunctionGenerator Serial #12345
+frequency: 1000.0 hertz
+amplitude: 0.0 volt
+offset: 0.0 volt
+output_enabled: False
+waveform: sine
+dout[1]: False
+dout[2]: False
+dout[3]: False
+dout[4]: False
+dout[5]: False
+dout[6]: False
+dout[7]: False
+dout[8]: False
+din[1]: False
+din[2]: False
+din[3]: False
+din[4]: False
+din[5]: False
+din[6]: False
+din[7]: False
+din[8]: False</pre>
+</div>
+</div>
+<div class="section" id="multiple-queries">
+<h2>1.2. Multiple queries<a class="headerlink" href="#multiple-queries" title="Permalink to this headline">¶</a></h2>
+<p>You can actually make it simpler. All lantz feats of a given instrument are registered within the driver. You can call the <cite>refresh</cite> method to get them all at once:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;{}[{}]: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;{}: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. Using lantz drivers</a><ul>
+<li><a class="reference internal" href="#lantz-feat-in-depth">1.1. Lantz Feat in depth</a></li>
+<li><a class="reference internal" href="#multiple-queries">1.2. Multiple queries</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Tutorials</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="building.html"
+                        title="next chapter">2. Building your own drivers</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorial/using.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="building.html" title="2. Building your own drivers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Tutorials"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

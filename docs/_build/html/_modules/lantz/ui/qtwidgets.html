@@ -1,0 +1,1238 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.ui.qtwidgets &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="lantz" href="../../lantz.html" />
+    <link rel="shortcut icon" type="image/png" href="../../../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><img src="../../../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../../../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../lantz.html" accesskey="U">lantz</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for lantz.ui.qtwidgets</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    lantz.ui.qtwidgets</span>
+<span class="sd">    ~~~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">    Implements UI widgets based on Qt widgets. To achieve functionality,</span>
+<span class="sd">    instances of QtWidgets are patched.</span>
+
+<span class="sd">    :copyright: 2012 by Lantz Authors, see AUTHORS for more details.</span>
+<span class="sd">    :license: BSD, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">docutils</span> <span class="kn">import</span> <span class="n">core</span> <span class="k">as</span> <span class="n">doc_core</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">class</span> <span class="nc">doc_core</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+        <span class="nd">@staticmethod</span>
+        <span class="k">def</span> <span class="nf">publish_parts</span><span class="p">(</span><span class="n">rst</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">rst</span>
+
+<span class="kn">from</span> <span class="nn">Qt.QtCore</span> <span class="kn">import</span> <span class="n">QVariant</span><span class="p">,</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QSize</span><span class="p">,</span> <span class="n">Slot</span><span class="p">,</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">Property</span>
+<span class="kn">from</span> <span class="nn">Qt.QtGui</span> <span class="kn">import</span> <span class="p">(</span><span class="n">QApplication</span><span class="p">,</span> <span class="n">QDialog</span><span class="p">,</span> <span class="n">QWidget</span><span class="p">,</span> <span class="n">QFont</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="p">,</span>
+                      <span class="n">QColor</span><span class="p">,</span> <span class="n">QPalette</span><span class="p">,</span> <span class="n">QToolTip</span><span class="p">,</span> <span class="n">QMessageBox</span><span class="p">,</span>
+                      <span class="n">QLabel</span><span class="p">,</span> <span class="n">QPushButton</span><span class="p">,</span> <span class="n">QDialogButtonBox</span><span class="p">,</span>
+                      <span class="n">QLayout</span><span class="p">,</span> <span class="n">QHBoxLayout</span><span class="p">,</span> <span class="n">QVBoxLayout</span><span class="p">,</span> <span class="n">QFormLayout</span><span class="p">,</span> <span class="n">QFrame</span><span class="p">,</span>
+                      <span class="n">QTabWidget</span><span class="p">,</span>
+                      <span class="n">QLineEdit</span><span class="p">,</span> <span class="n">QSpinBox</span><span class="p">,</span> <span class="n">QDoubleSpinBox</span><span class="p">,</span> <span class="n">QLCDNumber</span><span class="p">,</span>
+                      <span class="n">QDial</span><span class="p">,</span> <span class="n">QProgressBar</span><span class="p">,</span> <span class="n">QSlider</span><span class="p">,</span> <span class="n">QScrollBar</span><span class="p">,</span>
+                      <span class="n">QComboBox</span><span class="p">,</span> <span class="n">QCheckBox</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">Q_</span><span class="p">,</span> <span class="n">Driver</span>
+<span class="kn">from</span> <span class="nn">..feat</span> <span class="kn">import</span> <span class="n">MISSING</span><span class="p">,</span> <span class="n">DictFeat</span>
+
+<span class="n">QToolTip</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="s">&#39;SansSerif&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;lantz.ui&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NullHandler</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">_rst_to_html</span><span class="p">(</span><span class="n">rst</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert rst docstring to HTML.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">doc_core</span><span class="o">.</span><span class="n">publish_parts</span><span class="p">(</span><span class="n">rst</span><span class="p">,</span> <span class="n">writer_name</span><span class="o">=</span><span class="s">&quot;html&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parts</span><span class="p">[</span><span class="s">&#39;body&#39;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_params_doc</span><span class="p">(</span><span class="n">rst</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">docs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">rst</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rst</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">rst</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">key</span><span class="p">:</span>
+            <span class="n">docs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;param&#39;</span><span class="p">,</span> <span class="s">&#39;parameter&#39;</span><span class="p">,</span> <span class="s">&#39;arg&#39;</span><span class="p">,</span> <span class="s">&#39;argument&#39;</span><span class="p">,</span> <span class="s">&#39;key&#39;</span><span class="p">,</span> <span class="s">&#39;keyword&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+                    <span class="n">key</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">):]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                    <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">docs</span>
+
+
+<div class="viewcode-block" id="register_wrapper"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.register_wrapper">[docs]</a><span class="k">def</span> <span class="nf">register_wrapper</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Register a class as lantz wrapper for QWidget subclasses.</span>
+
+<span class="sd">    The class must contain a field (_WRAPPERS) with a tuple of the</span>
+<span class="sd">    QWidget subclasses that it wraps.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">wrapped</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">_WRAPPED</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wrapped</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">_WRAPPERS</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;{} is already registered to {}.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wrapped</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">_WRAPPERS</span><span class="p">[</span><span class="n">wrapped</span><span class="p">]))</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_WRAPPERS</span><span class="p">[</span><span class="n">wrapped</span><span class="p">]</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">wrapped</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s">&#39;Wrapped&#39;</span><span class="p">,</span>
+                                      <span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">),</span> <span class="p">{})</span>
+
+    <span class="k">return</span> <span class="n">cls</span>
+
+</div>
+<span class="nd">@register_wrapper</span>
+<div class="viewcode-block" id="WidgetMixin"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin">[docs]</a><span class="k">class</span> <span class="nc">WidgetMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mixin class to provide extra functionality to QWidget derived controls.</span>
+
+<span class="sd">    Derived class must override _WRAPPED to indicate with which classes it</span>
+<span class="sd">    can be mixed.</span>
+
+<span class="sd">    To wrap an existing widget object use::</span>
+
+<span class="sd">    &gt;&gt;&gt; widget = QComboBox()</span>
+<span class="sd">    &gt;&gt;&gt; WidgetMixin.wrap(widget)</span>
+
+<span class="sd">    If you want lantz to provide an appropriate wrapped widget for a given feat::</span>
+
+<span class="sd">    &gt;&gt;&gt; widget = WidgetMixin.from_feat(feat)</span>
+
+<span class="sd">    In any case, after wrapping a widget you need to bind it to a feat::</span>
+
+<span class="sd">    &gt;&gt;&gt; feat = driver._lantz_feat[feat_name]</span>
+<span class="sd">    &gt;&gt;&gt; widget.bind_feat(feat)</span>
+
+<span class="sd">    Finally, you need to</span>
+
+<span class="sd">    &gt;&gt;&gt; widget.lantz_target = driver</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_WRAPPED</span> <span class="o">=</span> <span class="p">(</span><span class="n">QWidget</span><span class="p">,</span> <span class="p">)</span>
+
+    <span class="c">#: Dictionary linking Widget types with the function to patch them</span>
+    <span class="n">_WRAPPERS</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="WidgetMixin.keyPressEvent"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.keyPressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;When &#39;u&#39; is pressed, request new units.</span>
+<span class="sd">        When &#39;r&#39; is pressed, get new value from the driver.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;r&#39;</span><span class="p">:</span>
+            <span class="c"># This should also trigger a widget update if necessary.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value_from_feat</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WidgetMixin.value"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get widget value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WidgetMixin.setValue"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set widget value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">MISSING</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WidgetMixin.setReadOnly"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.setReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">setReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set read only s</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setReadOnly</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WidgetMixin.value_from_feat"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.value_from_feat">[docs]</a>    <span class="k">def</span> <span class="nf">value_from_feat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update the widget value with the current Feat value of the driver.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="WidgetMixin.value_to_feat"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.value_to_feat">[docs]</a>    <span class="k">def</span> <span class="nf">value_to_feat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update the Feat value of the driver with the widget value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="WidgetMixin.readable"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.readable">[docs]</a>    <span class="k">def</span> <span class="nf">readable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If the Feat associated with the widget can be read (get).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">fget</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">MISSING</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="WidgetMixin.writable"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.writable">[docs]</a>    <span class="k">def</span> <span class="nf">writable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If the Feat associated with the widget can be written (set).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">fset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+</div>
+    <span class="nd">@Slot</span><span class="p">(</span><span class="n">QVariant</span><span class="p">)</span>
+<div class="viewcode-block" id="WidgetMixin.on_widget_value_changed"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.on_widget_value_changed">[docs]</a>    <span class="k">def</span> <span class="nf">on_widget_value_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;When the widget is changed by the user, update the driver with</span>
+<span class="sd">        the new value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_on_change</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value_to_feat</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="WidgetMixin.on_feat_value_changed"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.on_feat_value_changed">[docs]</a>    <span class="k">def</span> <span class="nf">on_feat_value_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;When the driver value is changed, update the widget if necessary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
+           <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">feat_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Key associated with the DictFeat.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span>
+
+    <span class="nd">@feat_key.setter</span>
+<div class="viewcode-block" id="WidgetMixin.feat_key"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.feat_key">[docs]</a>    <span class="k">def</span> <span class="nf">feat_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="o">.</span><span class="n">del_on_changed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="o">.</span><span class="n">add_on_changed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value_from_feat</span><span class="p">()</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lantz_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Driver connected to the widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span>
+
+    <span class="nd">@lantz_target.setter</span>
+<div class="viewcode-block" id="WidgetMixin.lantz_target"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.lantz_target">[docs]</a>    <span class="k">def</span> <span class="nf">lantz_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="o">.</span><span class="n">del_on_changed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span> <span class="o">=</span> <span class="n">target</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="o">.</span><span class="n">add_on_changed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span><span class="p">)</span>
+            <span class="c">#if feat_key is MISSING:</span>
+            <span class="c">#    self.on_feat_value_changed(self._lantz_target.recall(self._feat.name))</span>
+            <span class="c">#else:</span>
+            <span class="c">#    self.on_feat_value_changed(self._lantz_target.recall(self._feat.name)[self._feat_key])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value_from_feat</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_widget_value_changed</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">bind_feat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span> <span class="o">=</span> <span class="n">feat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span> <span class="o">=</span> <span class="n">MISSING</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setReadOnly</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">writable</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_wrap</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="n">ChildrenWidgets</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">_lantz_target</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">_feat</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">_update_on_change</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">__class__</span> <span class="o">=</span>  <span class="n">cls</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">_lantz_wrapped</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="s">&#39;_lantz_wrapped&#39;</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_WRAPPERS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">widget</span><span class="p">),</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">_wrap</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="WidgetMixin.from_feat"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.from_feat">[docs]</a>    <span class="k">def</span> <span class="nf">from_feat</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a widget appropriate to represent a lantz feature.</span>
+
+<span class="sd">        :param feat: a lantz feature, the result of inst._lantz_feat[feat_name].</span>
+<span class="sd">        :param parent: parent widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">tmp</span> <span class="o">==</span> <span class="p">{</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">}:</span>
+                <span class="n">widget</span> <span class="o">=</span> <span class="n">QCheckBox</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">widget</span> <span class="o">=</span> <span class="n">QComboBox</span>
+        <span class="k">elif</span> <span class="n">feat</span><span class="o">.</span><span class="n">units</span> <span class="ow">or</span> <span class="n">feat</span><span class="o">.</span><span class="n">limits</span><span class="p">:</span>
+            <span class="n">widget</span> <span class="o">=</span> <span class="n">QDoubleSpinBox</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">=</span> <span class="n">QLineEdit</span>
+
+        <span class="n">widget</span> <span class="o">=</span> <span class="n">widget</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">widget</span>
+
+</div></div>
+<div class="viewcode-block" id="FeatWidget"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.FeatWidget">[docs]</a><span class="k">class</span> <span class="nc">FeatWidget</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Widget to show a Feat.</span>
+
+<span class="sd">    :param parent: parent widget.</span>
+<span class="sd">    :param target: driver object to connect.</span>
+<span class="sd">    :param feat: Feat to connect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">feat</span><span class="p">):</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="n">WidgetMixin</span><span class="o">.</span><span class="n">from_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">bind_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">lanz_target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="k">return</span> <span class="n">widget</span>
+
+</div>
+<div class="viewcode-block" id="DictFeatWidget"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DictFeatWidget">[docs]</a><span class="k">class</span> <span class="nc">DictFeatWidget</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Widget to show a DictFeat.</span>
+
+<span class="sd">    :param parent: parent widget.</span>
+<span class="sd">    :param target: driver object to connect.</span>
+<span class="sd">    :param feat: DictFeat to connect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">feat</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span> <span class="o">=</span> <span class="n">feat</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">keys</span><span class="p">:</span>
+            <span class="n">wid</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">keys</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">keys</span><span class="p">)</span>
+
+            <span class="n">wid</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="p">])</span>
+            <span class="n">wid</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_combobox_changed</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">wid</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+            <span class="n">wid</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lineedit_changed</span><span class="p">)</span>
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_key_widget</span> <span class="o">=</span> <span class="n">wid</span>
+
+        <span class="n">wid</span> <span class="o">=</span> <span class="n">WidgetMixin</span><span class="o">.</span><span class="n">from_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+        <span class="n">wid</span><span class="o">.</span><span class="n">bind_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+        <span class="n">wid</span><span class="o">.</span><span class="n">feat_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">wid</span><span class="o">.</span><span class="n">lantz_target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span> <span class="o">=</span> <span class="n">wid</span>
+
+    <span class="nd">@Slot</span><span class="p">(</span><span class="n">QVariant</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_combobox_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">feat_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_key_widget</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()]</span>
+
+    <span class="nd">@Slot</span><span class="p">(</span><span class="n">QVariant</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_lineedit_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">feat_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key_widget</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+<div class="viewcode-block" id="DictFeatWidget.value"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DictFeatWidget.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get widget value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="DictFeatWidget.setValue"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DictFeatWidget.setValue">[docs]</a>    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set widget value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">MISSING</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DictFeatWidget.setReadOnly"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DictFeatWidget.setReadOnly">[docs]</a>    <span class="k">def</span> <span class="nf">setReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set read only s</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">setReadOnly</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lantz_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Driver connected to this widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">_lantz_target</span>
+
+    <span class="nd">@lantz_target.setter</span>
+<div class="viewcode-block" id="DictFeatWidget.lantz_target"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DictFeatWidget.lantz_target">[docs]</a>    <span class="k">def</span> <span class="nf">lantz_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">_lantz_target</span> <span class="o">=</span> <span class="n">driver</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DictFeatWidget.readable"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DictFeatWidget.readable">[docs]</a>    <span class="k">def</span> <span class="nf">readable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If the Feat associated with the widget can be read (get).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">readable</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DictFeatWidget.writable"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DictFeatWidget.writable">[docs]</a>    <span class="k">def</span> <span class="nf">writable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If the Feat associated with the widget can be written (set).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">writable</span>
+
+</div></div>
+<div class="viewcode-block" id="LabeledFeatWidget"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.LabeledFeatWidget">[docs]</a><span class="k">class</span> <span class="nc">LabeledFeatWidget</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Widget containing a label, a control, and a get a set button.</span>
+
+<span class="sd">    :param parent: parent widget.</span>
+<span class="sd">    :param target: driver object to connect.</span>
+<span class="sd">    :param feat: Feat to connect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">feat</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">_rst_to_html</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">__doc__</span><span class="p">))</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">DictFeat</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span> <span class="o">=</span> <span class="n">DictFeatWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">feat</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span> <span class="o">=</span> <span class="n">WidgetMixin</span><span class="o">.</span><span class="n">from_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">bind_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">lantz_target</span> <span class="o">=</span> <span class="n">target</span>
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;get&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">readable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;set&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">writable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_get_clicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_set_clicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">_update_on_change</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">writable</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">label_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Width of the label</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">width</span>
+
+    <span class="nd">@label_width.setter</span>
+<div class="viewcode-block" id="LabeledFeatWidget.label_width"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.LabeledFeatWidget.label_width">[docs]</a>    <span class="k">def</span> <span class="nf">label_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lantz_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Driver connected to this widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">_lantz_target</span>
+
+    <span class="nd">@lantz_target.setter</span>
+<div class="viewcode-block" id="LabeledFeatWidget.lantz_target"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.LabeledFeatWidget.lantz_target">[docs]</a>    <span class="k">def</span> <span class="nf">lantz_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">_lantz_target</span> <span class="o">=</span> <span class="n">driver</span>
+</div>
+    <span class="nd">@Slot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">on_get_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">value_from_feat</span><span class="p">()</span>
+
+    <span class="nd">@Slot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">on_set_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">font</span> <span class="o">=</span> <span class="n">QFont</span><span class="p">()</span>
+        <span class="n">font</span><span class="o">.</span><span class="n">setItalic</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">value_to_feat</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="LabeledFeatWidget.readable"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.LabeledFeatWidget.readable">[docs]</a>    <span class="k">def</span> <span class="nf">readable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If the Feat associated with the widget can be read (get).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">readable</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="LabeledFeatWidget.writable"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.LabeledFeatWidget.writable">[docs]</a>    <span class="k">def</span> <span class="nf">writable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If the Feat associated with the widget can be written (set).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">writable</span>
+
+</div></div>
+<div class="viewcode-block" id="DriverTestWidget"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DriverTestWidget">[docs]</a><span class="k">class</span> <span class="nc">DriverTestWidget</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Widget that is automatically filled to control all Feats of a given driver.</span>
+
+<span class="sd">    :param parent: parent widget.</span>
+<span class="sd">    :param target: driver object to map.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span> <span class="o">=</span> <span class="n">target</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+
+        <span class="n">recall</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">()</span>
+        <span class="n">recall</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Refresh&#39;</span><span class="p">)</span>
+        <span class="n">recall</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">target</span><span class="o">.</span><span class="n">refresh</span><span class="p">())</span>
+
+        <span class="n">update</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">()</span>
+        <span class="n">update</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Update&#39;</span><span class="p">)</span>
+        <span class="n">update</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">target</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widgets_values_as_dict</span><span class="p">()))</span>
+
+        <span class="n">auto</span> <span class="o">=</span> <span class="n">QCheckBox</span><span class="p">()</span>
+        <span class="n">auto</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Update on change&#39;</span><span class="p">)</span>
+        <span class="n">auto</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">auto</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_on_change</span><span class="p">)</span>
+
+        <span class="n">hlayout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">hlayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">recall</span><span class="p">)</span>
+        <span class="n">hlayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
+        <span class="n">hlayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">auto</span><span class="p">)</span>
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">hlayout</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">writable_widgets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c"># Feat</span>
+        <span class="k">for</span> <span class="n">feat_name</span><span class="p">,</span> <span class="n">feat</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">_lantz_features</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">feat_widget</span> <span class="o">=</span> <span class="n">LabeledFeatWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">feat</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feat_widget</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">feat_widget</span><span class="o">.</span><span class="n">writable</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">writable_widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feat_widget</span><span class="p">)</span>
+
+                <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">feat_widget</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Could not create control for {}: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">feat_name</span><span class="p">,</span> <span class="n">ex</span><span class="p">))</span>
+                <span class="c">#import traceback</span>
+                <span class="c">#traceback.print_exc()</span>
+
+        <span class="c"># Actions</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">QFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c">#self.line.setGeometry(QtCore.QRect(110, 80, 351, 31))</span>
+        <span class="n">line</span><span class="o">.</span><span class="n">setFrameShape</span><span class="p">(</span><span class="n">QFrame</span><span class="o">.</span><span class="n">HLine</span><span class="p">)</span>
+        <span class="n">line</span><span class="o">.</span><span class="n">setFrameShadow</span><span class="p">(</span><span class="n">QFrame</span><span class="o">.</span><span class="n">Sunken</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+
+        <span class="n">actions_label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">actions_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Actions:&#39;</span><span class="p">)</span>
+        <span class="n">actions_label</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions_combo</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions_combo</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">_lantz_actions</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+        <span class="n">actions_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">actions_button</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">actions_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Run&#39;</span><span class="p">)</span>
+        <span class="n">actions_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_run_clicked</span><span class="p">)</span>
+
+        <span class="n">alayout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">alayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">actions_label</span><span class="p">)</span>
+        <span class="n">alayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actions_combo</span><span class="p">)</span>
+        <span class="n">alayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">actions_button</span><span class="p">)</span>
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">alayout</span><span class="p">)</span>
+
+    <span class="nd">@Slot</span><span class="p">(</span><span class="n">QVariant</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">on_run_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ArgumentsInputDialog</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions_combo</span><span class="o">.</span><span class="n">currentText</span><span class="p">()),</span> <span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DriverTestWidget.update_on_change"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DriverTestWidget.update_on_change">[docs]</a>    <span class="k">def</span> <span class="nf">update_on_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the &#39;update_on_change&#39; flag to new_state in each writable widget</span>
+<span class="sd">        within this widget. If True, the driver will be updated after each change.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">writable_widgets</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">_update_on_change</span> <span class="o">=</span> <span class="n">new_state</span>
+</div>
+<div class="viewcode-block" id="DriverTestWidget.widgets_values_as_dict"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DriverTestWidget.widgets_values_as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">widgets_values_as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a dictionary mapping each writable feat name to the current</span>
+<span class="sd">        value of the widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">widget</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">widget</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">writable_widgets</span><span class="p">}</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lantz_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Driver connected to this widget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span>
+
+    <span class="nd">@lantz_target.setter</span>
+<div class="viewcode-block" id="DriverTestWidget.lantz_target"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DriverTestWidget.lantz_target">[docs]</a>    <span class="k">def</span> <span class="nf">lantz_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span> <span class="o">=</span> <span class="n">driver</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">:</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">lantz_target</span> <span class="o">=</span> <span class="n">driver</span>
+
+</div></div>
+<div class="viewcode-block" id="SetupTestWidget"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.SetupTestWidget">[docs]</a><span class="k">class</span> <span class="nc">SetupTestWidget</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Widget to control multiple drivers.</span>
+
+<span class="sd">    :param parent: parent widget.</span>
+<span class="sd">    :param targets: iterable of driver object to map.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">tab_widget</span> <span class="o">=</span> <span class="n">QTabWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">tab_widget</span><span class="o">.</span><span class="n">setTabsClosable</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
+            <span class="n">widget</span> <span class="o">=</span> <span class="n">DriverTestWidget</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+            <span class="n">tab_widget</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">tab_widget</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="connect_feat"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.connect_feat">[docs]</a><span class="k">def</span> <span class="nf">connect_feat</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">feat_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">feat_key</span><span class="o">=</span><span class="n">MISSING</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Connect a feature from a given driver to a widget. Calling this</span>
+<span class="sd">    function also patches the widget is necessary.</span>
+
+<span class="sd">    If applied two times with the same widget, it will connect to the target</span>
+<span class="sd">    provided in the second call. This behaviour can be useful to change the</span>
+<span class="sd">    connection target without rebuilding the whole UI. Alternative, after</span>
+<span class="sd">    connect has been called the first time, widget will have a property</span>
+<span class="sd">    `lantz_target` that can be used to achieve the same thing.</span>
+
+<span class="sd">    :param widget: widget instance.</span>
+<span class="sd">    :param target: driver instance.</span>
+<span class="sd">    :param feat_name: feature name. If None, connect using widget name.</span>
+<span class="sd">    :param feat_key: For a DictFeat, this defines which key to show.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Connecting {} to {}, {}, {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">feat_name</span><span class="p">,</span> <span class="n">feat_key</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">Driver</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;Connect target must be an instance of lantz.Driver, not {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">feat_name</span><span class="p">:</span>
+        <span class="n">feat_name</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">objectName</span><span class="p">()</span>
+
+    <span class="c">#: Reconnect</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="s">&#39;_feat.name&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">widget</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">feat_name</span><span class="p">:</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">lantz_target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="k">return</span>
+
+    <span class="n">feat</span> <span class="o">=</span>  <span class="n">target</span><span class="o">.</span><span class="n">_lantz_features</span><span class="p">[</span><span class="n">feat_name</span><span class="p">]</span>
+
+    <span class="n">WidgetMixin</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+    <span class="n">widget</span><span class="o">.</span><span class="n">bind_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+    <span class="n">widget</span><span class="o">.</span><span class="n">feat_key</span> <span class="o">=</span> <span class="n">feat_key</span>
+
+    <span class="n">widget</span><span class="o">.</span><span class="n">lantz_target</span> <span class="o">=</span> <span class="n">target</span>
+
+</div>
+<div class="viewcode-block" id="connect_driver"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.connect_driver">[docs]</a><span class="k">def</span> <span class="nf">connect_driver</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;__&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Connect all children widgets to their corresponding lantz feature</span>
+<span class="sd">    matching by name. Non-matching names are ignored.</span>
+
+<span class="sd">    :param parent: parent widget.</span>
+<span class="sd">    :param target: the driver.</span>
+<span class="sd">    :param prefix: prefix to be prepended to the lantz feature (default = &#39;&#39;)</span>
+<span class="sd">    :param sep: separator between prefix, name and suffix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Connecting {} to {}, {}, {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+
+    <span class="n">ChildrenWidgets</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">prefix</span><span class="p">:</span>
+        <span class="n">prefix</span> <span class="o">+=</span> <span class="n">sep</span>
+
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">wid</span> <span class="ow">in</span> <span class="n">parent</span><span class="o">.</span><span class="n">widgets</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">and</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">):]</span>
+        <span class="k">if</span> <span class="n">sep</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">_lantz_features</span><span class="p">:</span>
+            <span class="n">connect_feat</span><span class="p">(</span><span class="n">wid</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="connect_setup"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.connect_setup">[docs]</a><span class="k">def</span> <span class="nf">connect_setup</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;__&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Connect all children widget to their corresponding</span>
+
+<span class="sd">    :param parent: parent widget.</span>
+<span class="sd">    :param targets: iterable of drivers.</span>
+<span class="sd">    :param prefix: prefix to be prepended to the lantz feature name</span>
+<span class="sd">                   if None, the driver name will be used (default)</span>
+<span class="sd">                   if it is a dict, the driver name will be used to obtain</span>
+<span class="sd">                   he prefix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Connecting {} to {}, {}, {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+
+    <span class="n">ChildrenWidgets</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">prefix</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">connect_driver</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="start_test_app"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.start_test_app">[docs]</a><span class="k">def</span> <span class="nf">start_test_app</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Start a single window test application with a form automatically</span>
+<span class="sd">    generated for the driver.</span>
+
+<span class="sd">    :param target: a driver object or a collection of drivers.</span>
+<span class="sd">    :param width: to be used as minimum width of the window.</span>
+<span class="sd">    :param args: arguments to be passed to QApplication.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">Driver</span><span class="p">):</span>
+        <span class="n">main</span> <span class="o">=</span> <span class="n">DriverTestWidget</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">main</span> <span class="o">=</span> <span class="n">SetupTestWidget</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s">&#39;Lantz Driver Test Panel&#39;</span><span class="p">)</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;darwin&#39;</span><span class="p">):</span>
+        <span class="n">main</span><span class="o">.</span><span class="n">raise_</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="ChildrenWidgets"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.ChildrenWidgets">[docs]</a><span class="k">class</span> <span class="nc">ChildrenWidgets</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convenience class to iterate children.</span>
+
+<span class="sd">    :param parent: parent widget.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">findChild</span><span class="p">((</span><span class="n">QWidget</span><span class="p">,</span> <span class="p">),</span> <span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pending</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="p">]</span>
+        <span class="n">qualname</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">objectName</span><span class="p">()}</span>
+        <span class="k">while</span> <span class="n">pending</span><span class="p">:</span>
+            <span class="nb">object</span> <span class="o">=</span> <span class="n">pending</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="nb">object</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">QWidget</span><span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="n">qualname</span><span class="p">[</span><span class="n">child</span><span class="p">]</span> <span class="o">=</span> <span class="n">qualname</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;.&#39;</span> <span class="o">+</span> <span class="n">child</span><span class="o">.</span><span class="n">objectName</span><span class="p">()</span>
+                <span class="n">pending</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">child</span><span class="o">.</span><span class="n">objectName</span><span class="p">(),</span> <span class="n">qualname</span><span class="p">[</span><span class="n">child</span><span class="p">],</span> <span class="n">child</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s">&#39;widgets&#39;</span><span class="p">):</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">widgets</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="request_new_units"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.request_new_units">[docs]</a><span class="k">def</span> <span class="nf">request_new_units</span><span class="p">(</span><span class="n">current_units</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ask for new units using a dialog box and return them.</span>
+
+<span class="sd">    :param current_units: current units or magnitude.</span>
+<span class="sd">    :type current_units: Quantity</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_units</span> <span class="o">=</span> <span class="n">UnitInputDialog</span><span class="o">.</span><span class="n">get_units</span><span class="p">(</span><span class="n">current_units</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_units</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">new_units</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">LookupError</span><span class="p">:</span>
+        <span class="c"># cannot parse units</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+</div>
+<span class="nd">@register_wrapper</span>
+<span class="k">class</span> <span class="nc">MagnitudeMixin</span><span class="p">(</span><span class="n">WidgetMixin</span><span class="p">):</span>
+
+    <span class="n">_WRAPPED</span> <span class="o">=</span> <span class="p">(</span><span class="n">QDoubleSpinBox</span><span class="p">,</span> <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_units</span> <span class="ow">and</span> <span class="n">event</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;u&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">change_units</span><span class="p">(</span><span class="n">request_new_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">bind_feat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">bind_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_units</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">change_units</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_units</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update displayed suffix and stored units.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">new_units</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rescaled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">new_units</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="c"># incompatible units</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;setSuffix&#39;</span><span class="p">):</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">setSuffix</span><span class="p">(</span><span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_units</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;setRange&#39;</span><span class="p">):</span>
+                <span class="n">rng</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">limits</span>
+                <span class="n">conv</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ndx</span><span class="p">:</span> <span class="n">Q_</span><span class="p">(</span><span class="n">rng</span><span class="p">[</span><span class="n">ndx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">units</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">new_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">conv</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="n">conv</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">conv</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="n">conv</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_units</span> <span class="o">=</span> <span class="n">new_units</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">rescaled</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get widget value and scale by units.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_units</span>
+
+    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set widget value scaled by units.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">MISSING</span><span class="p">:</span>
+            <span class="n">font</span> <span class="o">=</span> <span class="n">QFont</span><span class="p">()</span>
+            <span class="n">font</span><span class="o">.</span><span class="n">setItalic</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+
+
+<span class="nd">@register_wrapper</span>
+<span class="k">class</span> <span class="nc">SliderMixin</span><span class="p">(</span><span class="n">MagnitudeMixin</span><span class="p">):</span>
+
+    <span class="n">_WRAPPED</span> <span class="o">=</span> <span class="p">(</span><span class="n">QSlider</span><span class="p">,</span> <span class="n">QDial</span><span class="p">,</span> <span class="n">QProgressBar</span><span class="p">,</span> <span class="n">QScrollBar</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="ow">not</span> <span class="n">value</span><span class="p">)</span>
+
+
+<span class="nd">@register_wrapper</span>
+<span class="k">class</span> <span class="nc">LCDNumberMixin</span><span class="p">(</span><span class="n">MagnitudeMixin</span><span class="p">):</span>
+
+    <span class="n">_WRAPPED</span> <span class="o">=</span> <span class="p">(</span><span class="n">QLCDNumber</span><span class="p">,</span> <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_wrap</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_wrap</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="c">#TODO: Create a real valueChanged Signal.</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">valueChanged</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">overflow</span>
+
+    <span class="k">def</span> <span class="nf">setReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="ow">not</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">MISSING</span><span class="p">:</span>
+            <span class="n">font</span> <span class="o">=</span> <span class="n">QFont</span><span class="p">()</span>
+            <span class="n">font</span><span class="o">.</span><span class="n">setItalic</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+
+<span class="nd">@register_wrapper</span>
+<span class="k">class</span> <span class="nc">QComboBoxMixin</span><span class="p">(</span><span class="n">WidgetMixin</span><span class="p">):</span>
+
+    <span class="n">_WRAPPED</span> <span class="o">=</span> <span class="p">(</span><span class="n">QComboBox</span><span class="p">,</span> <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_wrap</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_wrap</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">valueChanged</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">currentIndexChanged</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">MISSING</span><span class="p">:</span>
+            <span class="n">font</span> <span class="o">=</span> <span class="n">QFont</span><span class="p">()</span>
+            <span class="n">font</span><span class="o">.</span><span class="n">setItalic</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__values</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">setReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="ow">not</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">bind_feat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">bind_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__values</span><span class="p">])</span>
+
+
+<span class="nd">@register_wrapper</span>
+<span class="k">class</span> <span class="nc">QCheckBoxMixin</span><span class="p">(</span><span class="n">WidgetMixin</span><span class="p">):</span>
+
+    <span class="n">_WRAPPED</span> <span class="o">=</span> <span class="p">(</span><span class="n">QCheckBox</span><span class="p">,</span> <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_wrap</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_wrap</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">valueChanged</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">stateChanged</span>
+
+    <span class="k">def</span> <span class="nf">setReadOnly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="ow">not</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">MISSING</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="nd">@register_wrapper</span>
+<span class="k">class</span> <span class="nc">QLineEditMixin</span><span class="p">(</span><span class="n">WidgetMixin</span><span class="p">):</span>
+
+    <span class="n">_WRAPPED</span> <span class="o">=</span> <span class="p">(</span><span class="n">QLineEdit</span><span class="p">,</span> <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_wrap</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_wrap</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">valueChanged</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">textChanged</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">MISSING</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ArgumentsInputDialog</span><span class="p">(</span><span class="n">QDialog</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argspec</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">window_title</span><span class="o">=</span><span class="s">&#39;Function arguments&#39;</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="n">vlayout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QFormLayout</span><span class="p">()</span>
+
+        <span class="n">widgets</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">defaults</span> <span class="o">=</span> <span class="n">argspec</span><span class="o">.</span><span class="n">defaults</span> <span class="k">if</span> <span class="n">argspec</span><span class="o">.</span><span class="n">defaults</span> <span class="k">else</span> <span class="p">()</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">argspec</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">defaults</span><span class="p">))</span> <span class="o">+</span> <span class="n">defaults</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">arg</span><span class="p">,</span> <span class="n">default</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">argspec</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">defaults</span><span class="p">):</span>
+            <span class="n">wid</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">wid</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+            <span class="n">wid</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">default</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="n">arg</span><span class="p">]</span> <span class="o">=</span> <span class="n">default</span>
+
+            <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">wid</span><span class="p">)</span>
+            <span class="n">widgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wid</span><span class="p">)</span>
+            <span class="n">wid</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_widget_change</span><span class="p">(</span><span class="n">wid</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">doc</span> <span class="ow">and</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+                <span class="n">wid</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">doc</span><span class="p">[</span><span class="n">arg</span><span class="p">])</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span> <span class="o">=</span> <span class="n">widgets</span>
+
+        <span class="n">buttonBox</span> <span class="o">=</span> <span class="n">QDialogButtonBox</span><span class="p">()</span>
+        <span class="n">buttonBox</span><span class="o">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">)</span>
+        <span class="n">buttonBox</span><span class="o">.</span><span class="n">setStandardButtons</span><span class="p">(</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+        <span class="n">buttonBox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">buttonBox</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
+
+        <span class="n">vlayout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+
+        <span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Values are decoded from text using as JSON.&#39;</span><span class="p">)</span>
+        <span class="n">vlayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+
+        <span class="n">vlayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">buttonBox</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span> <span class="o">=</span> <span class="n">buttonBox</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="p">{</span><span class="n">wid</span><span class="o">.</span><span class="n">objectName</span><span class="p">():</span> <span class="bp">True</span> <span class="k">for</span> <span class="n">wid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">window_title</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">on_widget_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">objectName</span><span class="p">()</span>
+        <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="bp">None</span>
+                <span class="n">palette</span> <span class="o">=</span> <span class="n">QPalette</span><span class="p">()</span>
+                <span class="n">palette</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">backgroundRole</span><span class="p">(),</span> <span class="n">QColor</span><span class="p">(</span><span class="s">&#39;white&#39;</span><span class="p">))</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">valid</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">palette</span> <span class="o">=</span> <span class="n">QPalette</span><span class="p">()</span>
+                <span class="n">palette</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">backgroundRole</span><span class="p">(),</span> <span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">102</span><span class="p">))</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">valid</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valid</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+        <span class="k">return</span> <span class="n">validate</span>
+
+    <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates and display a UnitInputDialog and return new units.</span>
+
+<span class="sd">        Return None if the user cancelled.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wrapped</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">__wrapped__</span>
+        <span class="n">argspec</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="n">wrapped</span><span class="p">)</span>
+        <span class="n">arguments</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argspec</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">dialog</span> <span class="o">=</span> <span class="n">ArgumentsInputDialog</span><span class="p">(</span><span class="n">argspec</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span>
+                                          <span class="n">window_title</span><span class="o">=</span><span class="n">wrapped</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s">&#39; arguments&#39;</span><span class="p">,</span>
+                                          <span class="n">doc</span><span class="o">=</span><span class="n">_params_doc</span><span class="p">(</span><span class="n">wrapped</span><span class="o">.</span><span class="n">__doc__</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+                <span class="k">return</span> <span class="bp">None</span>
+            <span class="n">arguments</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">arguments</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">arguments</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s">&#39;Lantz&#39;</span><span class="p">,</span>
+                                 <span class="s">&#39;Instrument error while calling {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wrapped</span><span class="o">.</span><span class="n">__name__</span><span class="p">),</span>
+                                 <span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">,</span>
+                                 <span class="n">QMessageBox</span><span class="o">.</span><span class="n">NoButton</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="UnitInputDialog"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.UnitInputDialog">[docs]</a><span class="k">class</span> <span class="nc">UnitInputDialog</span><span class="p">(</span><span class="n">QDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dialog to select new units. Checks compatibility while typing</span>
+<span class="sd">    and does not allow to continue if incompatible.</span>
+
+<span class="sd">    Returns None if cancelled.</span>
+
+<span class="sd">    :param units: current units.</span>
+<span class="sd">    :param parent: parent widget.</span>
+
+<span class="sd">    &gt;&gt;&gt; new_units = UnitInputDialog.get_units(&#39;ms&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">units</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_units</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">units</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">275</span><span class="p">,</span> <span class="mi">172</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s">&#39;Convert units&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">setSizeConstraint</span><span class="p">(</span><span class="n">QLayout</span><span class="o">.</span><span class="n">SetFixedSize</span><span class="p">)</span>
+        <span class="n">align</span> <span class="o">=</span> <span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignTrailing</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignVCenter</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout1</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label1</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label1</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label1</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Convert from:&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label1</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">align</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_units</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_units</span><span class="o">.</span><span class="n">setReadOnly</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source_units</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout2</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label2</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label2</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label2</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;to:&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label2</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">align</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout2</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">destination_units</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout2</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">destination_units</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span> <span class="o">=</span> <span class="n">QDialogButtonBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">setStandardButtons</span><span class="p">(</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">destination_units</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">destination_units</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">destination_units</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">units</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">new_units</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">new_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="k">except</span> <span class="ne">LookupError</span> <span class="ow">or</span> <span class="ne">SyntaxError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Cannot parse units&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;Incompatible units&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&#39;factor {:f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">factor</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="UnitInputDialog.get_units"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.UnitInputDialog.get_units">[docs]</a>    <span class="k">def</span> <span class="nf">get_units</span><span class="p">(</span><span class="n">units</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates and display a UnitInputDialog and return new units.</span>
+
+<span class="sd">        Return None if the user cancelled.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dialog</span> <span class="o">=</span> <span class="n">UnitInputDialog</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">dialog</span><span class="o">.</span><span class="n">destination_units</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">None</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../../../index.html">
+  <img src="../../../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><img src="../../../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../../../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../lantz.html" >lantz</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

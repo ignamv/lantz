@@ -1,0 +1,1508 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.visalib &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Support" href="support.html" />
+    <link rel="next" title="pint" href="pint.html" />
+    <link rel="prev" title="lantz.processors" href="processors.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pint.html" title="pint"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="processors.html" title="lantz.processors"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li>
+          <li><a href="support.html" accesskey="U">Support</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.visalib"></span><div class="section" id="lantz-visalib">
+<h1>lantz.visalib<a class="headerlink" href="#lantz-visalib" title="Permalink to this headline">¶</a></h1>
+<p>Wraps Visa Library in a Python friendly way.</p>
+<p>This wrapper originated while porting pyvisa to Python 3 and therefore is
+heavily influenced by it. There are a few important differences:</p>
+<ul class="simple">
+<li>There is no visa_library singleton object and the library path can
+be specified.</li>
+<li>Similar functions for different data width (In8, In16, etc) have been
+grouped within the same function. The extended versions are also grouped.</li>
+<li>VISA functions dealing with strings have been dropped as can be easily
+replaced by Python functions.</li>
+<li>types, status codes, attributes, events and constants are defined within
+a class (not a module).</li>
+<li>Prefixes in types (<cite>vi</cite>), status codes (<cite>VI_</cite>), attributes (<cite>VI_ATTR</cite>),
+events (<cite>VI_EVENT</cite>) and constants (<cite>VI_</cite>) have been dropped for clarity.
+As this constants are defined within a RichEnum class, prefixed names are
+still usable.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.visalib.Attributes">
+<em class="property">class </em><tt class="descclassname">lantz.visalib.</tt><tt class="descname">Attributes</tt><a class="reference internal" href="../_modules/lantz/visalib.html#Attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.Attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enumeration of VISA Attributes with their corresponding value, VISA TYPE and docstring</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.visalib.Constants">
+<em class="property">class </em><tt class="descclassname">lantz.visalib.</tt><tt class="descname">Constants</tt><a class="reference internal" href="../_modules/lantz/visalib.html#Constants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.Constants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enumeration of VISA Constants with their corresponding value and docstring</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.visalib.Events">
+<em class="property">class </em><tt class="descclassname">lantz.visalib.</tt><tt class="descname">Events</tt><a class="reference internal" href="../_modules/lantz/visalib.html#Events"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.Events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enumeration of VISA Events with their corresponding value and docstring</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.visalib.ResourceInfo">
+<em class="property">class </em><tt class="descclassname">lantz.visalib.</tt><tt class="descname">ResourceInfo</tt><a class="headerlink" href="#lantz.visalib.ResourceInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resource extended information</p>
+<dl class="attribute">
+<dt id="lantz.visalib.ResourceInfo.alias">
+<tt class="descname">alias</tt><a class="headerlink" href="#lantz.visalib.ResourceInfo.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.visalib.ResourceInfo.interface_board_number">
+<tt class="descname">interface_board_number</tt><a class="headerlink" href="#lantz.visalib.ResourceInfo.interface_board_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.visalib.ResourceInfo.interface_type">
+<tt class="descname">interface_type</tt><a class="headerlink" href="#lantz.visalib.ResourceInfo.interface_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.visalib.ResourceInfo.resource_class">
+<tt class="descname">resource_class</tt><a class="headerlink" href="#lantz.visalib.ResourceInfo.resource_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.visalib.ResourceInfo.resource_name">
+<tt class="descname">resource_name</tt><a class="headerlink" href="#lantz.visalib.ResourceInfo.resource_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.visalib.ResourceManager">
+<em class="property">class </em><tt class="descclassname">lantz.visalib.</tt><tt class="descname">ResourceManager</tt><a class="reference internal" href="../_modules/lantz/visalib.html#ResourceManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.ResourceManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>VISA Resource Manager</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>library_path</strong> &#8211; path of the VISA library (if not given, the default for the platform will be used).</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.visalib.ResourceManager.list_resources">
+<tt class="descname">list_resources</tt><big>(</big><em>query='?*::INSTR'</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#ResourceManager.list_resources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.ResourceManager.list_resources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all connected devices matching query.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>query</strong> &#8211; regular expression used to match devices.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.ResourceManager.list_resources_info">
+<tt class="descname">list_resources_info</tt><big>(</big><em>query='?*::INSTR'</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#ResourceManager.list_resources_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.ResourceManager.list_resources_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary mapping resource names to resource extended
+information of all connected devices matching query.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>query</strong> &#8211; regular expression used to match devices.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.ResourceManager.open_resource">
+<tt class="descname">open_resource</tt><big>(</big><em>resource_name</em>, <em>access_mode=0</em>, <em>open_timeout=0</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#ResourceManager.open_resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.ResourceManager.open_resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the specified resources.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>resource_name</strong> &#8211; name or alias of the resource to open.</li>
+<li><strong>access_mode</strong> &#8211; access mode.</li>
+<li><strong>open_timeout</strong> &#8211; time out to open.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.ResourceManager.resource_info">
+<tt class="descname">resource_info</tt><big>(</big><em>resource_name</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#ResourceManager.resource_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.ResourceManager.resource_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the extended information of a particular resource</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.visalib.ResourceManager.REGISTER">
+<tt class="descname">REGISTER</tt><em class="property"> = {}</em><a class="headerlink" href="#lantz.visalib.ResourceManager.REGISTER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds a mapping between library_path and the default manager</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.visalib.RichEnum">
+<em class="property">class </em><tt class="descclassname">lantz.visalib.</tt><tt class="descname">RichEnum</tt><a class="reference internal" href="../_modules/lantz/visalib.html#RichEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.RichEnum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type for rich enumerations.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.visalib.StatusCode">
+<em class="property">class </em><tt class="descclassname">lantz.visalib.</tt><tt class="descname">StatusCode</tt><a class="reference internal" href="../_modules/lantz/visalib.html#StatusCode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.StatusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enumeration of VISA status codes with their corresponding value and docstring.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.visalib.Types">
+<em class="property">class </em><tt class="descclassname">lantz.visalib.</tt><tt class="descname">Types</tt><a class="reference internal" href="../_modules/lantz/visalib.html#Types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.Types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enumeration of VISA types mapped to ctypes.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.visalib.VisaLibrary">
+<em class="property">class </em><tt class="descclassname">lantz.visalib.</tt><tt class="descname">VisaLibrary</tt><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><p>VISA Library wrapper.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>library_path</strong> &#8211; full path of the library. If not given, the default value LIBRARY_PATH it is used.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.assert_interrupt_signal">
+<tt class="descname">assert_interrupt_signal</tt><big>(</big><em>session</em>, <em>mode</em>, <em>status_id</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.assert_interrupt_signal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.assert_interrupt_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asserts the specified interrupt or signal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>mode</strong> &#8211; How to assert the interrupt. (Constants.ASSERT*)</li>
+<li><strong>status_id</strong> &#8211; This is the status value to be presented during an interrupt acknowledge cycle.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.assert_trigger">
+<tt class="descname">assert_trigger</tt><big>(</big><em>session</em>, <em>protocol</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.assert_trigger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.assert_trigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asserts software or hardware trigger.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>protocol</strong> &#8211; Trigger protocol to use during assertion. (Constants.PROT*)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.assert_utility_signal">
+<tt class="descname">assert_utility_signal</tt><big>(</big><em>session</em>, <em>line</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.assert_utility_signal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.assert_utility_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asserts or deasserts the specified utility bus signal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>line</strong> &#8211; specifies the utility bus signal to assert. (Constants.UTIL_ASSERT*)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.buffer_read">
+<tt class="descname">buffer_read</tt><big>(</big><em>session</em>, <em>count</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.buffer_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.buffer_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads data from device or interface through the use of a formatted I/O read buffer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>count</strong> &#8211; Number of bytes to be read.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data read.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">byts</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.buffer_write">
+<tt class="descname">buffer_write</tt><big>(</big><em>session</em>, <em>data</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.buffer_write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.buffer_write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes data to a formatted I/O write buffer synchronously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>data</strong> &#8211; data to be written.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">number of written bytes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.clear">
+<tt class="descname">clear</tt><big>(</big><em>session</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears a device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; Unique logical identifier to a session.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.close">
+<tt class="descname">close</tt><big>(</big><em>session</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the specified session, event, or find list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; Unique logical identifier to a session, event, or find list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.disable_event">
+<tt class="descname">disable_event</tt><big>(</big><em>session</em>, <em>event_type</em>, <em>mechanism</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.disable_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.disable_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disables notification of the specified event type(s) via the specified mechanism(s).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>event_type</strong> &#8211; Logical event identifier.</li>
+<li><strong>mechanism</strong> &#8211; Specifies event handling mechanisms to be disabled.
+(Constants.QUEUE, .Handler, .SUSPEND_HNDLR, .ALL_MECH)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.discard_events">
+<tt class="descname">discard_events</tt><big>(</big><em>session</em>, <em>event_type</em>, <em>mechanism</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.discard_events"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.discard_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discards event occurrences for specified event types and mechanisms in a session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>event_type</strong> &#8211; Logical event identifier.</li>
+<li><strong>mechanism</strong> &#8211; Specifies event handling mechanisms to be disabled.
+(Constants.QUEUE, .Handler, .SUSPEND_HNDLR, .ALL_MECH)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.enable_event">
+<tt class="descname">enable_event</tt><big>(</big><em>session</em>, <em>event_type</em>, <em>mechanism</em>, <em>context=0</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.enable_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.enable_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discards event occurrences for specified event types and mechanisms in a session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>event_type</strong> &#8211; Logical event identifier.</li>
+<li><strong>mechanism</strong> &#8211; Specifies event handling mechanisms to be disabled.
+(Constants.QUEUE, .Handler, .SUSPEND_HNDLR)</li>
+<li><strong>context</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.find_next">
+<tt class="descname">find_next</tt><big>(</big><em>find_list</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.find_next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.find_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the next resource from the list of resources found during a previous call to find_resources().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>find_list</strong> &#8211; Describes a find list. This parameter must be created by find_resources().</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a string identifying the location of a device.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.find_resources">
+<tt class="descname">find_resources</tt><big>(</big><em>session</em>, <em>query</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.find_resources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.find_resources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries a VISA system to locate the resources associated with a specified interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session (unused, just to uniform signatures).</li>
+<li><strong>query</strong> &#8211; A regular expression followed by an optional logical expression. Use &#8216;?*&#8217; for all.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">find_list, return_counter, instrument_description</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.flush">
+<tt class="descname">flush</tt><big>(</big><em>session</em>, <em>mask</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manually flushes the specified buffers associated with formatted I/O operations and/or serial communication.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>mask</strong> &#8211; Specifies the action to be taken with flushing the buffer.
+(Constants.READ*, .WRITE*, .IO*)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.get_attribute">
+<tt class="descname">get_attribute</tt><big>(</big><em>session</em>, <em>attribute</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.get_attribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.get_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the state of an attribute.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session, event, or find list.</li>
+<li><strong>attribute</strong> &#8211; Resource attribute for which the state query is made (see Attributes.*)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The state of the queried attribute for a specified resource.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.gpib_command">
+<tt class="descname">gpib_command</tt><big>(</big><em>session</em>, <em>data</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.gpib_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.gpib_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write GPIB command bytes on the bus.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>data</strong> &#8211; data tor write.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number of written bytes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.gpib_control_atn">
+<tt class="descname">gpib_control_atn</tt><big>(</big><em>session</em>, <em>mode</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.gpib_control_atn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.gpib_control_atn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the state of the ATN line and the local active controller state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>mode</strong> &#8211; Specifies the state of the ATN line and optionally the local active controller state.
+(Constants.GPIB_ATN*)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.gpib_control_ren">
+<tt class="descname">gpib_control_ren</tt><big>(</big><em>session</em>, <em>mode</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.gpib_control_ren"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.gpib_control_ren" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls the state of the GPIB Remote Enable (REN) interface line, and optionally the remote/local
+state of the device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>mode</strong> &#8211; Specifies the state of the REN line and optionally the device remote/local state.
+(Constants.GPIB_REN*)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.gpib_pass_control">
+<tt class="descname">gpib_pass_control</tt><big>(</big><em>session</em>, <em>primary_address</em>, <em>secondary_address</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.gpib_pass_control"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.gpib_pass_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell the GPIB device at the specified address to become controller in charge (CIC).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>primary_address</strong> &#8211; Primary address of the GPIB device to which you want to pass control.</li>
+<li><strong>secondary_address</strong> &#8211; Secondary address of the targeted GPIB device.
+If the targeted device does not have a secondary address,
+this parameter should contain the value Constants.NO_SEC_ADDR.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.gpib_send_ifc">
+<tt class="descname">gpib_send_ifc</tt><big>(</big><em>session</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.gpib_send_ifc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.gpib_send_ifc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pulse the interface clear line (IFC) for at least 100 microseconds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; Unique logical identifier to a session.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.install_handler">
+<tt class="descname">install_handler</tt><big>(</big><em>session</em>, <em>event_type</em>, <em>handler</em>, <em>user_handle=None</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.install_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.install_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Installs handlers for event callbacks.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>event_type</strong> &#8211; Logical event identifier.</li>
+<li><strong>handler</strong> &#8211; Interpreted as a valid reference to a handler to be installed by a client application.</li>
+<li><strong>user_handle</strong> &#8211; A value specified by an application that can be used for identifying handlers
+uniquely for an event type.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.lock">
+<tt class="descname">lock</tt><big>(</big><em>session</em>, <em>lock_type</em>, <em>timeout</em>, <em>requested_key=None</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.lock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Establishes an access mode to the specified resources.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>lock_type</strong> &#8211; Specifies the type of lock requested, either Constants.EXCLUSIVE_LOCK or Constants.SHARED_LOCK.</li>
+<li><strong>timeout</strong> &#8211; Absolute time period (in milliseconds) that a resource waits to get unlocked by the
+locking session before returning an error.</li>
+<li><strong>requested_key</strong> &#8211; This parameter is not used and should be set to VI_NULL when lockType is VI_EXCLUSIVE_LOCK.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">access_key that can then be passed to other sessions to share the lock.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.map_address">
+<tt class="descname">map_address</tt><big>(</big><em>session</em>, <em>map_space</em>, <em>map_base</em>, <em>map_size</em>, <em>access=0</em>, <em>suggested=0</em>, <em>extended=False</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.map_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.map_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps the specified memory space into the process&#8217;s address space.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>map_space</strong> &#8211; Specifies the address space to map. (Constants.*SPACE*)</li>
+<li><strong>map_base</strong> &#8211; Offset (in bytes) of the memory to be mapped.</li>
+<li><strong>map_size</strong> &#8211; Amount of memory to map (in bytes).</li>
+<li><strong>access</strong> &#8211; </li>
+<li><strong>suggested</strong> &#8211; If not Constants.NULL (0), the operating system attempts to map the memory to the address
+specified in suggested. There is no guarantee, however, that the memory will be mapped to
+that address. This operation may map the memory into an address region different from
+suggested.</li>
+<li><strong>extended</strong> &#8211; Use 64 bits offset independent of the platform.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Address in your process space where the memory was mapped.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.map_trigger">
+<tt class="descname">map_trigger</tt><big>(</big><em>session</em>, <em>trigger_source</em>, <em>trigger_destination</em>, <em>mode=0</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.map_trigger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.map_trigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map the specified trigger source line to the specified destination line.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>trigger_source</strong> &#8211; Source line from which to map. (Constants.TRIG*)</li>
+<li><strong>trigger_destination</strong> &#8211; Destination line to which to map. (Constants.TRIG*)</li>
+<li><strong>mode</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.memory_allocation">
+<tt class="descname">memory_allocation</tt><big>(</big><em>session</em>, <em>size</em>, <em>extended=False</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.memory_allocation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.memory_allocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allocates memory from a resource&#8217;s memory region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>size</strong> &#8211; Specifies the size of the allocation.</li>
+<li><strong>extended</strong> &#8211; Use 64 bits offset independent of the platform.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Returns the offset of the allocated memory.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.memory_free">
+<tt class="descname">memory_free</tt><big>(</big><em>session</em>, <em>offset</em>, <em>extended=False</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.memory_free"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.memory_free" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frees memory previously allocated using the memory_allocation() operation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>size</strong> &#8211; Specifies the size of the allocation.</li>
+<li><strong>extended</strong> &#8211; Use 64 bits offset independent of the platform.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.move">
+<tt class="descname">move</tt><big>(</big><em>session</em>, <em>source_space</em>, <em>source_offset</em>, <em>source_width</em>, <em>destination_space</em>, <em>destination_offset</em>, <em>destination_width</em>, <em>length</em>, <em>extended=False</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves a block of data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>source_space</strong> &#8211; Specifies the address space of the source.</li>
+<li><strong>source_offset</strong> &#8211; Offset of the starting address or register from which to read.</li>
+<li><strong>source_width</strong> &#8211; Specifies the data width of the source.</li>
+<li><strong>destination_space</strong> &#8211; Specifies the address space of the destination.</li>
+<li><strong>destination_offset</strong> &#8211; Offset of the starting address or register to which to write.</li>
+<li><strong>destination_width</strong> &#8211; Specifies the data width of the destination.</li>
+<li><strong>length</strong> &#8211; Number of elements to transfer, where the data width of the elements to transfer
+is identical to the source data width.</li>
+<li><strong>extended</strong> &#8211; Use 64 bits offset independent of the platform.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.move_async">
+<tt class="descname">move_async</tt><big>(</big><em>session</em>, <em>source_space</em>, <em>source_offset</em>, <em>source_width</em>, <em>destination_space</em>, <em>destination_offset</em>, <em>destination_width</em>, <em>length</em>, <em>extended=False</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.move_async"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.move_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves a block of data asynchronously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>source_space</strong> &#8211; Specifies the address space of the source.</li>
+<li><strong>source_offset</strong> &#8211; Offset of the starting address or register from which to read.</li>
+<li><strong>source_width</strong> &#8211; Specifies the data width of the source.</li>
+<li><strong>destination_space</strong> &#8211; Specifies the address space of the destination.</li>
+<li><strong>destination_offset</strong> &#8211; Offset of the starting address or register to which to write.</li>
+<li><strong>destination_width</strong> &#8211; Specifies the data width of the destination.</li>
+<li><strong>length</strong> &#8211; Number of elements to transfer, where the data width of the elements to transfer
+is identical to the source data width.</li>
+<li><strong>extended</strong> &#8211; Use 64 bits offset independent of the platform.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Job identifier of this asynchronous move operation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.move_memory_in">
+<tt class="descname">move_memory_in</tt><big>(</big><em>session</em>, <em>space</em>, <em>offset</em>, <em>length</em>, <em>width</em>, <em>extended=False</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.move_memory_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.move_memory_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves a block of data from the specified address space and offset to local memory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>space</strong> &#8211; Specifies the address space. (Constants.*SPACE*)</li>
+<li><strong>offset</strong> &#8211; Offset (in bytes) of the address or register from which to read.</li>
+<li><strong>length</strong> &#8211; Number of elements to transfer, where the data width of the elements to transfer
+is identical to the source data width.</li>
+<li><strong>width</strong> &#8211; Number of bits to read per element.</li>
+<li><strong>extended</strong> &#8211; Use 64 bits offset independent of the platform.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Data read from bus.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Corresponds to viIn* functions of the visa library.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.move_memory_out">
+<tt class="descname">move_memory_out</tt><big>(</big><em>session</em>, <em>space</em>, <em>offset</em>, <em>length</em>, <em>data</em>, <em>width</em>, <em>extended=False</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.move_memory_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.move_memory_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves a block of data from local memory to the specified address space and offset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>space</strong> &#8211; Specifies the address space. (Constants.*SPACE*)</li>
+<li><strong>offset</strong> &#8211; Offset (in bytes) of the address or register from which to read.</li>
+<li><strong>length</strong> &#8211; Number of elements to transfer, where the data width of the elements to transfer
+is identical to the source data width.</li>
+<li><strong>data</strong> &#8211; Data to write to bus.</li>
+<li><strong>width</strong> &#8211; Number of bits to read per element.</li>
+<li><strong>extended</strong> &#8211; Use 64 bits offset independent of the platform.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.open">
+<tt class="descname">open</tt><big>(</big><em>session</em>, <em>resource_name</em>, <em>access_mode=0</em>, <em>open_timeout=0</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a session to the specified resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Resource Manager session (should always be a session returned from open_default_resource_manager()).</li>
+<li><strong>resource_name</strong> &#8211; Unique symbolic name of a resource.</li>
+<li><strong>access_mode</strong> &#8211; Specifies the mode by which the resource is to be accessed. (Constants.NULL or Constants.*LOCK*)</li>
+<li><strong>open_timeout</strong> &#8211; Specifies the maximum time period (in milliseconds) that this operation waits
+before returning an error.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Unique logical identifier reference to a session.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.open_default_resource_manager">
+<tt class="descname">open_default_resource_manager</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.open_default_resource_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.open_default_resource_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns a session to the Default Resource Manager resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Unique logical identifier to a Default Resource Manager session.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.parse_resource">
+<tt class="descname">parse_resource</tt><big>(</big><em>session</em>, <em>resource_name</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.parse_resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.parse_resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a resource string to get the interface information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Resource Manager session (should always be the Default Resource Manager for VISA
+returned from open_default_resource_manager()).</li>
+<li><strong>resource_name</strong> &#8211; Unique symbolic name of a resource.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Resource information with interface type and board number.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">:class:ResourceInfo</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.parse_resource_extended">
+<tt class="descname">parse_resource_extended</tt><big>(</big><em>session</em>, <em>resource_name</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.parse_resource_extended"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.parse_resource_extended" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a resource string to get extended interface information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Resource Manager session (should always be the Default Resource Manager for VISA
+returned from open_default_resource_manager()).</li>
+<li><strong>resource_name</strong> &#8211; Unique symbolic name of a resource.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Resource information.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">:class:ResourceInfo</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.peek">
+<tt class="descname">peek</tt><big>(</big><em>session</em>, <em>address</em>, <em>width</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.peek"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes an 8-bit, 16-bit, 32-bit, or 64-bit value from the specified address.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>address</strong> &#8211; Source address to read the value.</li>
+<li><strong>width</strong> &#8211; Number of bits to read.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Data read from bus.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bytes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.poke">
+<tt class="descname">poke</tt><big>(</big><em>session</em>, <em>address</em>, <em>data</em>, <em>width</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.poke"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.poke" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads an 8-bit, 16-bit, 32-bit, or 64-bit value from the specified address.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>address</strong> &#8211; Source address to read the value.</li>
+<li><strong>data</strong> &#8211; value to be written to the bus.</li>
+<li><strong>width</strong> &#8211; Number of bits to read.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Data read from bus.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bytes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.read">
+<tt class="descname">read</tt><big>(</big><em>session</em>, <em>count</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads data from device or interface synchronously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>count</strong> &#8211; Number of bytes to be read.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">data read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.read_asynchronously">
+<tt class="descname">read_asynchronously</tt><big>(</big><em>session</em>, <em>count</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.read_asynchronously"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.read_asynchronously" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads data from device or interface asynchronously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>count</strong> &#8211; Number of bytes to be read.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(ctypes buffer with result, jobid)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.read_memory">
+<tt class="descname">read_memory</tt><big>(</big><em>session</em>, <em>space</em>, <em>offset</em>, <em>width</em>, <em>extended=False</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.read_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.read_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in an 8-bit, 16-bit, 32-bit, or 64-bit value from the specified memory space and offset.
+:param session: Unique logical identifier to a session.
+:param space: Specifies the address space. (Constants.*SPACE*)
+:param offset: Offset (in bytes) of the address or register from which to read.
+:param width: Number of bits to read.
+:param extended: Use 64 bits offset independent of the platform.
+:return: Data read from memory.</p>
+<p>Corresponds to viIn* functions of the visa library.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.read_stb">
+<tt class="descname">read_stb</tt><big>(</big><em>session</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.read_stb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.read_stb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a status byte of the service request.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; Unique logical identifier to a session.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Service request status byte.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.read_to_file">
+<tt class="descname">read_to_file</tt><big>(</big><em>session</em>, <em>filename</em>, <em>count</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.read_to_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.read_to_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data synchronously, and store the transferred data in a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>filename</strong> &#8211; Name of file to which data will be written.</li>
+<li><strong>count</strong> &#8211; Number of bytes to be read.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number of bytes actually transferred.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.set_attribute">
+<tt class="descname">set_attribute</tt><big>(</big><em>session</em>, <em>attribute</em>, <em>attribute_state</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.set_attribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.set_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the state of an attribute.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>attribute</strong> &#8211; Attribute for which the state is to be modified. (Attributes.*)</li>
+<li><strong>attribute_state</strong> &#8211; The state of the attribute to be set for the specified object.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.set_buffer">
+<tt class="descname">set_buffer</tt><big>(</big><em>session</em>, <em>mask</em>, <em>size</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.set_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.set_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the size for the formatted I/O and/or low-level I/O communication buffer(s).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>mask</strong> &#8211; Specifies the type of buffer. (Constants.READ_BUF, .WRITE_BUF, .IO_IN_BUF, .IO_OUT_BUF)</li>
+<li><strong>size</strong> &#8211; The size to be set for the specified buffer(s).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.status_description">
+<tt class="descname">status_description</tt><big>(</big><em>session</em>, <em>status</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.status_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.status_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a user-readable description of the status code passed to the operation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>status</strong> &#8211; Status code to interpret.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The user-readable string interpretation of the status code passed to the operation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.terminate">
+<tt class="descname">terminate</tt><big>(</big><em>session</em>, <em>degree</em>, <em>job_id</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.terminate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.terminate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Requests a VISA session to terminate normal execution of an operation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>degree</strong> &#8211; Constants.NULL</li>
+<li><strong>job_id</strong> &#8211; Specifies an operation identifier.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.uninstall_handler">
+<tt class="descname">uninstall_handler</tt><big>(</big><em>session</em>, <em>event_type</em>, <em>handler</em>, <em>user_handle=None</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.uninstall_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.uninstall_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uninstalls handlers for events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>event_type</strong> &#8211; Logical event identifier.</li>
+<li><strong>handler</strong> &#8211; Interpreted as a valid reference to a handler to be uninstalled by a client application.</li>
+<li><strong>user_handle</strong> &#8211; A value specified by an application that can be used for identifying handlers
+uniquely in a session for an event.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.unlock">
+<tt class="descname">unlock</tt><big>(</big><em>session</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.unlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.unlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relinquishes a lock for the specified resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; Unique logical identifier to a session.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.unmap_address">
+<tt class="descname">unmap_address</tt><big>(</big><em>session</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.unmap_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.unmap_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unmaps memory space previously mapped by map_address().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; Unique logical identifier to a session.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.unmap_trigger">
+<tt class="descname">unmap_trigger</tt><big>(</big><em>session</em>, <em>trigger_source</em>, <em>trigger_destination</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.unmap_trigger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.unmap_trigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Undo a previous map from the specified trigger source line to the specified destination line.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>trigger_source</strong> &#8211; Source line used in previous map. (Constants.TRIG*)</li>
+<li><strong>trigger_destination</strong> &#8211; Destination line used in previous map. (Constants.TRIG*)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.usb_control_in">
+<tt class="descname">usb_control_in</tt><big>(</big><em>session</em>, <em>request_type_bitmap_field</em>, <em>request_id</em>, <em>request_value</em>, <em>index</em>, <em>length=0</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.usb_control_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.usb_control_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a USB control pipe transfer from the device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>request_type_bitmap_field</strong> &#8211; bmRequestType parameter of the setup stage of a USB control transfer.</li>
+<li><strong>request_id</strong> &#8211; bRequest parameter of the setup stage of a USB control transfer.</li>
+<li><strong>request_value</strong> &#8211; wValue parameter of the setup stage of a USB control transfer.</li>
+<li><strong>index</strong> &#8211; wIndex parameter of the setup stage of a USB control transfer.
+This is usually the index of the interface or endpoint.</li>
+<li><strong>length</strong> &#8211; wLength parameter of the setup stage of a USB control transfer.
+This value also specifies the size of the data buffer to receive the data from the
+optional data stage of the control transfer.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The data buffer that receives the data from the optional data stage of the control transfer.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bytes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.usb_control_out">
+<tt class="descname">usb_control_out</tt><big>(</big><em>session</em>, <em>request_type_bitmap_field</em>, <em>request_id</em>, <em>request_value</em>, <em>index</em>, <em>data=''</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.usb_control_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.usb_control_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a USB control pipe transfer to the device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>request_type_bitmap_field</strong> &#8211; bmRequestType parameter of the setup stage of a USB control transfer.</li>
+<li><strong>request_id</strong> &#8211; bRequest parameter of the setup stage of a USB control transfer.</li>
+<li><strong>request_value</strong> &#8211; wValue parameter of the setup stage of a USB control transfer.</li>
+<li><strong>index</strong> &#8211; wIndex parameter of the setup stage of a USB control transfer.
+This is usually the index of the interface or endpoint.</li>
+<li><strong>data</strong> &#8211; The data buffer that sends the data in the optional data stage of the control transfer.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.vxi_command_query">
+<tt class="descname">vxi_command_query</tt><big>(</big><em>session</em>, <em>mode</em>, <em>command</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.vxi_command_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.vxi_command_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the device a miscellaneous command or query and/or retrieves the response to a previous query.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>mode</strong> &#8211; Specifies whether to issue a command and/or retrieve a response. (Constants.VXI_CMD*, .VXI_RESP*)</li>
+<li><strong>command</strong> &#8211; The miscellaneous command to send.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The response retrieved from the device.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.wait_on_event">
+<tt class="descname">wait_on_event</tt><big>(</big><em>session</em>, <em>in_event_type</em>, <em>timeout</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.wait_on_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.wait_on_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Waits for an occurrence of the specified event for a given session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>in_event_type</strong> &#8211; Logical identifier of the event(s) to wait for.</li>
+<li><strong>timeout</strong> &#8211; Absolute time period in time units that the resource shall wait for a specified event to
+occur before returning the time elapsed error. The time unit is in milliseconds.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Logical identifier of the event actually received, A handle specifying the unique occurrence of an event.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.write">
+<tt class="descname">write</tt><big>(</big><em>session</em>, <em>data</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes data to device or interface synchronously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>data</strong> &#8211; data to be written.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number of bytes actually transferred.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.write_asynchronously">
+<tt class="descname">write_asynchronously</tt><big>(</big><em>session</em>, <em>buffer</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.write_asynchronously"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.write_asynchronously" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes data to device or interface asynchronously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>data</strong> &#8211; data to be written.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Job ID of this asynchronous write operation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.write_from_file">
+<tt class="descname">write_from_file</tt><big>(</big><em>session</em>, <em>filename</em>, <em>count</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.write_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.write_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take data from a file and write it out synchronously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>session</strong> &#8211; Unique logical identifier to a session.</li>
+<li><strong>filename</strong> &#8211; Name of file from which data will be read.</li>
+<li><strong>count</strong> &#8211; Number of bytes to be written.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number of bytes actually transferred.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visalib.VisaLibrary.write_memory">
+<tt class="descname">write_memory</tt><big>(</big><em>session</em>, <em>space</em>, <em>offset</em>, <em>data</em>, <em>width</em>, <em>extended=False</em><big>)</big><a class="reference internal" href="../_modules/lantz/visalib.html#VisaLibrary.write_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visalib.VisaLibrary.write_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in an 8-bit, 16-bit, 32-bit, or 64-bit value from the specified memory space and offset.
+:param session: Unique logical identifier to a session.
+:param space: Specifies the address space. (Constants.*SPACE*)
+:param offset: Offset (in bytes) of the address or register from which to read.
+:param data: Data to write to bus.
+:param width: Number of bits to read.
+:param extended: Use 64 bits offset independent of the platform.</p>
+<p>Corresponds to viOut* functions of the visa library.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.visalib.VisaLibrary.REGISTER">
+<tt class="descname">REGISTER</tt><em class="property"> = {}</em><a class="headerlink" href="#lantz.visalib.VisaLibrary.REGISTER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds a mapping between library_path and VisaLibrary objects</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="data">
+<dt id="lantz.visalib.LIBRARY_PATH">
+<tt class="descclassname">lantz.visalib.</tt><tt class="descname">LIBRARY_PATH</tt><em class="property"> = '/Library/Frameworks/visa.framework/visa'</em><a class="headerlink" href="#lantz.visalib.LIBRARY_PATH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default library path, used when none is provided to VisaLibrary.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="processors.html"
+                        title="previous chapter">lantz.processors</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pint.html"
+                        title="next chapter">pint</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/visalib.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pint.html" title="pint"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="processors.html" title="lantz.processors"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li>
+          <li><a href="support.html" >Support</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

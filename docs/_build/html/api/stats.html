@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.stats &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Support" href="support.html" />
+    <link rel="next" title="lantz.processors" href="processors.html" />
+    <link rel="prev" title="Support" href="support.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="processors.html" title="lantz.processors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="support.html" title="Support"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li>
+          <li><a href="support.html" accesskey="U">Support</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.stats"></span><div class="section" id="lantz-stats">
+<h1>lantz.stats<a class="headerlink" href="#lantz-stats" title="Permalink to this headline">¶</a></h1>
+<p>Implements an statistical accumulator</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.stats.RunningState">
+<em class="property">class </em><tt class="descclassname">lantz.stats.</tt><tt class="descname">RunningState</tt><big>(</big><em>value=None</em><big>)</big><a class="reference internal" href="../_modules/lantz/stats.html#RunningState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.stats.RunningState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accumulator for events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> &#8211; first value to add.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.stats.RunningState.add">
+<tt class="descname">add</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../_modules/lantz/stats.html#RunningState.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.stats.RunningState.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add to the accumulator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> &#8211; value to be added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.stats.RunningStats">
+<em class="property">class </em><tt class="descclassname">lantz.stats.</tt><tt class="descname">RunningStats</tt><a class="reference internal" href="../_modules/lantz/stats.html#RunningStats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.stats.RunningStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accumulator for categorized event statistics.</p>
+<dl class="method">
+<dt id="lantz.stats.RunningStats.add">
+<tt class="descname">add</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="reference internal" href="../_modules/lantz/stats.html#RunningStats.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.stats.RunningStats.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an event to a given accumulator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> &#8211; category to which the event should be added.</li>
+<li><strong>value</strong> &#8211; value of the event.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.stats.RunningStats.stats">
+<tt class="descname">stats</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="../_modules/lantz/stats.html#RunningStats.stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.stats.RunningStats.stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the statistics for the current accumulator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Stats.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.stats.Stats">
+<em class="property">class </em><tt class="descclassname">lantz.stats.</tt><tt class="descname">Stats</tt><a class="headerlink" href="#lantz.stats.Stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data structure</p>
+<dl class="attribute">
+<dt id="lantz.stats.Stats.count">
+<tt class="descname">count</tt><a class="headerlink" href="#lantz.stats.Stats.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.stats.Stats.last">
+<tt class="descname">last</tt><a class="headerlink" href="#lantz.stats.Stats.last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.stats.Stats.max">
+<tt class="descname">max</tt><a class="headerlink" href="#lantz.stats.Stats.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 5</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.stats.Stats.mean">
+<tt class="descname">mean</tt><a class="headerlink" href="#lantz.stats.Stats.mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.stats.Stats.min">
+<tt class="descname">min</tt><a class="headerlink" href="#lantz.stats.Stats.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.stats.Stats.std">
+<tt class="descname">std</tt><a class="headerlink" href="#lantz.stats.Stats.std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.stats.stats">
+<tt class="descclassname">lantz.stats.</tt><tt class="descname">stats</tt><big>(</big><em>state</em><big>)</big><a class="reference internal" href="../_modules/lantz/stats.html#stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.stats.stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the statistics for given state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>RunningState</em>) &#8211; state</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">statistics</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Stats named tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="support.html"
+                        title="previous chapter">Support</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="processors.html"
+                        title="next chapter">lantz.processors</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/stats.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="processors.html" title="lantz.processors"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="support.html" title="Support"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li>
+          <li><a href="support.html" >Support</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

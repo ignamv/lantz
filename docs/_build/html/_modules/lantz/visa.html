@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.visa &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="lantz" href="../lantz.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><img src="../../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../lantz.html" accesskey="U">lantz</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for lantz.visa</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    lantz.visa</span>
+<span class="sd">    ~~~~~~~~~~</span>
+
+<span class="sd">    Implements base classes for drivers that communicate with instruments using visalib.</span>
+
+<span class="sd">    :copyright: 2012 by Lantz Authors, see AUTHORS for more details.</span>
+<span class="sd">    :license: BSD, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Driver</span>
+<span class="kn">from</span> <span class="nn">.driver</span> <span class="kn">import</span> <span class="n">TextualMixin</span>
+<span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">LantzTimeoutError</span>
+
+<span class="kn">from</span> <span class="nn">.visalib</span> <span class="kn">import</span> <span class="n">Constants</span><span class="p">,</span> <span class="n">ResourceManager</span>
+
+
+<span class="k">class</span> <span class="nc">LantzVisaTimeoutError</span><span class="p">(</span><span class="n">LantzTimeoutError</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">BYTESIZE</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+            <span class="mi">7</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span>
+
+<span class="n">PARITY</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;None&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_NONE</span><span class="p">,</span> <span class="s">&#39;Even&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_EVEN</span><span class="p">,</span>
+          <span class="s">&#39;Odd&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_ODD</span><span class="p">,</span> <span class="s">&#39;Mark&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_MARK</span><span class="p">,</span>
+          <span class="s">&#39;Space&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_SPACE</span><span class="p">}</span>
+
+<span class="n">STOPBITS</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_STOP_ONE</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_STOP_ONE5</span><span class="p">,</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_STOP_TWO</span><span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">VisaDriver</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">library_path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;library_path&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">ResourceManager</span><span class="p">(</span><span class="n">library_path</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">resource_info</span><span class="p">(</span><span class="n">resource_name</span><span class="p">)</span><span class="o">.</span><span class="n">resource_name</span>
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;GPIB&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">GPIBVisaDriver</span><span class="p">(</span><span class="n">resource_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;ASRL&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">SerialVisaDriver</span><span class="p">(</span><span class="n">resource_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;TCPIP&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">TCPVisaDriver</span><span class="p">(</span><span class="n">resource_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;USB&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">USBVisaDriver</span><span class="p">(</span><span class="n">resource_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Unknown resource type: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="MessageVisaDriver"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver">[docs]</a><span class="k">class</span> <span class="nc">MessageVisaDriver</span><span class="p">(</span><span class="n">TextualMixin</span><span class="p">,</span> <span class="n">Driver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for drivers that communicate with instruments</span>
+<span class="sd">    via serial or parallel port using pyserial</span>
+
+<span class="sd">    :param resource_name: name or alias of the resource to open.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">RECV_TERMINATION</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+    <span class="n">SEND_TERMINATION</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+    <span class="n">ENCODING</span> <span class="o">=</span> <span class="s">&#39;ascii&#39;</span>
+
+    <span class="n">RECV_CHUNK</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="n">library_path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;library_path&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span> <span class="o">=</span> <span class="n">ResourceManager</span><span class="p">(</span><span class="n">library_path</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">visa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">visa</span>
+
+        <span class="c">#bytesize = BYTESIZE[bytesize]</span>
+        <span class="c">#parity = PARITY[parity]</span>
+        <span class="c">#stopbits = STOPBITS[stopbits]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span> <span class="o">=</span> <span class="n">resource_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Created Instrument {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">))</span>
+
+<div class="viewcode-block" id="MessageVisaDriver.raw_send"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver.raw_send">[docs]</a>    <span class="k">def</span> <span class="nf">raw_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Send raw bytes to the instrument.</span>
+
+<span class="sd">        :param data: bytes to be sent to the instrument</span>
+<span class="sd">        :param data: bytes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">visa</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="MessageVisaDriver.raw_recv"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver.raw_recv">[docs]</a>    <span class="k">def</span> <span class="nf">raw_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Receive raw bytes to the instrument.</span>
+
+<span class="sd">        :param size: number of bytes to receive</span>
+<span class="sd">        :return: received bytes</span>
+<span class="sd">        :return type: bytes</span>
+
+<span class="sd">        If a timeout is set, it may return less bytes than requested.</span>
+<span class="sd">        If size == -1, then the number of available bytes will be read.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span> <span class="c">###</span>
+        <span class="k">if</span> <span class="n">size</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">inWaiting</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c">#self.log_debug(&#39;waiting {}&#39;.format(size))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visa</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        <span class="c">#self.log_debug(data)</span>
+        <span class="k">return</span> <span class="n">data</span>
+</div>
+<div class="viewcode-block" id="MessageVisaDriver.initialize"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Open port</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Opening {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">)</span> <span class="c">#, self.access_mode, self.open_timeout</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;The session for {} is {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;{} is already open&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="MessageVisaDriver.finalize"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver.finalize">[docs]</a>    <span class="k">def</span> <span class="nf">finalize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close port</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Closing port {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visa</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+    <span class="k">def</span> <span class="nf">is_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+
+</div>
+<span class="k">class</span> <span class="nc">SerialVisaDriver</span><span class="p">(</span><span class="n">MessageVisaDriver</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">GPIBVisaDriver</span><span class="p">(</span><span class="n">MessageVisaDriver</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">TCPVisaDriver</span><span class="p">(</span><span class="n">MessageVisaDriver</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">USBVisaDriver</span><span class="p">(</span><span class="n">MessageVisaDriver</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../../index.html">
+  <img src="../../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><img src="../../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../lantz.html" >lantz</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.drivers.examples &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Drivers" href="index.html" />
+    <link rel="next" title="lantz.drivers.kentech" href="lantz.drivers.kentech.html" />
+    <link rel="prev" title="lantz.drivers.coherent" href="lantz.drivers.coherent.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.kentech.html" title="lantz.drivers.kentech"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.coherent.html" title="lantz.drivers.coherent"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Drivers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.drivers.examples"></span><div class="section" id="lantz-drivers-examples">
+<h1>lantz.drivers.examples<a class="headerlink" href="#lantz-drivers-examples" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">company:</th><td class="field-body">Lantz Examples.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">Example drivers for simulated instruments.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">website:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.drivers.examples.LantzSignalGenerator">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.examples.</tt><tt class="descname">LantzSignalGenerator</tt><big>(</big><em>host='localhost'</em>, <em>port=9997</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/interfaces.html#lantz.network.TCPDriver" title="lantz.network.TCPDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.network.TCPDriver</span></tt></a></p>
+<p>Lantz Signal Generator</p>
+<dl class="method">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.calibrate_async">
+<tt class="descname">calibrate_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.calibrate_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Calibrate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.query">
+<tt class="descname">query</tt><big>(</big><em>command</em>, <em>send_args</em>, <em>recv_args</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.self_test_async">
+<tt class="descname">self_test_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.self_test_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Reset to .</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.ENCODING">
+<tt class="descname">ENCODING</tt><em class="property"> = 'ascii'</em><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.ENCODING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.RECV_TERMINATION">
+<tt class="descname">RECV_TERMINATION</tt><em class="property"> = '\n'</em><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.RECV_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.SEND_TERMINATION">
+<tt class="descname">SEND_TERMINATION</tt><em class="property"> = '\n'</em><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.SEND_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.amplitude">
+<tt class="descname">amplitude</tt><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.amplitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Amplitude.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">V</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(10,)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.calibrate">
+<tt class="descname">calibrate</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a65bd0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.calibrate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.din">
+<tt class="descname">din</tt><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.din" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keys :</th><td class="field-body">[1, 2, 3, 4, 5, 6, 7, 8]</td>
+</tr>
+</tbody>
+</table>
+<p>Digital input state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;0&#8217;, True: &#8216;1&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.dout">
+<tt class="descname">dout</tt><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.dout" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keys :</th><td class="field-body">[1, 2, 3, 4, 5, 6, 7, 8]</td>
+</tr>
+</tbody>
+</table>
+<p>Digital output state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;0&#8217;, True: &#8216;1&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.frequency">
+<tt class="descname">frequency</tt><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">Hz</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(1, 100000.0)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.idn">
+<tt class="descname">idn</tt><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.idn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.offset">
+<tt class="descname">offset</tt><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Offset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">V</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(-5, 5, 0.01)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.output_enabled">
+<tt class="descname">output_enabled</tt><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.output_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analog output enabled.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.self_test">
+<tt class="descname">self_test</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a65bf0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.self_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.examples.LantzSignalGenerator.waveform">
+<tt class="descname">waveform</tt><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.waveform" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{&#8216;ramp&#8217;: &#8216;3&#8217;, &#8216;sine&#8217;: &#8216;0&#8217;, &#8216;square&#8217;: &#8216;1&#8217;, &#8216;triangular&#8217;: &#8216;2&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lantz.drivers.coherent.html"
+                        title="previous chapter">lantz.drivers.coherent</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lantz.drivers.kentech.html"
+                        title="next chapter">lantz.drivers.kentech</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/drivers/lantz.drivers.examples.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.kentech.html" title="lantz.drivers.kentech"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.coherent.html" title="lantz.drivers.coherent"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Drivers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

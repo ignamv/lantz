@@ -1,0 +1,264 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.drivers.sutter &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Drivers" href="index.html" />
+    <link rel="next" title="lantz.drivers.tektronix" href="lantz.drivers.tektronix.html" />
+    <link rel="prev" title="lantz.drivers.pco" href="lantz.drivers.pco.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.tektronix.html" title="lantz.drivers.tektronix"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.pco.html" title="lantz.drivers.pco"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Drivers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.drivers.sutter"></span><div class="section" id="lantz-drivers-sutter">
+<h1>lantz.drivers.sutter<a class="headerlink" href="#lantz-drivers-sutter" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">company:</th><td class="field-body">Sutter Instrument.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">Biomedical and scientific instrumentation.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">website:</th><td class="field-body"><a class="reference external" href="http://www.sutter.com/">http://www.sutter.com/</a></td>
+</tr>
+</tbody>
+</table>
+<p>&#8212;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.drivers.sutter.Lambda103">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.sutter.</tt><tt class="descname">Lambda103</tt><big>(</big><em>port=11</em>, <em>baudrate=9600</em>, <em>timeout=1</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.sutter.Lambda103" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/interfaces.html#lantz.serial.SerialDriver" title="lantz.serial.SerialDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.serial.SerialDriver</span></tt></a></p>
+<p>High performance, microprocessor-controlled multi-filter wheel system
+for imaging applications requiring up to 3 filter wheels.</p>
+<dl class="method">
+<dt id="lantz.drivers.sutter.Lambda103.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flush.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.sutter.Lambda103.motorsON_async">
+<tt class="descname">motorsON_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.motorsON_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Power on all motors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.sutter.Lambda103.reset_async">
+<tt class="descname">reset_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.reset_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Reset the controller.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.sutter.Lambda103.status_async">
+<tt class="descname">status_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.status_async" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.sutter.Lambda103.RECV_TERMINATION">
+<tt class="descname">RECV_TERMINATION</tt><em class="property"> = ''</em><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.RECV_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.sutter.Lambda103.SEND_TERMINATION">
+<tt class="descname">SEND_TERMINATION</tt><em class="property"> = ''</em><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.SEND_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.sutter.Lambda103.motorsON">
+<tt class="descname">motorsON</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a8bf30&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.motorsON" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.sutter.Lambda103.open_A">
+<tt class="descname">open_A</tt><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.open_A" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open shutter A.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;¬&#8217;, True: &#8216;ª&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.sutter.Lambda103.position">
+<tt class="descname">position</tt><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.position" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keys :</th><td class="field-body">{&#8216;A&#8217;: 0, &#8216;B&#8217;: 1}</td>
+</tr>
+</tbody>
+</table>
+<p>Set filter wheel position and speed.</p>
+<blockquote>
+<div>w = 0 -&gt; Filter wheels A and C
+w = 1 -&gt; Fliter wheel B</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.sutter.Lambda103.remote">
+<tt class="descname">remote</tt><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.remote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set Local-Mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;ï&#8217;, True: &#8216;î&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.sutter.Lambda103.reset">
+<tt class="descname">reset</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a8bfb0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.sutter.Lambda103.status">
+<tt class="descname">status</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a8bf70&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.sutter.Lambda103.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lantz.drivers.pco.html"
+                        title="previous chapter">lantz.drivers.pco</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lantz.drivers.tektronix.html"
+                        title="next chapter">lantz.drivers.tektronix</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/drivers/lantz.drivers.sutter.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.tektronix.html" title="lantz.drivers.tektronix"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.pco.html" title="lantz.drivers.pco"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Drivers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

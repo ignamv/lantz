@@ -1,0 +1,502 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.processors &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="lantz" href="../lantz.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><img src="../../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../lantz.html" accesskey="U">lantz</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for lantz.processors</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    lantz.processors</span>
+<span class="sd">    ~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">    :copyright: 2012 by Lantz Authors, see AUTHORS for more details.</span>
+<span class="sd">    :license: BSD, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Q_</span>
+<span class="kn">from</span> <span class="nn">.stringparser</span> <span class="kn">import</span> <span class="n">Parser</span>
+
+<span class="n">_LOG</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;lantz&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">DimensionalityWarning</span><span class="p">(</span><span class="ne">Warning</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">_do_nothing</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">_getitem</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a[b] or if not found a[type(b)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="n">b</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">)]</span>
+
+<span class="n">getitem</span> <span class="o">=</span> <span class="n">_getitem</span>
+
+<div class="viewcode-block" id="convert_to"><a class="viewcode-back" href="../../api/processors.html#lantz.processors.convert_to">[docs]</a><span class="k">def</span> <span class="nf">convert_to</span><span class="p">(</span><span class="n">units</span><span class="p">,</span> <span class="n">on_dimensionless</span><span class="o">=</span><span class="s">&#39;warn&#39;</span><span class="p">,</span> <span class="n">on_incompatible</span><span class="o">=</span><span class="s">&#39;raise&#39;</span><span class="p">,</span>
+               <span class="n">return_float</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a function that convert a Quantity to to another units.</span>
+
+<span class="sd">    :param units: string or Quantity specifying the target units</span>
+<span class="sd">    :param on_dimensionless: how to proceed when a dimensionless number</span>
+<span class="sd">                             number is given.</span>
+<span class="sd">                             &#39;raise&#39; to raise an exception,</span>
+<span class="sd">                             &#39;warn&#39; to log a warning and proceed,</span>
+<span class="sd">                             &#39;ignore&#39; to silently proceed</span>
+<span class="sd">    :param on_incompatible: how to proceed when source and target units are</span>
+<span class="sd">                            incompatible. Same options as `on_dimensionless`</span>
+
+<span class="sd">    :raises: :class:`ValueError` if the incoming value cannot be</span>
+<span class="sd">             properly converted</span>
+
+<span class="sd">        &gt;&gt;&gt; convert_to(&#39;mV&#39;)(Q_(1, &#39;V&#39;))</span>
+<span class="sd">        &lt;Quantity(1000.0, &#39;millivolt&#39;)&gt;</span>
+<span class="sd">        &gt;&gt;&gt; convert_to(&#39;mV&#39;, return_float=True)(Q_(1, &#39;V&#39;))</span>
+<span class="sd">        1000.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">on_dimensionless</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;ignore&#39;</span><span class="p">,</span> <span class="s">&#39;warn&#39;</span><span class="p">,</span> <span class="s">&#39;raise&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;{} is not a valid value for &#39;on_dimensionless&#39;. &quot;</span>
+                         <span class="s">&quot;It should be either &#39;ignore&#39;, &#39;warn&#39; or &#39;raise&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">on_dimensionless</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">on_incompatible</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;ignore&#39;</span><span class="p">,</span> <span class="s">&#39;warn&#39;</span><span class="p">,</span> <span class="s">&#39;raise&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;{} is not a valid value for &#39;on_incompatible&#39;. &quot;</span>
+                         <span class="s">&quot;It should be either &#39;ignore&#39;, &#39;warn&#39; or &#39;raise&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">on_dimensionless</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">units</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">units</span><span class="p">,</span> <span class="n">Q_</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;{} is not a valid value for &#39;units&#39;. &quot;</span>
+                         <span class="s">&quot;It should be either str or Quantity&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_float</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">_inner</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Q_</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+                <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">on_incompatible</span> <span class="o">==</span> <span class="s">&#39;raise&#39;</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">on_incompatible</span> <span class="o">==</span> <span class="s">&#39;warn&#39;</span><span class="p">:</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;Unable to convert {} to {}. Ignoring source units.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+                        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">DimensionalityWarning</span><span class="p">)</span>
+                        <span class="n">_LOG</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+                <span class="c"># on_incompatible == &#39;ignore&#39;</span>
+                <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">on_dimensionless</span> <span class="o">==</span> <span class="s">&#39;raise&#39;</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Unable to convert {} to {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">))</span>
+                    <span class="k">elif</span> <span class="n">on_dimensionless</span> <span class="o">==</span> <span class="s">&#39;warn&#39;</span><span class="p">:</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;Assuming units `{1.units}` for {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+                        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">DimensionalityWarning</span><span class="p">)</span>
+                        <span class="n">_LOG</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+                <span class="c"># on_incompatible == &#39;ignore&#39;</span>
+                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_inner</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">_inner</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Q_</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">on_incompatible</span> <span class="o">==</span> <span class="s">&#39;raise&#39;</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">on_incompatible</span> <span class="o">==</span> <span class="s">&#39;warn&#39;</span><span class="p">:</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;Assuming units `{1.units}` for {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+                        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">DimensionalityWarning</span><span class="p">)</span>
+                        <span class="n">_LOG</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+                <span class="c"># on_incompatible == &#39;ignore&#39;</span>
+                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span> <span class="o">*</span> <span class="n">units</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">on_dimensionless</span> <span class="o">==</span> <span class="s">&#39;raise&#39;</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Unable to convert {} to {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">))</span>
+                    <span class="k">elif</span> <span class="n">on_dimensionless</span> <span class="o">==</span> <span class="s">&#39;warn&#39;</span><span class="p">:</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;Assuming units `{1.units}` for {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+                        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">DimensionalityWarning</span><span class="p">)</span>
+                        <span class="n">_LOG</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+                <span class="c"># on_incompatible == &#39;ignore&#39;</span>
+                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">*</span> <span class="n">units</span>
+        <span class="k">return</span> <span class="n">_inner</span>
+
+</div>
+<div class="viewcode-block" id="Processor"><a class="viewcode-back" href="../../api/processors.html#lantz.processors.Processor">[docs]</a><span class="k">class</span> <span class="nc">Processor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor to convert the function parameters.</span>
+
+<span class="sd">    A `callable` argument will be used to convert the corresponding</span>
+<span class="sd">    function argument.</span>
+
+<span class="sd">    For example, here `x` will be converted to float, before entering</span>
+<span class="sd">    the function body::</span>
+
+<span class="sd">        &gt;&gt;&gt; conv = Processor(float)</span>
+<span class="sd">        &gt;&gt;&gt; conv</span>
+<span class="sd">        &lt;class &#39;float&#39;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; conv(&#39;10&#39;)</span>
+<span class="sd">        10.0</span>
+
+<span class="sd">    The processor supports multiple argument conversion in a tuple::</span>
+
+<span class="sd">        &gt;&gt;&gt; conv = Processor((float, str))</span>
+<span class="sd">        &gt;&gt;&gt; type(conv)</span>
+<span class="sd">        &lt;class &#39;lantz.processors.Processor&#39;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; conv((&#39;10&#39;, 10))</span>
+<span class="sd">        (10.0, &#39;10&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">processors</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">processors</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">processors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">inst</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+                <span class="n">inst</span><span class="o">.</span><span class="n">processors</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">_to_callable</span><span class="p">(</span><span class="n">processor</span><span class="p">)</span>
+                                        <span class="k">for</span> <span class="n">processor</span> <span class="ow">in</span> <span class="n">processors</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">inst</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_to_callable</span><span class="p">(</span><span class="n">processors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_to_callable</span><span class="p">(</span><span class="n">processors</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">processor</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                     <span class="k">for</span> <span class="n">processor</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processors</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_to_callable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_do_nothing</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">to_callable</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">to_callable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;Preprocessor argument must callable, not {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processors</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+</div>
+<div class="viewcode-block" id="FromQuantityProcessor"><a class="viewcode-back" href="../../api/processors.html#lantz.processors.FromQuantityProcessor">[docs]</a><span class="k">class</span> <span class="nc">FromQuantityProcessor</span><span class="p">(</span><span class="n">Processor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor to convert the units the function arguments.</span>
+
+<span class="sd">    The syntax is equal to `Processor` except that strings are interpreted</span>
+<span class="sd">    as units.</span>
+
+<span class="sd">        &gt;&gt;&gt; conv = FromQuantityProcessor(&#39;ms&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; conv(Q_(1, &#39;s&#39;))</span>
+<span class="sd">        1000.0</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">to_callable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Q_</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">convert_to</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">return_float</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;FromQuantityProcessor argument must be a string &#39;</span>
+                        <span class="s">&#39; or a callable, not {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="ToQuantityProcessor"><a class="viewcode-back" href="../../api/processors.html#lantz.processors.ToQuantityProcessor">[docs]</a><span class="k">class</span> <span class="nc">ToQuantityProcessor</span><span class="p">(</span><span class="n">Processor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decorator to convert the units the function arguments.</span>
+
+<span class="sd">    The syntax is equal to `Processor` except that strings are interpreted</span>
+<span class="sd">    as units.</span>
+
+<span class="sd">        &gt;&gt;&gt; conv = ToQuantityProcessor(&#39;ms&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; conv(Q_(1, &#39;s&#39;))</span>
+<span class="sd">        &lt;Quantity(1000.0, &#39;millisecond&#39;)&gt;</span>
+<span class="sd">        &gt;&gt;&gt; conv(1)</span>
+<span class="sd">        &lt;Quantity(1.0, &#39;millisecond&#39;)&gt;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">to_callable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Q_</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">convert_to</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">on_dimensionless</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;ToQuantityProcessor argument must be a string &#39;</span>
+                        <span class="s">&#39; or a callable, not {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="ParseProcessor"><a class="viewcode-back" href="../../api/processors.html#lantz.processors.ParseProcessor">[docs]</a><span class="k">class</span> <span class="nc">ParseProcessor</span><span class="p">(</span><span class="n">Processor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor to convert/parse the function parameters.</span>
+
+<span class="sd">    The syntax is equal to `Processor` except that strings are interpreted</span>
+<span class="sd">    as a :class:Parser expression.</span>
+
+<span class="sd">        &gt;&gt;&gt; conv = ParseProcessor(&#39;spam {:s} eggs&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; conv(&#39;spam ham eggs&#39;)</span>
+<span class="sd">        &#39;ham&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; conv = ParseProcessor((&#39;hi {:d}&#39;, &#39;bye {:s}&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; conv((&#39;hi 42&#39;, &#39;bye Brian&#39;))</span>
+<span class="sd">        (42, &#39;Brian&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">to_callable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;parse_params argument must be a string or a callable, &#39;</span>
+                        <span class="s">&#39;not {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="MapProcessor"><a class="viewcode-back" href="../../api/processors.html#lantz.processors.MapProcessor">[docs]</a><span class="k">class</span> <span class="nc">MapProcessor</span><span class="p">(</span><span class="n">Processor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor to map the function parameter values.</span>
+
+<span class="sd">    The syntax is equal to `Processor` except that a dict is used as</span>
+<span class="sd">    mapping table.</span>
+
+<span class="sd">    Examples::</span>
+
+<span class="sd">        &gt;&gt;&gt; conv = MapProcessor({True: 42})</span>
+<span class="sd">        &gt;&gt;&gt; conv(True)</span>
+<span class="sd">        42</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">to_callable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">getitem</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">check_membership</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;MapProcessor argument must be a dict or a callable, &#39;</span>
+                        <span class="s">&#39;not {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="ReverseMapProcessor"><a class="viewcode-back" href="../../api/processors.html#lantz.processors.ReverseMapProcessor">[docs]</a><span class="k">class</span> <span class="nc">ReverseMapProcessor</span><span class="p">(</span><span class="n">Processor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor to map the function parameter values.</span>
+
+<span class="sd">    The syntax is equal to `Processor` except that a dict is used as</span>
+<span class="sd">    mapping table.</span>
+
+<span class="sd">    Examples::</span>
+
+<span class="sd">        &gt;&gt;&gt; conv = ReverseMapProcessor({True: 42})</span>
+<span class="sd">        &gt;&gt;&gt; conv(42)</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">#: Shared cache of reversed dictionaries indexed by the id()</span>
+    <span class="n">__reversed_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">to_callable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__reversed_cache</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span>
+                                                  <span class="p">{</span><span class="n">value</span><span class="p">:</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span>
+                                                   <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+            <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">getitem</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">check_membership</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;ReverseMapProcessor argument must be a dict or a callable, &#39;</span>
+                        <span class="s">&#39;not {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="RangeProcessor"><a class="viewcode-back" href="../../api/processors.html#lantz.processors.RangeProcessor">[docs]</a><span class="k">class</span> <span class="nc">RangeProcessor</span><span class="p">(</span><span class="n">Processor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor to convert the units the function arguments.</span>
+
+<span class="sd">    The syntax is equal to `Processor` except that iterables are interpreted</span>
+<span class="sd">    as (low, high, step) specified ranges. Step is optional and max is included</span>
+
+<span class="sd">        &gt;&gt;&gt; conv = RangeProcessor(((1, 2, .5), ))</span>
+<span class="sd">        &gt;&gt;&gt; conv(1.7)</span>
+<span class="sd">        1.5</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">to_callable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;RangeProcessor argument must be a tuple/list &#39;</span>
+                            <span class="s">&#39;or a callable, not {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;RangeProcessor argument must be a tuple/list &#39;</span>
+                            <span class="s">&#39;with 1, 2 or 3 elements ([low,] high[, step]) &#39;</span>
+                            <span class="s">&#39;not {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">check_range_and_coerce_step</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">check_range_and_coerce_step</span><span class="p">(</span><span class="o">*</span><span class="n">obj</span><span class="p">)</span>
+
+
+</div>
+<div class="viewcode-block" id="check_range_and_coerce_step"><a class="viewcode-back" href="../../api/processors.html#lantz.processors.check_range_and_coerce_step">[docs]</a><span class="k">def</span> <span class="nf">check_range_and_coerce_step</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    :param low:</span>
+<span class="sd">    :param high:</span>
+<span class="sd">    :param step:</span>
+<span class="sd">    :return:</span>
+
+<span class="sd">        &gt;&gt;&gt; checker = check_range_and_coerce_step(1, 10)</span>
+<span class="sd">        &gt;&gt;&gt; checker(1), checker(5), checker(10)</span>
+<span class="sd">        (1, 5, 10)</span>
+<span class="sd">        &gt;&gt;&gt; checker(11)</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ...</span>
+<span class="sd">        ValueError: 11 not in range (1, 10)</span>
+<span class="sd">        &gt;&gt;&gt; checker = check_range_and_coerce_step(1, 10, 1)</span>
+<span class="sd">        &gt;&gt;&gt; checker(1), checker(5.4), checker(10)</span>
+<span class="sd">        (1, 5, 10)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_inner</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">low</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;{} not in range ({}, {})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">step</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">value</span> <span class="o">-</span> <span class="n">low</span><span class="p">)</span> <span class="o">/</span> <span class="n">step</span><span class="p">)</span> <span class="o">*</span> <span class="n">step</span> <span class="o">+</span> <span class="n">low</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">return</span> <span class="n">_inner</span>
+
+</div>
+<div class="viewcode-block" id="check_membership"><a class="viewcode-back" href="../../api/processors.html#lantz.processors.check_membership">[docs]</a><span class="k">def</span> <span class="nf">check_membership</span><span class="p">(</span><span class="n">container</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    :param container:</span>
+<span class="sd">    :return:</span>
+
+<span class="sd">        &gt;&gt;&gt; checker = check_membership((1, 2, 3))</span>
+<span class="sd">        &gt;&gt;&gt; checker(1)</span>
+<span class="sd">        1</span>
+<span class="sd">        &gt;&gt;&gt; checker(0)</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ...</span>
+<span class="sd">        ValueError: 0 not in (1, 2, 3)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_inner</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">container</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;{} not in {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">container</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">_inner</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../../index.html">
+  <img src="../../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><img src="../../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../lantz.html" >lantz</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

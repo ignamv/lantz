@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="index.html" />
+    <link rel="next" title="Tutorials" href="tutorial/index.html" />
+    <link rel="prev" title="About" href="about.html" />
+    <link rel="shortcut icon" type="image/png" href="_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial/index.html" title="Tutorials"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="about.html" title="About"
+             accesskey="P">previous</a> |</li>
+        <li><img src="_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="index.html">Lantz 0.1 documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="overview">
+<span id="id1"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>A minimal script to control a function generator using Lantz might look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Q_</span>
+
+<span class="kn">from</span> <span class="nn">lantz.drivers.aeroflex</span> <span class="kn">import</span> <span class="n">A2023aSerial</span>
+
+<span class="n">fungen</span> <span class="o">=</span> <span class="n">A2023aSerial</span><span class="p">(</span><span class="s">&#39;COM1&#39;</span><span class="p">)</span>
+<span class="n">fungen</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">fungen</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
+<span class="n">fungen</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="s">&#39;MHz&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fungen</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span>
+<span class="n">fungen</span><span class="o">.</span><span class="n">sweep</span><span class="p">()</span>
+
+<span class="n">fungen</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The code is basically self explanatory, and does not differ too much of what you would write if you write a driver from scratch. But there are a few important things going under the hood that makes Lantz useful for instrumentation. Let&#8217;s take a look!</p>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>While building and running your program it is invaluable to monitor its state. Lantz gives to all your drivers automatic logging.</p>
+<p>The default level is logging.INFO, but if you prepend  the following lines to the previous example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">log_to_screen</span>
+<span class="n">log_to_screen</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You will see the instance initializing and how and when each property is accessed. Loggers are organized by default with the following naming convention:</p>
+<div class="highlight-python"><pre>lantz.&lt;class name&gt;.&lt;instance name&gt;</pre>
+</div>
+<p>which for this case becomes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">lantz</span><span class="o">.</span><span class="n">A2023aSerial</span><span class="o">.</span><span class="n">A2023aSerial0</span>
+</pre></div>
+</div>
+<p>because no name was given. If you want to specify a name, do it at object creation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fungen</span> <span class="o">=</span> <span class="n">A2023aSerial</span><span class="p">(</span><span class="s">&#39;COM1&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;white&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Separation into multiple loggers makes finding problems easier and enables fine grained control over log output.</p>
+<p>By the way, if you are running your program from an IDE or you don&#8217;t want to clutter your current terminal, you can log to a socket and view the log output in another window (even in another computer, but we leave this for latter). Open first another terminal and run:</p>
+<div class="highlight-python"><pre>$ lantzmonitor.py -l 1</pre>
+</div>
+<p>(If you want a nicer user interface with filtering and searching capabilities, try LogView <a class="reference external" href="http://code.google.com/p/logview/">http://code.google.com/p/logview/</a>)</p>
+<p>To your python program, replace the logging lines by:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">log_to_socket</span>
+<span class="n">log_to_socket</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When you run it, you will see the log appearing in the logging window.</p>
+<p>By the way, <cite>lantzmonitor</cite> is more than log to screen dumper. Tailored for lantz, it can display instrument specific messages as well as an on-line summary indicating the current value for each property. Hopefully, you will never need to add a print statement in your program any more!</p>
+</div>
+<div class="section" id="timing">
+<h2>Timing<a class="headerlink" href="#timing" title="Permalink to this headline">¶</a></h2>
+<p>Basic statistics of instrument related function calls are kept to facilitate bottleneck identification. While this is not as powerful as python profiler, its much easier to use within your application. You can obtain the statistics for a particular operation using:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fungen</span><span class="o">.</span><span class="n">timing</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="s">&#39;set_frequency&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will return a named tuple with the following fields:</p>
+<div class="highlight-python"><pre>- last: Execution time of last set operation
+- count: Number of times the setter was called
+- mean: Mean execution time of all set operations
+- std: Standard deviation of the execution time of all set operations
+- min: Minimum execution time of all set operations
+- max: Maximum execution time of all set operations</pre>
+</div>
+<p>Similarly, you can obtain timing statistics of the getter calling:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fungen</span><span class="o">.</span><span class="n">timing</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="s">&#39;get_frequency&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cache">
+<h2>Cache<a class="headerlink" href="#cache" title="Permalink to this headline">¶</a></h2>
+<p>Setting and getting drivers properties always does it in the instrument. However, accessing the instrument is time consuming and many times  you just want to a way to recall the last known value. Lantz properties carry their own cache, which can be accessed with the recall method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">recall</span><span class="p">(</span><span class="s">&#39;amplitude&#39;</span><span class="p">)</span>
+<span class="go">20 V</span>
+</pre></div>
+</div>
+<p>You can also access multiple elements:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">recall</span><span class="p">((</span><span class="s">&#39;amplitude&#39;</span><span class="p">,</span> <span class="s">&#39;voltage&#39;</span><span class="p">))</span>
+<span class="go">{&#39;frequency&#39;: 20 MHz, &#39;amplitude&#39;: 20 V}</span>
+</pre></div>
+</div>
+<p>Using recall without arguments gets all defined feats</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">recall</span><span class="p">()</span>
+<span class="go">{&#39;frequency&#39;: 20 MHz, &#39;amplitude&#39;: 20 V, &#39;ac_mode&#39;: True }</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="prevent-unnecessary-set">
+<h2>Prevent unnecessary set<a class="headerlink" href="#prevent-unnecessary-set" title="Permalink to this headline">¶</a></h2>
+<p>The internal cache also prevents unnecessary communication with the instrument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="mi">20</span> <span class="c"># The amplitude will be changed to 20</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="mi">20</span> <span class="c"># The amplitude is already 20, so this will be ignored.</span>
+</pre></div>
+</div>
+<p>If you are not sure that the current state of the instrument matches the cached value, you can force a setting change as will be described below.</p>
+</div>
+<div class="section" id="getting-and-setting-multiple-values-in-one-line">
+<h2>Getting and setting multiple values in one line<a class="headerlink" href="#getting-and-setting-multiple-values-in-one-line" title="Permalink to this headline">¶</a></h2>
+<p>You can use the refresh method to obtain multiple values from the instrument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">fungen</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="s">&#39;amplitude&#39;</span><span class="p">))</span> <span class="c"># is equivalent to print(fungen.amplitude)</span>
+<span class="go">20 V</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">fungen</span><span class="o">.</span><span class="n">refresh</span><span class="p">((</span><span class="s">&#39;frequency&#39;</span><span class="p">,</span> <span class="s">&#39;amplitude&#39;</span><span class="p">)))</span> <span class="c"># You can refresh multiple properties at once</span>
+<span class="go">{&#39;frequency&#39;: 20 MHz, &#39;amplitude&#39;: 20 V}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">fungen</span><span class="o">.</span><span class="n">refresh</span><span class="p">())</span> <span class="c"># You can refresh all properties at once</span>
+<span class="go">{&#39;frequency&#39;: 20 MHz, &#39;amplitude&#39;: 20 V, &#39;ac_mode&#39;: True }</span>
+</pre></div>
+</div>
+<p>The counterpart of refresh is the update method that allows you to set multiple values in a single line:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ac_mode</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c"># is equivalent to fungen.ac_mode = True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;ac_mode&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})</span>  <span class="c"># Can be also used with a dictionary</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ac_mode</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">Q</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">))</span> <span class="c"># if you want to set many, just do</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;ac_mode&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;amplitude&#39;</span><span class="p">:</span> <span class="n">Q</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">)})</span> <span class="c"># or this</span>
+</pre></div>
+</div>
+<p>The cache is what allows to Lantz to avoid unnecessary communication with the instrument. You can overrule this check using the update method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">)</span> <span class="c"># No information is set to the instrument as is the value already set</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">amplitude</span><span class="o">=</span><span class="n">Q</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">),</span> <span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c"># The force true argument ignores cache checking</span>
+</pre></div>
+</div>
+<p>This can be useful for example when the operator might change the settings using the manual controls.</p>
+</div>
+<div class="section" id="effortless-asynchronous-get-and-set">
+<h2>Effortless asynchronous get and set<a class="headerlink" href="#effortless-asynchronous-get-and-set" title="Permalink to this headline">¶</a></h2>
+<p>Lantz also provides out of the box asynchronous capabilities for all methods described before. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fungen</span><span class="o">.</span><span class="n">update_async</span><span class="p">({</span><span class="s">&#39;ac_mode&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;amplitude&#39;</span><span class="p">:</span> <span class="n">Q</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">)})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;I am not blocked!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will update <cite>ac_mode</cite> and <cite>amplitude</cite> without blocking, so the print statement is executed even if the update has not finished. This is useful when updating multiple independent instruments. The state of the operation can be verified using the returned <a class="reference external" href="http://docs.python.org/3.2/library/concurrent.futures.html#concurrent.futures.Future" title="(in Python v3.2)"><tt class="xref py py-class docutils literal"><span class="pre">concurrent.futures.Future</span></tt></a> object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">result1</span> <span class="o">=</span> <span class="n">fungen</span><span class="o">.</span><span class="n">update_async</span><span class="p">({</span><span class="s">&#39;ac_mode&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;amplitude&#39;</span><span class="p">:</span> <span class="n">Q</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">)})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result2</span> <span class="o">=</span> <span class="n">another_fungen</span><span class="o">.</span><span class="n">update_async</span><span class="p">({</span><span class="s">&#39;ac_mode&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;amplitude&#39;</span><span class="p">:</span> <span class="n">Q</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">)})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="ow">not</span> <span class="n">result1</span><span class="o">.</span><span class="n">done</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">result2</span><span class="o">.</span><span class="n">done</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">DoSomething</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Just like <cite>update_async</cite>, you can use <cite>refresh_async</cite> to obtain the value of one or more features. The result is again a <a class="reference external" href="http://docs.python.org/3.2/library/concurrent.futures.html#concurrent.futures.Future" title="(in Python v3.2)"><tt class="xref py py-class docutils literal"><span class="pre">concurrent.futures.Future</span></tt></a> object whose value can be queried using the result method <a class="reference external" href="http://docs.python.org/3.2/library/concurrent.futures.html#concurrent.futures.Future.result" title="(in Python v3.2)"><tt class="xref py py-meth docutils literal"><span class="pre">concurrent.futures.Future.result()</span></tt></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fut</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">refresh_async</span><span class="p">(</span><span class="s">&#39;eggs&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">DoSomething</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">fut</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Async methods accept also a callback argument to define a method that will be used</p>
+<div class="topic">
+<p class="topic-title first">Under the hood</p>
+<p>Single thread for the instrument</p>
+</div>
+</div>
+<div class="section" id="context-manager">
+<h2>Context manager<a class="headerlink" href="#context-manager" title="Permalink to this headline">¶</a></h2>
+<p>If you want to send a command to an instrument only once during a particular script, you might want to make use of the context manager syntax. In the following example, the driver will be created and initialized in the first line and finalized when the <cite>with</cite> clause finishes even when an unhandled exception is raised:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">A2023aSerial</span><span class="p">(</span><span class="s">&#39;COM1&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fungen</span><span class="p">:</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">fungen</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
+    <span class="n">fungen</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="s">&#39;MHz&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">fungen</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span>
+    <span class="n">fungen</span><span class="o">.</span><span class="n">sweep</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="units">
+<h2>Units<a class="headerlink" href="#units" title="Permalink to this headline">¶</a></h2>
+<p>Instrumentation software need to deal with physical units, and therefore you need to deal with them. Keeping track of the units of each variable in time consuming and error prone, and derives into annoying naming practices such as <cite>freq_in_KHz</cite>. Lantz aims to reduce the burden of this by incorporating units using the Quantities package. The Quantity object si abbreviated withing Lantz as <cite>Q_</cite> and can be imported from the root:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Q_</span>
+
+<span class="n">mv</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;mV&#39;</span><span class="p">)</span> <span class="c"># we define milivolt</span>
+<span class="n">value</span> <span class="o">=</span> <span class="mi">42</span> <span class="o">*</span> <span class="n">mv</span> <span class="c"># we can use the defined units like this</span>
+<span class="n">thesame</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s">&#39;mv&#39;</span><span class="p">)</span> <span class="c"># or like this</span>
+</pre></div>
+</div>
+<p>This makes the code a little more verbose but is worth the effort. The code is more explicit and less error prone. It also allows you to do thing like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Q_</span>
+
+<span class="kn">from</span> <span class="nn">lantz.drivers.example</span> <span class="kn">import</span> <span class="n">OneFunGen</span> <span class="k">as</span> <span class="n">FunGen</span>
+<span class="c"># In OneFunGen, the amplitude of this function generator must be set in Volts.</span>
+
+<span class="k">with</span> <span class="n">FunGen</span><span class="p">(</span><span class="s">&#39;COM1&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fungen</span><span class="p">:</span>
+
+    <span class="n">fungen</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Later you decide to change the function generator by a different one, with a different communication protocol:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Q_</span>
+
+<span class="kn">from</span> <span class="nn">lantz.drivers.example</span> <span class="kn">import</span> <span class="n">AnotherFunGen</span> <span class="k">as</span> <span class="n">FunGen</span>
+<span class="c"># In AnotherFunGen, the amplitude of this function generator must be set in milivolts.</span>
+
+<span class="k">with</span> <span class="n">FunGen</span><span class="p">(</span><span class="s">&#39;COM1&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fungen</span><span class="p">:</span>
+
+    <span class="n">fungen</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">)</span> <span class="c"># the value is converted from volts to mV inside the driver.</span>
+</pre></div>
+</div>
+<p>Apart from the import, nothing has changed. In a big code base this means that you can easily replace one instrument by another.</p>
+<p>You might want to use the value obtained in one instrument to set another. Or you might want to use the same value in two different instruments without looking into their specific details:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Q_</span>
+
+<span class="kn">from</span> <span class="nn">lantz.drivers.example</span> <span class="kn">import</span> <span class="n">FrequenceMeter</span>
+<span class="kn">from</span> <span class="nn">lantz.drivers.aeroflex</span> <span class="kn">import</span> <span class="n">A2023aSerial</span>
+<span class="kn">from</span> <span class="nn">lantz.drivers.standford</span> <span class="kn">import</span> <span class="n">SR844</span>
+
+<span class="k">with</span> <span class="n">FrequenceMeter</span><span class="p">(</span><span class="s">&#39;COM1&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fmeter</span><span class="p">,</span> \
+     <span class="n">A2023aSerial</span><span class="p">(</span><span class="s">&#39;COM2&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fungen</span><span class="p">,</span> \
+     <span class="n">SR844</span><span class="p">(</span><span class="s">&#39;COM3&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">lockin</span><span class="p">:</span>
+
+    <span class="n">freq</span> <span class="o">=</span> <span class="n">fmeter</span><span class="o">.</span><span class="n">frequency</span>
+
+    <span class="n">fungen</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">freq</span>
+    <span class="n">lockin</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">freq</span>
+</pre></div>
+</div>
+<p>In case you are not convinced, a small technical note:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The MCO MIB has determined that the root cause for the loss of the MCO spacecraft was the failure to use metric units in the coding of a ground software file, “Small Forces,” used in trajectory models. Specifically, thruster performance data in English units instead of metric units was used in the software application code titled SM_FORCES (small forces). The output from the SM_FORCES application code as required by a MSOP Project Software Interface Specification (SIS) was to be in metric units of Newtonseconds (N-s). Instead, the data was reported in English units of pound-seconds (lbf-s). The Angular Momentum Desaturation (AMD) file contained the output data from the SM_FORCES software. The SIS, which was not followed, defines both the format and units of the AMD file generated by ground-based computers. Subsequent processing of the data from AMD file by the navigation software algorithm therefore, underestimated the effect on the spacecraft trajectory by a factor of 4.45, which is the required conversion factor from force in pounds to Newtons. An erroneous trajectory was computed using this incorrect data.</p>
+<blockquote class="last">
+<div><cite>Mars Climate Orbiter Mishap Investigation Phase I Report</cite>
+<a class="reference external" href="ftp://ftp.hq.nasa.gov/pub/pao/reports/1999/MCO_report.pdf">PDF</a></div></blockquote>
+</div>
+</div>
+<div class="section" id="user-interface">
+<h2>User interface<a class="headerlink" href="#user-interface" title="Permalink to this headline">¶</a></h2>
+<p>Providing a powerful GUI is an important aspect of developing an application for end user. Lantz aims to simplify the UI development by allowing you to correctly connect to <cite>Lantz</cite> Feats and Actions to widgets without any effort. For example, if you generate a GUI using Qt Designer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># imports not shown</span>
+
+<span class="n">main</span> <span class="o">=</span> <span class="n">loadUi</span><span class="p">(</span><span class="s">&#39;connect_test.ui&#39;</span><span class="p">)</span> <span class="c"># Load the GUI</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">()</span> <span class="k">as</span> <span class="n">fungen</span><span class="p">:</span> <span class="c"># Instantiate the instrument</span>
+
+    <span class="n">connect_driver</span><span class="p">(</span><span class="n">main</span><span class="p">,</span> <span class="n">fungen</span><span class="p">)</span> <span class="c"># All signals and slots are connected here!</span>
+
+    <span class="c"># Do something</span>
+</pre></div>
+</div>
+<p>Additionally it provides automatic generation of Test Panels, a very useful feature when you are building or debugging a new driver:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># imports not shown</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">()</span> <span class="k">as</span> <span class="n">fungen</span><span class="p">:</span> <span class="c"># Instantiate the instrument</span>
+    <span class="n">start_test_app</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span>               <span class="c"># Create</span>
+</pre></div>
+</div>
+<p>and you get:</p>
+<img alt="Signal Generation Test Panel" src="_images/ui-fungen.png" />
+<p>Check out the <a class="reference internal" href="tutorial/index.html#tutorials"><em>Tutorials</em></a> to get started!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="index.html">
+  <img src="_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Overview</a><ul>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+<li><a class="reference internal" href="#timing">Timing</a></li>
+<li><a class="reference internal" href="#cache">Cache</a></li>
+<li><a class="reference internal" href="#prevent-unnecessary-set">Prevent unnecessary set</a></li>
+<li><a class="reference internal" href="#getting-and-setting-multiple-values-in-one-line">Getting and setting multiple values in one line</a></li>
+<li><a class="reference internal" href="#effortless-asynchronous-get-and-set">Effortless asynchronous get and set</a></li>
+<li><a class="reference internal" href="#context-manager">Context manager</a></li>
+<li><a class="reference internal" href="#units">Units</a></li>
+<li><a class="reference internal" href="#user-interface">User interface</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="about.html"
+                        title="previous chapter">About</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tutorial/index.html"
+                        title="next chapter">Tutorials</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/overview.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial/index.html" title="Tutorials"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="about.html" title="About"
+             >previous</a> |</li>
+        <li><img src="_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="index.html">Lantz 0.1 documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

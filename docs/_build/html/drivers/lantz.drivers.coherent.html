@@ -1,0 +1,803 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.drivers.coherent &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Drivers" href="index.html" />
+    <link rel="next" title="lantz.drivers.examples" href="lantz.drivers.examples.html" />
+    <link rel="prev" title="lantz.drivers.andor" href="lantz.drivers.andor.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.examples.html" title="lantz.drivers.examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.andor.html" title="lantz.drivers.andor"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Drivers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.drivers.coherent"></span><div class="section" id="lantz-drivers-coherent">
+<h1>lantz.drivers.coherent<a class="headerlink" href="#lantz-drivers-coherent" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">company:</th><td class="field-body">Coherent Inc.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">Lasers and Lasers Systems.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">website:</th><td class="field-body"><a class="reference external" href="http://www.coherent.com/">http://www.coherent.com/</a></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.drivers.coherent.Innova300C">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.coherent.</tt><tt class="descname">Innova300C</tt><big>(</big><em>port=1</em>, <em>baudrate=1200</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.coherent.Innova300C" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/interfaces.html#lantz.serial.SerialDriver" title="lantz.serial.SerialDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.serial.SerialDriver</span></tt></a></p>
+<p>Innova300 C Series.</p>
+<dl class="method">
+<dt id="lantz.drivers.coherent.Innova300C.center_powertrack_async">
+<tt class="descname">center_powertrack_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.center_powertrack_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Center PowerTrack and turn it off.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.coherent.Innova300C.initialize">
+<tt class="descname">initialize</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.coherent.Innova300C.query">
+<tt class="descname">query</tt><big>(</big><em>command</em>, <em>send_args</em>, <em>recv_args</em><big>)</big><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send query to the laser and return the answer, after handling
+possible errors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>command</strong> (<a class="reference external" href="http://docs.python.org/3.2/library/string.html#string" title="(in Python v3.2)"><em>string</em></a>) &#8211; command to be sent to the instrument</li>
+<li><strong>send_args</strong> &#8211; (termination, encoding) to override class defaults</li>
+<li><strong>recv_args</strong> &#8211; (termination, encoding) to override class defaults</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.coherent.Innova300C.recalibrate_powertrack_async">
+<tt class="descname">recalibrate_powertrack_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.recalibrate_powertrack_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Recalibrate PowerTrack. This will only execute if PowerTrack is on
+and light regulation is off</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.ENCODING">
+<tt class="descname">ENCODING</tt><em class="property"> = 'ascii'</em><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.ENCODING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.RECV_TERMINATION">
+<tt class="descname">RECV_TERMINATION</tt><em class="property"> = '\r\n'</em><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.RECV_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.SEND_TERMINATION">
+<tt class="descname">SEND_TERMINATION</tt><em class="property"> = '\r\n'</em><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.SEND_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.analog_enabled">
+<tt class="descname">analog_enabled</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.analog_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analog Interface input state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.analog_relative">
+<tt class="descname">analog_relative</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.analog_relative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analog Interface input mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.auto_light_cal_enabled">
+<tt class="descname">auto_light_cal_enabled</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.auto_light_cal_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatic light regulation calibration flag.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.autofill_delta">
+<tt class="descname">autofill_delta</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.autofill_delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tube voltage minus the autofill setting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">V</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.autofill_mode">
+<tt class="descname">autofill_mode</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.autofill_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Autofill mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{&#8216;disabled&#8217;: 0, &#8216;enabled until next autofill&#8217;: 2, &#8216;enabled&#8217;: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.autofill_needed">
+<tt class="descname">autofill_needed</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.autofill_needed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the autofill needed (wheter fill is enabled or not)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.baudrate">
+<tt class="descname">baudrate</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.baudrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>RS-232/422 baud rate, the serial connection will be reset after.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{19200, 9600, 300, 110, 1200, 2400, 4800}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.cathode_current">
+<tt class="descname">cathode_current</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.cathode_current" title="Permalink to this definition">¶</a></dt>
+<dd><p>Laser cathode current (AC).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">A</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.cathode_voltage">
+<tt class="descname">cathode_voltage</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.cathode_voltage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Laser cathode voltage (AC).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">V</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.center_powertrack">
+<tt class="descname">center_powertrack</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x19c8b50&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.center_powertrack" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.control_pin_high">
+<tt class="descname">control_pin_high</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.control_pin_high" title="Permalink to this definition">¶</a></dt>
+<dd><p>State of the input pin 10 of the Analog Interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.current">
+<tt class="descname">current</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.current" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current regulation mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">A</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.current_change_limit">
+<tt class="descname">current_change_limit</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.current_change_limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Percent tube change before an automatic light regulation recalibration becomes necessary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Limits :</th><td class="field-body">(5, 100, 1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.current_range">
+<tt class="descname">current_range</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.current_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current corresponding to 5 Volts at the input or output lines of the Analog Interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">A</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(10, 100, 1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.current_setpoint">
+<tt class="descname">current_setpoint</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.current_setpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current setpoint when using the current regulation mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">A</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(0, 50, 0.01)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.echo_enabled">
+<tt class="descname">echo_enabled</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.echo_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Echo mode of the serial interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.etalon_mode">
+<tt class="descname">etalon_mode</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.etalon_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Etalon mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{&#8216;modetune&#8217;: 2, &#8216;manual&#8217;: 0, &#8216;modetrack&#8217;: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.etalon_temperature">
+<tt class="descname">etalon_temperature</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.etalon_temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Etalon temperature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">degC</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.etalon_temperature_setpoint">
+<tt class="descname">etalon_temperature_setpoint</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.etalon_temperature_setpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setpoint for the etalon temperature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">degC</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(51.5, 54, 0.001)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.faults">
+<tt class="descname">faults</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.faults" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of all active faults.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.head_software_rev">
+<tt class="descname">head_software_rev</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.head_software_rev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Software revision level in the laser head board.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.idn">
+<tt class="descname">idn</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.idn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Laser identification, should be I300.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.is_in_start_delay">
+<tt class="descname">is_in_start_delay</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.is_in_start_delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Laser is in start delay (tube not ionized)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.laser_enabled">
+<tt class="descname">laser_enabled</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.laser_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Energize the power supply.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 2}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.magnet_current">
+<tt class="descname">magnet_current</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.magnet_current" title="Permalink to this definition">¶</a></dt>
+<dd><p>Laser magnet current.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">A</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.magnetic_field_high">
+<tt class="descname">magnetic_field_high</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.magnetic_field_high" title="Permalink to this definition">¶</a></dt>
+<dd><p>Magnetic field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.magnetic_field_setpoint_high">
+<tt class="descname">magnetic_field_setpoint_high</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.magnetic_field_setpoint_high" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setpoint for magnetic field setting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.operating_mode">
+<tt class="descname">operating_mode</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.operating_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Laser operating mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{&#8216;current regulation&#8217;: 0, &#8216;standard light regulation&#8217;: 2, &#8216;reduced bandwidth light regulation&#8217;: 1, &#8216;current regulation, light regulation out of range&#8217;: 3}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.output_pin_high">
+<tt class="descname">output_pin_high</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.output_pin_high" title="Permalink to this definition">¶</a></dt>
+<dd><p>State of the output pin 24 and 25 of the Analog Interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{(False, True): 2, (True, False): 1, (False, False): 0, (True, True): 3}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.power">
+<tt class="descname">power</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current power output.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">A</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.power_setpoint">
+<tt class="descname">power_setpoint</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.power_setpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setpoint for the light regulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">W</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Limits :</th><td class="field-body">(0, 50, 0.0001)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.powertrack_mode_enabled">
+<tt class="descname">powertrack_mode_enabled</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.powertrack_mode_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>PowerTrack.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: 0, True: 1}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.powertrack_position">
+<tt class="descname">powertrack_position</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.powertrack_position" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keys :</th><td class="field-body">(&#8216;A&#8217;, &#8216;B&#8217;)</td>
+</tr>
+</tbody>
+</table>
+<p>Relative position of the PowerTrack solenoids.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Limits :</th><td class="field-body">(0, 255)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.recalibrate_powertrack">
+<tt class="descname">recalibrate_powertrack</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x19c8b10&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.recalibrate_powertrack" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.remaining_time">
+<tt class="descname">remaining_time</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.remaining_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of hours remaining before the laser will shut down automatically.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">hour</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.software_rev">
+<tt class="descname">software_rev</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.software_rev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Software revision level in the power supply.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.time_to_start">
+<tt class="descname">time_to_start</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.time_to_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timer countdown during the start delay cycle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">second</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.tube_time">
+<tt class="descname">tube_time</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.tube_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of operating hours on the plasma tube.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">hour</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.tube_voltage">
+<tt class="descname">tube_voltage</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.tube_voltage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Laser tube voltage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">V</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.water_flow">
+<tt class="descname">water_flow</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.water_flow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Water flow.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">gallons/minute</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.water_resistivity">
+<tt class="descname">water_resistivity</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.water_resistivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resistivity of the incoming water to the power supply.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">kohm*cm</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.Innova300C.water_temperature">
+<tt class="descname">water_temperature</tt><a class="headerlink" href="#lantz.drivers.coherent.Innova300C.water_temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Temperature of the incoming water to the power supply.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.drivers.coherent.ArgonInnova300C">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.coherent.</tt><tt class="descname">ArgonInnova300C</tt><big>(</big><em>port=1</em>, <em>baudrate=1200</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.coherent.ArgonInnova300C" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.drivers.coherent.innova.Innova300C</span></tt></p>
+<p>Argon Innova 300C.</p>
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.ArgonInnova300C.wavelength">
+<tt class="descname">wavelength</tt><a class="headerlink" href="#lantz.drivers.coherent.ArgonInnova300C.wavelength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wavelength for the internal power meter calibration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{496, 514, 454, 488, 457, 364, 1090, &#8216;MLUV&#8217;, 528, 465, &#8216;MLVS&#8217;, 501, 472, 476, &#8216;MLDUV&#8217;, 351}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.drivers.coherent.KryptonInnova300C">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.coherent.</tt><tt class="descname">KryptonInnova300C</tt><big>(</big><em>port=1</em>, <em>baudrate=1200</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.coherent.KryptonInnova300C" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.drivers.coherent.innova.Innova300C</span></tt></p>
+<p>Krypton Innova 300C.</p>
+<dl class="attribute">
+<dt id="lantz.drivers.coherent.KryptonInnova300C.wavelength">
+<tt class="descname">wavelength</tt><a class="headerlink" href="#lantz.drivers.coherent.KryptonInnova300C.wavelength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wavelength for the internal power meter calibration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{482, 676, 647, &#8216;MLVI&#8217;, &#8216;MLBG&#8217;, 530, &#8216;MLUV&#8217;, 752, 520, &#8216;MLVS&#8217;, &#8216;MLIR&#8217;, 568, &#8216;MLRD&#8217;, 476}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lantz.drivers.andor.html"
+                        title="previous chapter">lantz.drivers.andor</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lantz.drivers.examples.html"
+                        title="next chapter">lantz.drivers.examples</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/drivers/lantz.drivers.coherent.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.examples.html" title="lantz.drivers.examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.andor.html" title="lantz.drivers.andor"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Drivers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

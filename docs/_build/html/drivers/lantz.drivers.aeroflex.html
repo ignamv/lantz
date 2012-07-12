@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.drivers.aeroflex &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Drivers" href="index.html" />
+    <link rel="next" title="lantz.drivers.andor" href="lantz.drivers.andor.html" />
+    <link rel="prev" title="lantz.drivers.aa" href="lantz.drivers.aa.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.andor.html" title="lantz.drivers.andor"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.aa.html" title="lantz.drivers.aa"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Drivers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.drivers.aeroflex"></span><div class="section" id="lantz-drivers-aeroflex">
+<h1>lantz.drivers.aeroflex<a class="headerlink" href="#lantz-drivers-aeroflex" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">company:</th><td class="field-body">Aeroflex</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">Test and measurement equipment and microelectronic solutions.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">website:</th><td class="field-body"><a class="reference external" href="http://www.aeroflex.com/">http://www.aeroflex.com/</a></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.drivers.aeroflex.A2023a">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.aeroflex.</tt><tt class="descname">A2023a</tt><big>(</big><em>port=1</em>, <em>timeout=1</em>, <em>write_timeout=1</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/interfaces.html#lantz.serial.SerialDriver" title="lantz.serial.SerialDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.serial.SerialDriver</span></tt></a></p>
+<p>Aeroflex Test Solutions 2023A 9 kHz to 1.2 GHz Signal Generator.</p>
+<dl class="method">
+<dt id="lantz.drivers.aeroflex.A2023a.clear_status_async">
+<tt class="descname">clear_status_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.clear_status_async" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.aeroflex.A2023a.expose_async">
+<tt class="descname">expose_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.expose_async" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.aeroflex.A2023a.local_lockout">
+<tt class="descname">local_lockout</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.local_lockout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.aeroflex.A2023a.remote">
+<tt class="descname">remote</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.remote" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.aeroflex.A2023a.reset_async">
+<tt class="descname">reset_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.reset_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Set the instrument functions to the factory default power up state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.aeroflex.A2023a.self_test_async">
+<tt class="descname">self_test_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.self_test_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Is the interface and processor are operating?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.aeroflex.A2023a.software_handshake">
+<tt class="descname">software_handshake</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.software_handshake" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.aeroflex.A2023a.trigger_async">
+<tt class="descname">trigger_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.trigger_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Equivalent to Group Execute Trigger.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.aeroflex.A2023a.wait_async">
+<tt class="descname">wait_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.wait_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Inhibit execution of an overlapped command until the execution of
+the preceding operation has been completed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.RECV_TERMINATION">
+<tt class="descname">RECV_TERMINATION</tt><em class="property"> = '\n'</em><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.RECV_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.SEND_TERMINATION">
+<tt class="descname">SEND_TERMINATION</tt><em class="property"> = '\n'</em><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.SEND_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.amplitude">
+<tt class="descname">amplitude</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.amplitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>RF amplitude.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">V</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.clear_status">
+<tt class="descname">clear_status</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x153ce30&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.clear_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.event_status_enabled">
+<tt class="descname">event_status_enabled</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.event_status_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standard event enable register.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.event_status_reg">
+<tt class="descname">event_status_reg</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.event_status_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standard event enable register.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.expose">
+<tt class="descname">expose</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x153cf50&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.expose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.fitted_options">
+<tt class="descname">fitted_options</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.fitted_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fitted options.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.frequency">
+<tt class="descname">frequency</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Carrier frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">Hz</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.frequency_standard">
+<tt class="descname">frequency_standard</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.frequency_standard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get internal or external frequency standard.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{&#8216;INT&#8217;, &#8216;EXT10IND&#8217;, &#8216;EXTIND&#8217;, &#8216;EXT10DIR&#8217;, &#8216;INT10OUT&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.idn">
+<tt class="descname">idn</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.idn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instrument identification.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.offset">
+<tt class="descname">offset</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Offset amplitude.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">V</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.output_enabled">
+<tt class="descname">output_enabled</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.output_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable the RF output</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;DISABLED&#8217;, True: &#8216;ENABLED&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.phase">
+<tt class="descname">phase</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Phase offset</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">deg</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.reset">
+<tt class="descname">reset</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x153cd10&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.rflimit">
+<tt class="descname">rflimit</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.rflimit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set RF output level max.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.rflimit_enabled">
+<tt class="descname">rflimit_enabled</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.rflimit_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;DISABLED&#8217;, True: &#8216;ENABLED&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.self_test">
+<tt class="descname">self_test</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x153cd50&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.self_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.service_request_enabled">
+<tt class="descname">service_request_enabled</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.service_request_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Service request enable register.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.status_byte">
+<tt class="descname">status_byte</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.status_byte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status byte, a number between 0-255.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.time">
+<tt class="descname">time</tt><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.time" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;off&#8217;, True: &#8216;on&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.trigger">
+<tt class="descname">trigger</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x153cd90&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.trigger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.aeroflex.A2023a.wait">
+<tt class="descname">wait</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x153cd70&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.aeroflex.A2023a.wait" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lantz.drivers.aa.html"
+                        title="previous chapter">lantz.drivers.aa</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lantz.drivers.andor.html"
+                        title="next chapter">lantz.drivers.andor</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/drivers/lantz.drivers.aeroflex.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.andor.html" title="lantz.drivers.andor"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.aa.html" title="lantz.drivers.aa"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Drivers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

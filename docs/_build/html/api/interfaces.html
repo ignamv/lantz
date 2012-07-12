@@ -1,0 +1,460 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Interfacing to instruments &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="API" href="index.html" />
+    <link rel="next" title="UI" href="ui.html" />
+    <link rel="prev" title="General" href="general.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ui.html" title="UI"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="general.html" title="General"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-lantz.serial">
+<span id="interfacing-to-instruments"></span><h1>Interfacing to instruments<a class="headerlink" href="#module-lantz.serial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="lantz-serial">
+<h2>lantz.serial<a class="headerlink" href="#lantz-serial" title="Permalink to this headline">¶</a></h2>
+<p>Implements base classes for drivers that communicate with instruments
+via serial or parallel port.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.serial.SerialDriver">
+<em class="property">class </em><tt class="descclassname">lantz.serial.</tt><tt class="descname">SerialDriver</tt><big>(</big><em>port=1</em>, <em>timeout=1</em>, <em>write_timeout=1</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/lantz/serial.html#SerialDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.serial.SerialDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.driver.TextualMixin</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">lantz.driver.Driver</span></tt></p>
+<p>Base class for drivers that communicate with instruments
+via serial or parallel port using pyserial</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>port</strong> &#8211; Device name or port number</li>
+<li><strong>baudrate</strong> &#8211; Baud rate such as 9600 or 115200</li>
+<li><strong>bytesize</strong> &#8211; Number of data bits. Possible values = (5, 6, 7, 8)</li>
+<li><strong>parity</strong> &#8211; Enable parity checking. Possible values = (&#8216;None&#8217;, &#8216;Even&#8217;, &#8216;Odd&#8217;, &#8216;Mark&#8217;, &#8216;Space&#8217;)</li>
+<li><strong>stopbits</strong> &#8211; Number of stop bits. Possible values = (1, 1.5, 2)</li>
+<li><strong>xonoff</strong> &#8211; xonoff flow control enabled.</li>
+<li><strong>rtscts</strong> &#8211; rtscts flow control enabled.</li>
+<li><strong>dsrdtr</strong> &#8211; dsrdtr flow control enabled</li>
+<li><strong>timeout</strong> &#8211; value in seconds, None to wait for ever or 0 for non-blocking mode</li>
+<li><strong>write_timeout</strong> &#8211; see timeout</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.serial.SerialDriver.finalize">
+<tt class="descname">finalize</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/serial.html#SerialDriver.finalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.serial.SerialDriver.finalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close port</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.serial.SerialDriver.initialize">
+<tt class="descname">initialize</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/serial.html#SerialDriver.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.serial.SerialDriver.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open port</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.serial.SerialDriver.raw_recv">
+<tt class="descname">raw_recv</tt><big>(</big><em>size</em><big>)</big><a class="reference internal" href="../_modules/lantz/serial.html#SerialDriver.raw_recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.serial.SerialDriver.raw_recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive raw bytes to the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> &#8211; number of bytes to receive</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">received bytes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bytes</td>
+</tr>
+</tbody>
+</table>
+<p>If a timeout is set, it may return less bytes than requested.
+If size == -1, then the number of available bytes will be read.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.serial.SerialDriver.raw_send">
+<tt class="descname">raw_send</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/lantz/serial.html#SerialDriver.raw_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.serial.SerialDriver.raw_send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send raw bytes to the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; bytes to be sent to the instrument</li>
+<li><strong>data</strong> &#8211; bytes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.serial.SerialDriver.BAUDRATE">
+<tt class="descname">BAUDRATE</tt><em class="property"> = 9600</em><a class="headerlink" href="#lantz.serial.SerialDriver.BAUDRATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>comunication parameters</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.serial.SerialDriver.RECV_CHUNK">
+<tt class="descname">RECV_CHUNK</tt><em class="property"> = -1</em><a class="headerlink" href="#lantz.serial.SerialDriver.RECV_CHUNK" title="Permalink to this definition">¶</a></dt>
+<dd><p>-1 is mapped to get the number of bytes pending.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.serial.SerialDriver.RTSCTS">
+<tt class="descname">RTSCTS</tt><em class="property"> = False</em><a class="headerlink" href="#lantz.serial.SerialDriver.RTSCTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>flow control flags</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<span class="target" id="module-lantz.network"></span><div class="section" id="lantz-network">
+<h2>lantz.network<a class="headerlink" href="#lantz-network" title="Permalink to this headline">¶</a></h2>
+<p>Implements a base class for drivers that communicate with instruments via TCP.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.network.TCPDriver">
+<em class="property">class </em><tt class="descclassname">lantz.network.</tt><tt class="descname">TCPDriver</tt><big>(</big><em>host='localhost'</em>, <em>port=9997</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/lantz/network.html#TCPDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.network.TCPDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.driver.TextualMixin</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">lantz.driver.Driver</span></tt></p>
+<p>Base class for drivers that communicate with instruments via TCP.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>host</strong> &#8211; Address of the network resource</li>
+<li><strong>port</strong> &#8211; Port number</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.network.TCPDriver.raw_recv">
+<tt class="descname">raw_recv</tt><big>(</big><em>size</em><big>)</big><a class="reference internal" href="../_modules/lantz/network.html#TCPDriver.raw_recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.network.TCPDriver.raw_recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive raw bytes to the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> &#8211; number of bytes to receive.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">received bytes.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.network.TCPDriver.raw_send">
+<tt class="descname">raw_send</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/lantz/network.html#TCPDriver.raw_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.network.TCPDriver.raw_send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send raw bytes to the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; bytes to be sent to the instrument.</li>
+<li><strong>data</strong> &#8211; bytes.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<span class="target" id="module-lantz.foreign"></span><div class="section" id="lantz-foreign">
+<h2>lantz.foreign<a class="headerlink" href="#lantz-foreign" title="Permalink to this headline">¶</a></h2>
+<p>Implements classes and methods to interface to foreign functions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.foreign.Library">
+<em class="property">class </em><tt class="descclassname">lantz.foreign.</tt><tt class="descname">Library</tt><big>(</big><em>library</em>, <em>wrapper</em><big>)</big><a class="reference internal" href="../_modules/lantz/foreign.html#Library"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.foreign.Library" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<p>Library wrapper</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>library</strong> &#8211; ctypes library</li>
+<li><strong>wrapper</strong> &#8211; callable that takes two arguments the name of the function
+and the function itself. It should return a callable.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.foreign.LibraryDriver">
+<em class="property">class </em><tt class="descclassname">lantz.foreign.</tt><tt class="descname">LibraryDriver</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/lantz/foreign.html#LibraryDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.foreign.LibraryDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.driver.Driver</span></tt></p>
+<p>Base class for drivers that communicate with instruments
+calling a library (dll or others)</p>
+<p>To use this class you must override LIBRARY_NAME</p>
+<dl class="attribute">
+<dt id="lantz.foreign.LibraryDriver.LIBRARY_NAME">
+<tt class="descname">LIBRARY_NAME</tt><em class="property"> = ''</em><a class="headerlink" href="#lantz.foreign.LibraryDriver.LIBRARY_NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the library</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<span class="target" id="module-lantz.visa"></span><div class="section" id="lantz-visa">
+<h2>lantz.visa<a class="headerlink" href="#lantz-visa" title="Permalink to this headline">¶</a></h2>
+<p>Implements base classes for drivers that communicate with instruments using visalib.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.visa.MessageVisaDriver">
+<em class="property">class </em><tt class="descclassname">lantz.visa.</tt><tt class="descname">MessageVisaDriver</tt><big>(</big><em>resource_name</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/lantz/visa.html#MessageVisaDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visa.MessageVisaDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.driver.TextualMixin</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">lantz.driver.Driver</span></tt></p>
+<p>Base class for drivers that communicate with instruments
+via serial or parallel port using pyserial</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource_name</strong> &#8211; name or alias of the resource to open.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.visa.MessageVisaDriver.finalize">
+<tt class="descname">finalize</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/visa.html#MessageVisaDriver.finalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visa.MessageVisaDriver.finalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close port</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visa.MessageVisaDriver.initialize">
+<tt class="descname">initialize</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/lantz/visa.html#MessageVisaDriver.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visa.MessageVisaDriver.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open port</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visa.MessageVisaDriver.raw_recv">
+<tt class="descname">raw_recv</tt><big>(</big><em>size</em><big>)</big><a class="reference internal" href="../_modules/lantz/visa.html#MessageVisaDriver.raw_recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visa.MessageVisaDriver.raw_recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive raw bytes to the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> &#8211; number of bytes to receive</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">received bytes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bytes</td>
+</tr>
+</tbody>
+</table>
+<p>If a timeout is set, it may return less bytes than requested.
+If size == -1, then the number of available bytes will be read.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.visa.MessageVisaDriver.raw_send">
+<tt class="descname">raw_send</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/lantz/visa.html#MessageVisaDriver.raw_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visa.MessageVisaDriver.raw_send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send raw bytes to the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; bytes to be sent to the instrument</li>
+<li><strong>data</strong> &#8211; bytes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Interfacing to instruments</a><ul>
+<li><a class="reference internal" href="#lantz-serial">lantz.serial</a></li>
+<li><a class="reference internal" href="#lantz-network">lantz.network</a></li>
+<li><a class="reference internal" href="#lantz-foreign">lantz.foreign</a></li>
+<li><a class="reference internal" href="#lantz-visa">lantz.visa</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="general.html"
+                        title="previous chapter">General</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ui.html"
+                        title="next chapter">UI</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/interfaces.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ui.html" title="UI"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="general.html" title="General"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

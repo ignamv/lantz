@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.processors &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Support" href="support.html" />
+    <link rel="next" title="lantz.visalib" href="visalib.html" />
+    <link rel="prev" title="lantz.stats" href="stats.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="visalib.html" title="lantz.visalib"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="stats.html" title="lantz.stats"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li>
+          <li><a href="support.html" accesskey="U">Support</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.processors"></span><div class="section" id="lantz-processors">
+<h1>lantz.processors<a class="headerlink" href="#lantz-processors" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.processors.FromQuantityProcessor">
+<em class="property">class </em><tt class="descclassname">lantz.processors.</tt><tt class="descname">FromQuantityProcessor</tt><a class="reference internal" href="../_modules/lantz/processors.html#FromQuantityProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.processors.FromQuantityProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processor to convert the units the function arguments.</p>
+<p>The syntax is equal to <cite>Processor</cite> except that strings are interpreted
+as units.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span> <span class="o">=</span> <span class="n">FromQuantityProcessor</span><span class="p">(</span><span class="s">&#39;ms&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">))</span>
+<span class="go">1000.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.processors.MapProcessor">
+<em class="property">class </em><tt class="descclassname">lantz.processors.</tt><tt class="descname">MapProcessor</tt><a class="reference internal" href="../_modules/lantz/processors.html#MapProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.processors.MapProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processor to map the function parameter values.</p>
+<p>The syntax is equal to <cite>Processor</cite> except that a dict is used as
+mapping table.</p>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span> <span class="o">=</span> <span class="n">MapProcessor</span><span class="p">({</span><span class="bp">True</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">42</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.processors.ParseProcessor">
+<em class="property">class </em><tt class="descclassname">lantz.processors.</tt><tt class="descname">ParseProcessor</tt><a class="reference internal" href="../_modules/lantz/processors.html#ParseProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.processors.ParseProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processor to convert/parse the function parameters.</p>
+<p>The syntax is equal to <cite>Processor</cite> except that strings are interpreted
+as a :class:Parser expression.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span> <span class="o">=</span> <span class="n">ParseProcessor</span><span class="p">(</span><span class="s">&#39;spam {:s} eggs&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span><span class="p">(</span><span class="s">&#39;spam ham eggs&#39;</span><span class="p">)</span>
+<span class="go">&#39;ham&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span> <span class="o">=</span> <span class="n">ParseProcessor</span><span class="p">((</span><span class="s">&#39;hi {:d}&#39;</span><span class="p">,</span> <span class="s">&#39;bye {:s}&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span><span class="p">((</span><span class="s">&#39;hi 42&#39;</span><span class="p">,</span> <span class="s">&#39;bye Brian&#39;</span><span class="p">))</span>
+<span class="go">(42, &#39;Brian&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.processors.Processor">
+<em class="property">class </em><tt class="descclassname">lantz.processors.</tt><tt class="descname">Processor</tt><a class="reference internal" href="../_modules/lantz/processors.html#Processor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.processors.Processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processor to convert the function parameters.</p>
+<p>A <cite>callable</cite> argument will be used to convert the corresponding
+function argument.</p>
+<p>For example, here <cite>x</cite> will be converted to float, before entering
+the function body:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span> <span class="o">=</span> <span class="n">Processor</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span>
+<span class="go">&lt;class &#39;float&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span><span class="p">(</span><span class="s">&#39;10&#39;</span><span class="p">)</span>
+<span class="go">10.0</span>
+</pre></div>
+</div>
+<p>The processor supports multiple argument conversion in a tuple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span> <span class="o">=</span> <span class="n">Processor</span><span class="p">((</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">conv</span><span class="p">)</span>
+<span class="go">&lt;class &#39;lantz.processors.Processor&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span><span class="p">((</span><span class="s">&#39;10&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="go">(10.0, &#39;10&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.processors.RangeProcessor">
+<em class="property">class </em><tt class="descclassname">lantz.processors.</tt><tt class="descname">RangeProcessor</tt><a class="reference internal" href="../_modules/lantz/processors.html#RangeProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.processors.RangeProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processor to convert the units the function arguments.</p>
+<p>The syntax is equal to <cite>Processor</cite> except that iterables are interpreted
+as (low, high, step) specified ranges. Step is optional and max is included</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span> <span class="o">=</span> <span class="n">RangeProcessor</span><span class="p">(((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">),</span> <span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span><span class="p">(</span><span class="mf">1.7</span><span class="p">)</span>
+<span class="go">1.5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.processors.ReverseMapProcessor">
+<em class="property">class </em><tt class="descclassname">lantz.processors.</tt><tt class="descname">ReverseMapProcessor</tt><a class="reference internal" href="../_modules/lantz/processors.html#ReverseMapProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.processors.ReverseMapProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processor to map the function parameter values.</p>
+<p>The syntax is equal to <cite>Processor</cite> except that a dict is used as
+mapping table.</p>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span> <span class="o">=</span> <span class="n">ReverseMapProcessor</span><span class="p">({</span><span class="bp">True</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.processors.ToQuantityProcessor">
+<em class="property">class </em><tt class="descclassname">lantz.processors.</tt><tt class="descname">ToQuantityProcessor</tt><a class="reference internal" href="../_modules/lantz/processors.html#ToQuantityProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.processors.ToQuantityProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to convert the units the function arguments.</p>
+<p>The syntax is equal to <cite>Processor</cite> except that strings are interpreted
+as units.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span> <span class="o">=</span> <span class="n">ToQuantityProcessor</span><span class="p">(</span><span class="s">&#39;ms&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span><span class="p">(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">))</span>
+<span class="go">&lt;Quantity(1000.0, &#39;millisecond&#39;)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&lt;Quantity(1.0, &#39;millisecond&#39;)&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.processors.check_membership">
+<tt class="descclassname">lantz.processors.</tt><tt class="descname">check_membership</tt><big>(</big><em>container</em><big>)</big><a class="reference internal" href="../_modules/lantz/processors.html#check_membership"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.processors.check_membership" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>container</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span> <span class="o">=</span> <span class="n">check_membership</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">0 not in (1, 2, 3)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.processors.check_range_and_coerce_step">
+<tt class="descclassname">lantz.processors.</tt><tt class="descname">check_range_and_coerce_step</tt><big>(</big><em>low</em>, <em>high</em>, <em>step=None</em><big>)</big><a class="reference internal" href="../_modules/lantz/processors.html#check_range_and_coerce_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.processors.check_range_and_coerce_step" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>low</strong> &#8211; </li>
+<li><strong>high</strong> &#8211; </li>
+<li><strong>step</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span> <span class="o">=</span> <span class="n">check_range_and_coerce_step</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">checker</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">checker</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">(1, 5, 10)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">11 not in range (1, 10)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span> <span class="o">=</span> <span class="n">check_range_and_coerce_step</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">checker</span><span class="p">(</span><span class="mf">5.4</span><span class="p">),</span> <span class="n">checker</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">(1, 5, 10)</span>
+</pre></div>
+</div>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.processors.convert_to">
+<tt class="descclassname">lantz.processors.</tt><tt class="descname">convert_to</tt><big>(</big><em>units</em>, <em>on_dimensionless='warn'</em>, <em>on_incompatible='raise'</em>, <em>return_float=False</em><big>)</big><a class="reference internal" href="../_modules/lantz/processors.html#convert_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.processors.convert_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a function that convert a Quantity to to another units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>units</strong> &#8211; string or Quantity specifying the target units</li>
+<li><strong>on_dimensionless</strong> &#8211; how to proceed when a dimensionless number
+number is given.
+&#8216;raise&#8217; to raise an exception,
+&#8216;warn&#8217; to log a warning and proceed,
+&#8216;ignore&#8217; to silently proceed</li>
+<li><strong>on_incompatible</strong> &#8211; how to proceed when source and target units are
+incompatible. Same options as <cite>on_dimensionless</cite></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises :</th><td class="field-body"><dl class="first docutils">
+<dt><tt class="xref py py-class docutils literal"><span class="pre">ValueError</span></tt> if the incoming value cannot be</dt>
+<dd><p class="first last">properly converted</p>
+</dd>
+</dl>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">convert_to</span><span class="p">(</span><span class="s">&#39;mV&#39;</span><span class="p">)(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">))</span>
+<span class="go">&lt;Quantity(1000.0, &#39;millivolt&#39;)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">convert_to</span><span class="p">(</span><span class="s">&#39;mV&#39;</span><span class="p">,</span> <span class="n">return_float</span><span class="o">=</span><span class="bp">True</span><span class="p">)(</span><span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">))</span>
+<span class="go">1000.0</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lantz.processors.getitem">
+<tt class="descclassname">lantz.processors.</tt><tt class="descname">getitem</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="headerlink" href="#lantz.processors.getitem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a[b] or if not found a[type(b)]</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="stats.html"
+                        title="previous chapter">lantz.stats</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="visalib.html"
+                        title="next chapter">lantz.visalib</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/processors.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="visalib.html" title="lantz.visalib"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="stats.html" title="lantz.stats"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >API</a> &raquo;</li>
+          <li><a href="support.html" >Support</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

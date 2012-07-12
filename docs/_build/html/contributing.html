@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Contributing &mdash; Lantz 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="index.html" />
+    <link rel="next" title="&lt;no title&gt;" href="agreement.html" />
+    <link rel="prev" title="lantz.stringparser" href="api/stringparser.html" />
+    <link rel="shortcut icon" type="image/png" href="_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="agreement.html" title="&lt;no title&gt;"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/stringparser.html" title="lantz.stringparser"
+             accesskey="P">previous</a> |</li>
+        <li><img src="_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="index.html">Lantz 0.1 documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="contributing">
+<span id="id1"></span><h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<p>You are most welcome to contribute to Lantz with code, documentation and translations. Please read the following document for guidelines.</p>
+<div class="section" id="file-system-structure">
+<h2>File system structure<a class="headerlink" href="#file-system-structure" title="Permalink to this headline">¶</a></h2>
+<p>The distribution is organized in the following folders:</p>
+<p><strong>docs</strong></p>
+<blockquote>
+<div><p>Documentation in <a class="reference external" href="http://docutils.sf.net/rst.html">reStructuredText</a> format with <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> makefile. Files must have a <tt class="docutils literal"><span class="pre">.rst</span></tt> extension</p>
+<p>To generate, for example, HTML documentation change into this folder and run:</p>
+<div class="highlight-python"><pre>$ make html</pre>
+</div>
+<p>You will find the generated documentation in <tt class="docutils literal"><span class="pre">docs/_build/html/index.html</span></tt></p>
+</div></blockquote>
+<p><strong>examples</strong></p>
+<blockquote>
+<div>Root folder for the examples.</div></blockquote>
+<p><strong>lantz</strong></p>
+<blockquote>
+<div><p>Root folder containing the core functionality</p>
+<blockquote>
+<div><p><strong>ui</strong></p>
+<blockquote>
+<div>User interface related code.</div></blockquote>
+<p><strong>drivers</strong></p>
+<blockquote>
+<div>There is a package folder for each manufacturer and module file for each instrument model (or family of models). All files are named using lowercase. Class drivers are named according to the model. If the model starts with a number, then the first letter of the manufacturer should be prefixed. Finally, all classes should be imported in the __init__.py of the corresponding package.</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+<p><strong>scripts</strong></p>
+<blockquote>
+<div>Python scripts to provide simple command line functionality.</div></blockquote>
+<p><strong>tests</strong></p>
+<blockquote>
+<div>Test cases.</div></blockquote>
+</div>
+<div class="section" id="python-style">
+<h2>Python style<a class="headerlink" href="#python-style" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Unless otherwise specified, follow <span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0008"><strong>PEP 8</strong></a> strictly.</li>
+<li>Document every class and method according to <span class="target" id="index-1"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0257"><strong>PEP 257</strong></a>.</li>
+<li>Before submitting your code, use a tool like <a class="reference external" href="http://pypi.python.org/pypi/pep8/">pep8.py</a> and <a class="reference external" href="http://www.logilab.org/857">pylint.py</a> to check for style.</li>
+<li><cite>Feat</cite> and <cite>DictFeat</cite> should be named with a noun or an adjective.</li>
+<li><cite>Action</cite> should be named with a verb.</li>
+<li>Files should be utf-8 formatted.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="header">
+<h2>Header<a class="headerlink" href="#header" title="Permalink to this headline">¶</a></h2>
+<p>All files must have first the encoding indication, and then a header indicating the
+module, a small description and the copyright message. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    lantz.foreign</span>
+<span class="sd">    ~~~~~~~~~~~~~</span>
+
+<span class="sd">    Implements classes and methods to interface to foreign functions.</span>
+
+<span class="sd">    :copyright: (c) 2012 by Lantz Authors, see AUTHORS for more details.</span>
+<span class="sd">    :license: BSD, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="version-control-system">
+<h2>Version control system<a class="headerlink" href="#version-control-system" title="Permalink to this headline">¶</a></h2>
+<p>Lantz uses <a class="reference external" href="http://git-scm.com/">Git</a> as version control system.</p>
+<dl class="docutils">
+<dt>There are always at least two branches:</dt>
+<dd><ul class="first last simple">
+<li>master: appropriate for users. It must always be in a working state.</li>
+<li>develop: appropriate for developers. Might not be in a working state.</li>
+</ul>
+</dd>
+</dl>
+<p>The master branch only accepts atomic, small commits. Larger changes that might break the master branch should happen in the develop branch. The develop branch will be merged into the master after deep testing. If you want to refactor major parts of the code or try new ideas, create a dedicated branch. This branch will merged into develop once tested.</p>
+</div>
+<div class="section" id="submitting-your-changes">
+<h2>Submitting your changes<a class="headerlink" href="#submitting-your-changes" title="Permalink to this headline">¶</a></h2>
+<p>Changes must be submitted for merging as patches or pull requests.</p>
+<dl class="docutils">
+<dt>Before doing so, please check that:</dt>
+<dd><ul class="first last simple">
+<li>The new code is functional.</li>
+<li>The new code follows the style guidelines.</li>
+<li>The new code is documented.</li>
+<li>All tests are passed.</li>
+<li>Any new file contains an appropriate header.</li>
+<li>You commit to the head of the appropriate branch (usually develop).</li>
+</ul>
+</dd>
+</dl>
+<p>Commits must include a one-line description of the intended change followed, if necessary, by an empty line and detailed description. You can send your patch by e-mail to <cite>lantz.contributor&#64;gmail.com</cite>:</p>
+<div class="highlight-python"><pre>$ git format-patch origin/develop..develop
+0001-Changed-Driver-class-to-enable-inheritance-of-Action.patch
+0002-Added-RECV_CHUNK-to-TextualMixin.patch</pre>
+</div>
+<p>or send a pull request.</p>
+</div>
+<div class="section" id="copyright">
+<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this headline">¶</a></h2>
+<p>Files in the Lantz repository don&#8217;t list author names, both to avoid clutter and to avoid having to keep the lists up to date. Instead, your name will appear in the Git change log and in the AUTHORS file. The Lantz maintainer will update this file when you have submitted your first commit.</p>
+<p>Before your first contribution you must submit the <a class="reference internal" href="agreement.html#agreement"><em>Contributor Agreement</em></a>. Code that you contribute should use the standard copyright header:</p>
+<div class="highlight-python"><pre>:copyright: (c) 2012 by Lantz Authors, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.</pre>
+</div>
+</div>
+<div class="section" id="finally-we-have-a-small-zen">
+<h2>Finally, we have a small Zen<a class="headerlink" href="#finally-we-have-a-small-zen" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>import this
+Lantz should not get in your way.
+Unless you actually want it to.
+Even then, python ways should not be void.
+Provide solutions for common scenarios.
+Leave the special cases for the people who actually need them.
+Logging is great, do it often!</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="index.html">
+  <img src="_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Contributing</a><ul>
+<li><a class="reference internal" href="#file-system-structure">File system structure</a></li>
+<li><a class="reference internal" href="#python-style">Python style</a></li>
+<li><a class="reference internal" href="#header">Header</a></li>
+<li><a class="reference internal" href="#version-control-system">Version control system</a></li>
+<li><a class="reference internal" href="#submitting-your-changes">Submitting your changes</a></li>
+<li><a class="reference internal" href="#copyright">Copyright</a></li>
+<li><a class="reference internal" href="#finally-we-have-a-small-zen">Finally, we have a small Zen</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api/stringparser.html"
+                        title="previous chapter">lantz.stringparser</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="agreement.html"
+                        title="next chapter">&lt;no title&gt;</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/contributing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="agreement.html" title="&lt;no title&gt;"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api/stringparser.html" title="lantz.stringparser"
+             >previous</a> |</li>
+        <li><img src="_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="index.html">Lantz 0.1 documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Jul 13, 2012.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>
