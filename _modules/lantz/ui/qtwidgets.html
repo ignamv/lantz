@@ -96,11 +96,11 @@
 
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">Q_</span><span class="p">,</span> <span class="n">Driver</span>
 <span class="kn">from</span> <span class="nn">..feat</span> <span class="kn">import</span> <span class="n">MISSING</span><span class="p">,</span> <span class="n">DictFeat</span>
+<span class="kn">from</span> <span class="nn">..log</span> <span class="kn">import</span> <span class="n">get_logger</span>
 
 <span class="n">QToolTip</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">QFont</span><span class="p">(</span><span class="s">&#39;SansSerif&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;lantz.ui&#39;</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NullHandler</span><span class="p">())</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&#39;lantz.ui&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_rst_to_html</span><span class="p">(</span><span class="n">rst</span><span class="p">):</span>
@@ -113,6 +113,8 @@
 <span class="k">def</span> <span class="nf">_params_doc</span><span class="p">(</span><span class="n">rst</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Extract</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">rst</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;&#39;</span>
     <span class="n">docs</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">rst</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rst</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
     <span class="n">key</span> <span class="o">=</span> <span class="bp">None</span>
@@ -325,7 +327,7 @@
                 <span class="n">widget</span> <span class="o">=</span> <span class="n">QCheckBox</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">widget</span> <span class="o">=</span> <span class="n">QComboBox</span>
-        <span class="k">elif</span> <span class="n">feat</span><span class="o">.</span><span class="n">units</span> <span class="ow">or</span> <span class="n">feat</span><span class="o">.</span><span class="n">limits</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">feat</span><span class="o">.</span><span class="n">units</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">feat</span><span class="o">.</span><span class="n">limits</span><span class="p">:</span>
             <span class="n">widget</span> <span class="o">=</span> <span class="n">QDoubleSpinBox</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">widget</span><span class="o">=</span> <span class="n">QLineEdit</span>
@@ -826,8 +828,18 @@
 
     <span class="k">def</span> <span class="nf">bind_feat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">bind_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_units</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">change_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span>
+
+        <span class="c">#: self._units are the current units displayed by the widget.</span>
+        <span class="c">#: Respects units declared in the suffix</span>
+
+        <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">units</span><span class="p">:</span>
+            <span class="n">suf</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">suffix</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;suffix&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">feat</span><span class="o">.</span><span class="n">units</span><span class="p">)</span> <span class="ow">or</span> <span class="n">feat</span><span class="o">.</span><span class="n">units</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_units</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">suf</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">change_units</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_units</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">limits</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">change_limits</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">change_units</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_units</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update displayed suffix and stored units.</span>
@@ -843,23 +855,37 @@
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;setSuffix&#39;</span><span class="p">):</span>
                <span class="bp">self</span><span class="o">.</span><span class="n">setSuffix</span><span class="p">(</span><span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_units</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
 
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;setRange&#39;</span><span class="p">):</span>
-                <span class="n">rng</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">limits</span>
-                <span class="n">conv</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ndx</span><span class="p">:</span> <span class="n">Q_</span><span class="p">(</span><span class="n">rng</span><span class="p">[</span><span class="n">ndx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">units</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">new_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">conv</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="n">conv</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">conv</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="n">conv</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_units</span> <span class="o">=</span> <span class="n">new_units</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">change_limits</span><span class="p">(</span><span class="n">new_units</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_units</span> <span class="o">=</span> <span class="n">new_units</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">rescaled</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">change_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_units</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Change the limits (range) of the control taking the original values</span>
+<span class="sd">        from the feat and scaling them to the new_units.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;setRange&#39;</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="n">rng</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">limits</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s">&#39;-inf&#39;</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="s">&#39;+inf&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">new_units</span><span class="p">:</span>
+            <span class="n">conv</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ndx</span><span class="p">:</span> <span class="n">Q_</span><span class="p">(</span><span class="n">rng</span><span class="p">[</span><span class="n">ndx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">units</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">new_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">conv</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ndx</span><span class="p">:</span> <span class="n">rng</span><span class="p">[</span><span class="n">ndx</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">conv</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="n">conv</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">conv</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="n">conv</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get widget value and scale by units.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_units</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_units</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set widget value scaled by units.</span>
@@ -868,8 +894,10 @@
             <span class="n">font</span> <span class="o">=</span> <span class="n">QFont</span><span class="p">()</span>
             <span class="n">font</span><span class="o">.</span><span class="n">setItalic</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Q_</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
 
 <span class="nd">@register_wrapper</span>
@@ -901,7 +929,10 @@
             <span class="n">font</span><span class="o">.</span><span class="n">setItalic</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Q_</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_units</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
@@ -1065,22 +1096,27 @@
 <span class="sd">        Return None if the user cancelled.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">wrapped</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">__wrapped__</span>
+
+        <span class="n">wrapped</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="s">&#39;__wrapped__&#39;</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">wrapped</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">wrapped</span><span class="o">.</span><span class="n">__doc__</span>
         <span class="n">argspec</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="n">wrapped</span><span class="p">)</span>
+
         <span class="n">arguments</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argspec</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">dialog</span> <span class="o">=</span> <span class="n">ArgumentsInputDialog</span><span class="p">(</span><span class="n">argspec</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span>
-                                          <span class="n">window_title</span><span class="o">=</span><span class="n">wrapped</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s">&#39; arguments&#39;</span><span class="p">,</span>
-                                          <span class="n">doc</span><span class="o">=</span><span class="n">_params_doc</span><span class="p">(</span><span class="n">wrapped</span><span class="o">.</span><span class="n">__doc__</span><span class="p">))</span>
+                                          <span class="n">window_title</span><span class="o">=</span><span class="n">name</span><span class="o">+</span> <span class="s">&#39; arguments&#39;</span><span class="p">,</span>
+                                          <span class="n">doc</span><span class="o">=</span><span class="n">_params_doc</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">():</span>
                 <span class="k">return</span> <span class="bp">None</span>
             <span class="n">arguments</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">arguments</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">arguments</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
             <span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s">&#39;Lantz&#39;</span><span class="p">,</span>
-                                 <span class="s">&#39;Instrument error while calling {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wrapped</span><span class="o">.</span><span class="n">__name__</span><span class="p">),</span>
+                                 <span class="s">&#39;Instrument error while calling {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
                                  <span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">,</span>
                                  <span class="n">QMessageBox</span><span class="o">.</span><span class="n">NoButton</span><span class="p">)</span>
 
@@ -1228,7 +1264,7 @@
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Jul 13, 2012.
+    Last updated on Aug 22, 2012.
     <a href="../../../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

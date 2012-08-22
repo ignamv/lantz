@@ -91,25 +91,13 @@
 </table>
 <dl class="class">
 <dt id="lantz.drivers.examples.LantzSignalGenerator">
-<em class="property">class </em><tt class="descclassname">lantz.drivers.examples.</tt><tt class="descname">LantzSignalGenerator</tt><big>(</big><em>host='localhost'</em>, <em>port=9997</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../api/interfaces.html#lantz.network.TCPDriver" title="lantz.network.TCPDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.network.TCPDriver</span></tt></a></p>
+<em class="property">class </em><tt class="descclassname">lantz.drivers.examples.</tt><tt class="descname">LantzSignalGenerator</tt><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
 <p>Lantz Signal Generator</p>
-<dl class="method">
-<dt id="lantz.drivers.examples.LantzSignalGenerator.calibrate_async">
-<tt class="descname">calibrate_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.calibrate_async" title="Permalink to this definition">¶</a></dt>
-<dd><p>(Async) Calibrate.</p>
-</dd></dl>
-
 <dl class="method">
 <dt id="lantz.drivers.examples.LantzSignalGenerator.query">
 <tt class="descname">query</tt><big>(</big><em>command</em>, <em>send_args</em>, <em>recv_args</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.query" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="lantz.drivers.examples.LantzSignalGenerator.self_test_async">
-<tt class="descname">self_test_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.self_test_async" title="Permalink to this definition">¶</a></dt>
-<dd><p>(Async) Reset to .</p>
-</dd></dl>
 
 <dl class="attribute">
 <dt id="lantz.drivers.examples.LantzSignalGenerator.ENCODING">
@@ -144,7 +132,7 @@
 
 <dl class="attribute">
 <dt id="lantz.drivers.examples.LantzSignalGenerator.calibrate">
-<tt class="descname">calibrate</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a65bd0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.calibrate" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">calibrate</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1aecd90&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.calibrate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -244,7 +232,7 @@
 
 <dl class="attribute">
 <dt id="lantz.drivers.examples.LantzSignalGenerator.self_test">
-<tt class="descname">self_test</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1a65bf0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.self_test" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">self_test</tt><em class="property"> = functools.partial(&lt;bound method Action.call of &lt;lantz.action.Action object at 0x1aecdb0&gt;&gt;, None)</em><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGenerator.self_test" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -258,6 +246,60 @@
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.drivers.examples.LantzSignalGeneratorTCP">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.examples.</tt><tt class="descname">LantzSignalGeneratorTCP</tt><big>(</big><em>host='localhost'</em>, <em>port=9997</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGeneratorTCP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.drivers.examples.fungen.LantzSignalGenerator</span></tt>, <a class="reference internal" href="../api/interfaces.html#lantz.network.TCPDriver" title="lantz.network.TCPDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.network.TCPDriver</span></tt></a></p>
+<dl class="method">
+<dt id="lantz.drivers.examples.LantzSignalGeneratorTCP.calibrate_async">
+<tt class="descname">calibrate_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGeneratorTCP.calibrate_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Calibrate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.examples.LantzSignalGeneratorTCP.self_test_async">
+<tt class="descname">self_test_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGeneratorTCP.self_test_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Reset to .</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.drivers.examples.LantzSignalGeneratorSerial">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.examples.</tt><tt class="descname">LantzSignalGeneratorSerial</tt><big>(</big><em>port=1</em>, <em>timeout=1</em>, <em>write_timeout=1</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGeneratorSerial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.drivers.examples.fungen.LantzSignalGenerator</span></tt>, <a class="reference internal" href="../api/interfaces.html#lantz.serial.SerialDriver" title="lantz.serial.SerialDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.serial.SerialDriver</span></tt></a></p>
+<dl class="method">
+<dt id="lantz.drivers.examples.LantzSignalGeneratorSerial.calibrate_async">
+<tt class="descname">calibrate_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGeneratorSerial.calibrate_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Calibrate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.examples.LantzSignalGeneratorSerial.self_test_async">
+<tt class="descname">self_test_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGeneratorSerial.self_test_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Reset to .</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.drivers.examples.LantzSignalGeneratorSerialVisa">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.examples.</tt><tt class="descname">LantzSignalGeneratorSerialVisa</tt><big>(</big><em>resource_name</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGeneratorSerialVisa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">lantz.drivers.examples.fungen.LantzSignalGenerator</span></tt>, <a class="reference internal" href="../api/interfaces.html#lantz.visa.SerialVisaDriver" title="lantz.visa.SerialVisaDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.visa.SerialVisaDriver</span></tt></a></p>
+<dl class="method">
+<dt id="lantz.drivers.examples.LantzSignalGeneratorSerialVisa.calibrate_async">
+<tt class="descname">calibrate_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGeneratorSerialVisa.calibrate_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Calibrate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.examples.LantzSignalGeneratorSerialVisa.self_test_async">
+<tt class="descname">self_test_async</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.examples.LantzSignalGeneratorSerialVisa.self_test_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Async) Reset to .</p>
 </dd></dl>
 
 </dd></dl>
@@ -326,7 +368,7 @@
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Jul 13, 2012.
+    Last updated on Aug 22, 2012.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

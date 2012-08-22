@@ -192,7 +192,7 @@ or the state of the analog ourput (0 off/disabled, 1 on/enabled)</li>
 The response to successful <strong>SET</strong> commands is the string OK.
 If the command is invalid or an occurs in the instrument, the instrument will respond with the string ERROR. For example, the command <tt class="docutils literal"><span class="pre">?DIS</span> <span class="pre">19</span></tt> is invalid because the parameter <em>B</em> should be in [1, 8].</p>
 <p>One more thing, following a tutorial about building a driver to communicate with an instrument that you do not have is not much fun. That&#8217;s why we have created a virtual version of this instrument. From the command line, run the following command:</p>
-<p>$ sim-fungen.py</p>
+<p>$ sim-fungen.py tcp</p>
 <p>This will start an application that listens for incoming TCP packages on port 5678 from <cite>localhost</cite>.</p>
 </div>
 <div class="section" id="a-basic-driver">
@@ -263,7 +263,7 @@ Inside the method (in this case is a getter) goes the code to communicate with t
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Feat</span>
 <span class="kn">from</span> <span class="nn">lantz.network</span> <span class="kn">import</span> <span class="n">TCPDriver</span>
 
-<span class="k">class</span> <span class="nc">LantzSignalGenerator</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Lantz Signal Generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -335,7 +335,7 @@ Inside the method (in this case is a getter) goes the code to communicate with t
 <span class="kn">from</span> <span class="nn">lantz.network</span> <span class="kn">import</span> <span class="n">TCPDriver</span>
 <span class="kn">from</span> <span class="nn">lantz.errors</span> <span class="kn">import</span> <span class="n">InstrumentError</span>
 
-<span class="k">class</span> <span class="nc">LantzSignalGenerator</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Lantz Signal Generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -394,7 +394,7 @@ Inside the method (in this case is a getter) goes the code to communicate with t
 <span class="kn">from</span> <span class="nn">lantz.network</span> <span class="kn">import</span> <span class="n">TCPDriver</span>
 <span class="kn">from</span> <span class="nn">lantz.errors</span> <span class="kn">import</span> <span class="n">InstrumentError</span>
 
-<span class="k">class</span> <span class="nc">LantzSignalGenerator</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Lantz Signal Generator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -453,7 +453,7 @@ Inside the method (in this case is a getter) goes the code to communicate with t
 <span class="kn">from</span> <span class="nn">lantz.network</span> <span class="kn">import</span> <span class="n">TCPDriver</span>
 <span class="kn">from</span> <span class="nn">lantz.errors</span> <span class="kn">import</span> <span class="n">InstrumentError</span>
 
-<span class="k">class</span> <span class="nc">LantzSignalGenerator</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Lantz Signal Generator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -687,7 +687,7 @@ Inside the method (in this case is a getter) goes the code to communicate with t
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Jul 13, 2012.
+    Last updated on Aug 22, 2012.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

@@ -99,7 +99,7 @@ via serial or parallel port using pyserial</p>
 <li><strong>xonoff</strong> &#8211; xonoff flow control enabled.</li>
 <li><strong>rtscts</strong> &#8211; rtscts flow control enabled.</li>
 <li><strong>dsrdtr</strong> &#8211; dsrdtr flow control enabled</li>
-<li><strong>timeout</strong> &#8211; value in seconds, None to wait for ever or 0 for non-blocking mode</li>
+<li><strong>timeout</strong> &#8211; value in seconds, None or negative to wait for ever or 0 for non-blocking mode</li>
 <li><strong>write_timeout</strong> &#8211; see timeout</li>
 </ul>
 </td>
@@ -159,7 +159,7 @@ If size == -1, then the number of available bytes will be read.</p>
 <dl class="attribute">
 <dt id="lantz.serial.SerialDriver.BAUDRATE">
 <tt class="descname">BAUDRATE</tt><em class="property"> = 9600</em><a class="headerlink" href="#lantz.serial.SerialDriver.BAUDRATE" title="Permalink to this definition">¶</a></dt>
-<dd><p>comunication parameters</p>
+<dd><p>communication parameters</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -335,8 +335,42 @@ via serial or parallel port using pyserial</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="lantz.visa.MessageVisaDriver.raw_recv">
-<tt class="descname">raw_recv</tt><big>(</big><em>size</em><big>)</big><a class="reference internal" href="../_modules/lantz/visa.html#MessageVisaDriver.raw_recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visa.MessageVisaDriver.raw_recv" title="Permalink to this definition">¶</a></dt>
+<dt id="lantz.visa.MessageVisaDriver.raw_send">
+<tt class="descname">raw_send</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/lantz/visa.html#MessageVisaDriver.raw_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visa.MessageVisaDriver.raw_send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send raw bytes to the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; bytes to be sent to the instrument</li>
+<li><strong>data</strong> &#8211; bytes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lantz.visa.SerialVisaDriver">
+<em class="property">class </em><tt class="descclassname">lantz.visa.</tt><tt class="descname">SerialVisaDriver</tt><big>(</big><em>resource_name</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/lantz/visa.html#SerialVisaDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visa.SerialVisaDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lantz.visa.MessageVisaDriver" title="lantz.visa.MessageVisaDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.visa.MessageVisaDriver</span></tt></a></p>
+<p>Base class for drivers that communicate with instruments
+via serial port using visa.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource_name</strong> &#8211; the visa resource name or alias (e.g. &#8216;ASRL1::INSTR&#8217;)</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lantz.visa.SerialVisaDriver.raw_recv">
+<tt class="descname">raw_recv</tt><big>(</big><em>size</em><big>)</big><a class="reference internal" href="../_modules/lantz/visa.html#SerialVisaDriver.raw_recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visa.SerialVisaDriver.raw_recv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receive raw bytes to the instrument.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -354,22 +388,16 @@ via serial or parallel port using pyserial</p>
 If size == -1, then the number of available bytes will be read.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="lantz.visa.MessageVisaDriver.raw_send">
-<tt class="descname">raw_send</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/lantz/visa.html#MessageVisaDriver.raw_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.visa.MessageVisaDriver.raw_send" title="Permalink to this definition">¶</a></dt>
-<dd><p>Send raw bytes to the instrument.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data</strong> &#8211; bytes to be sent to the instrument</li>
-<li><strong>data</strong> &#8211; bytes</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="attribute">
+<dt id="lantz.visa.SerialVisaDriver.BAUDRATE">
+<tt class="descname">BAUDRATE</tt><em class="property"> = 9600</em><a class="headerlink" href="#lantz.visa.SerialVisaDriver.BAUDRATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>communication parameters</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.visa.SerialVisaDriver.RTSCTS">
+<tt class="descname">RTSCTS</tt><em class="property"> = False</em><a class="headerlink" href="#lantz.visa.SerialVisaDriver.RTSCTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>flow control flags</p>
 </dd></dl>
 
 </dd></dl>
@@ -450,7 +478,7 @@ If size == -1, then the number of available bytes will be read.</p>
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Jul 13, 2012.
+    Last updated on Aug 22, 2012.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

@@ -82,9 +82,9 @@
 <span class="n">BYTESIZE</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
             <span class="mi">7</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span>
 
-<span class="n">PARITY</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;None&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_NONE</span><span class="p">,</span> <span class="s">&#39;Even&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_EVEN</span><span class="p">,</span>
-          <span class="s">&#39;Odd&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_ODD</span><span class="p">,</span> <span class="s">&#39;Mark&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_MARK</span><span class="p">,</span>
-          <span class="s">&#39;Space&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_SPACE</span><span class="p">}</span>
+<span class="n">PARITY</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;none&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_NONE</span><span class="p">,</span> <span class="s">&#39;even&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_EVEN</span><span class="p">,</span>
+          <span class="s">&#39;odd&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_ODD</span><span class="p">,</span> <span class="s">&#39;mark&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_MARK</span><span class="p">,</span>
+          <span class="s">&#39;space&#39;</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_PAR_SPACE</span><span class="p">}</span>
 
 <span class="n">STOPBITS</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_STOP_ONE</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_STOP_ONE5</span><span class="p">,</span>
             <span class="mi">2</span><span class="p">:</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_STOP_TWO</span><span class="p">}</span>
@@ -126,6 +126,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_attributes</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="n">library_path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;library_path&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span> <span class="o">=</span> <span class="n">ResourceManager</span><span class="p">(</span><span class="n">library_path</span><span class="p">)</span>
@@ -137,7 +138,7 @@
         <span class="c">#stopbits = STOPBITS[stopbits]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span> <span class="o">=</span> <span class="n">resource_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Created Instrument {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Created Instrument {}&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MessageVisaDriver.raw_send"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver.raw_send">[docs]</a>    <span class="k">def</span> <span class="nf">raw_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Send raw bytes to the instrument.</span>
@@ -151,7 +152,79 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 </div>
-<div class="viewcode-block" id="MessageVisaDriver.raw_recv"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver.raw_recv">[docs]</a>    <span class="k">def</span> <span class="nf">raw_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+<div class="viewcode-block" id="MessageVisaDriver.initialize"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Open port</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Opening {}&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">)</span> <span class="c">#, self.access_mode, self.open_timeout</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">visa</span><span class="o">.</span><span class="n">set_attribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;The session for {} is {}&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;{} is already open&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MessageVisaDriver.finalize"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver.finalize">[docs]</a>    <span class="k">def</span> <span class="nf">finalize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close port</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Closing port {}&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visa</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+    <span class="k">def</span> <span class="nf">is_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="SerialVisaDriver"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.SerialVisaDriver">[docs]</a><span class="k">class</span> <span class="nc">SerialVisaDriver</span><span class="p">(</span><span class="n">MessageVisaDriver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for drivers that communicate with instruments</span>
+<span class="sd">    via serial port using visa.</span>
+
+<span class="sd">    :param resource_name: the visa resource name or alias (e.g. &#39;ASRL1::INSTR&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">#: communication parameters</span>
+    <span class="n">BAUDRATE</span> <span class="o">=</span> <span class="mi">9600</span>
+    <span class="n">BYTESIZE</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">PARITY</span> <span class="o">=</span> <span class="s">&#39;none&#39;</span>
+    <span class="n">STOPBITS</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c">#: flow control flags</span>
+    <span class="n">RTSCTS</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">DSRDTR</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">XONXOFF</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">RECV_CHUNK</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">resource_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">kw</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">kw</span><span class="p">[</span><span class="s">&#39;ASRL_BAUD&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;baudrate&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BAUDRATE</span><span class="p">)</span>
+        <span class="n">kw</span><span class="p">[</span><span class="s">&#39;ASRL_DATA_BITS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BYTESIZE</span><span class="p">[</span><span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;bytesize&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BYTESIZE</span><span class="p">)]</span>
+        <span class="n">kw</span><span class="p">[</span><span class="s">&#39;ASRL_PARITY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PARITY</span><span class="p">[</span><span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;parity&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PARITY</span><span class="p">)]</span>
+        <span class="n">kw</span><span class="p">[</span><span class="s">&#39;ASRL_STOP_BITS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">STOPBITS</span><span class="p">[</span><span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;stopbits&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">STOPBITS</span><span class="p">)]</span>
+
+        <span class="n">flow</span> <span class="o">=</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_FLOW_NONE</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;rtscts&#39;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;RTSCTS&#39;</span><span class="p">)):</span>
+            <span class="n">flow</span> <span class="o">|=</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_FLOW_RTS_CTS</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;dsrdtr&#39;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;DSRDTR&#39;</span><span class="p">)):</span>
+            <span class="n">flow</span> <span class="o">|=</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_FLOW_DTR_DSR</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;xonxoff&#39;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;XONXOFF&#39;</span><span class="p">)):</span>
+            <span class="n">flow</span> <span class="o">|=</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_FLOW_XON_XOFF</span>
+
+        <span class="n">kw</span><span class="p">[</span><span class="s">&#39;ASRL_FLOW_CNTRL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">RECV_TERMINATION</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">RECV_CHUNK</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s">&#39;TERMCHAR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RECV_TERMINATION</span><span class="p">)</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s">&#39;ASRL_END_IN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_END_TERMCHAR</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s">&#39;ASRL_END_IN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Constants</span><span class="o">.</span><span class="n">ASRL_END_NONE</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_attributes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SerialVisaDriver.raw_recv"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.SerialVisaDriver.raw_recv">[docs]</a>    <span class="k">def</span> <span class="nf">raw_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Receive raw bytes to the instrument.</span>
 
 <span class="sd">        :param size: number of bytes to receive</span>
@@ -162,42 +235,20 @@
 <span class="sd">        If size == -1, then the number of available bytes will be read.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span> <span class="c">###</span>
+
         <span class="k">if</span> <span class="n">size</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">inWaiting</span><span class="p">()</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visa</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">,</span> <span class="s">&#39;ASRL_AVAIL_NUM&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">bytes</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
             <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="c">#self.log_debug(&#39;waiting {}&#39;.format(size))</span>
+
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visa</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
-        <span class="c">#self.log_debug(data)</span>
+
         <span class="k">return</span> <span class="n">data</span>
-</div>
-<div class="viewcode-block" id="MessageVisaDriver.initialize"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Open port</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Opening {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">)</span> <span class="c">#, self.access_mode, self.open_timeout</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;The session for {} is {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;{} is already open&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">))</span>
-</div>
-<div class="viewcode-block" id="MessageVisaDriver.finalize"><a class="viewcode-back" href="../../api/interfaces.html#lantz.visa.MessageVisaDriver.finalize">[docs]</a>    <span class="k">def</span> <span class="nf">finalize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Close port</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s">&#39;Closing port {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resource_name</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">visa</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="o">=</span> <span class="bp">None</span>
-</div>
-    <span class="k">def</span> <span class="nf">is_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
 
-</div>
-<span class="k">class</span> <span class="nc">SerialVisaDriver</span><span class="p">(</span><span class="n">MessageVisaDriver</span><span class="p">):</span>
-    <span class="k">pass</span>
-
-
+</div></div>
 <span class="k">class</span> <span class="nc">GPIBVisaDriver</span><span class="p">(</span><span class="n">MessageVisaDriver</span><span class="p">):</span>
     <span class="k">pass</span>
 
@@ -255,7 +306,7 @@
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Jul 13, 2012.
+    Last updated on Aug 22, 2012.
     <a href="../../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

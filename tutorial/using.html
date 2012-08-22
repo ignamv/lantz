@@ -68,25 +68,25 @@
 <span id="tutorial-using"></span><h1>1. Using lantz drivers<a class="headerlink" href="#using-lantz-drivers" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, you will learn how to use Lantz drivers to control an instrument. Lantz is shipped with drivers for common laboratory instruments. Each instrument has different capabilities, and these reflect in the drivers being different. However, all Lantz drivers share a common structure and learning about it allows you to use them in a more efficient way.</p>
 <p>Following a tutorial about using a driver to communicate with an instrument that you do not have is not much fun. That&#8217;s why we have created a virtual version of this instrument. From the command line, run the following command:</p>
-<div class="highlight-python"><pre>$ sim-fungen.py</pre>
+<div class="highlight-python"><pre>$ sim-fungen.py tcp</pre>
 </div>
 <p>This will start an application (i.e. your instrument) that listens for incoming TCP packages (commands) on port 5678 from <cite>localhost</cite>. In the screen you will see the commands received and sent by the instrument.</p>
 <p>Your program and the instrument will communicate by exchanging text commands via TCP. But having a Lantz driver already built for your particular instrument releases you for the burden of sending and receiving the messages. Let&#8217;s start by finding the driver. Lantz drivers are organized inside packages, each package named after the manufacturer. So the <cite>Coherent Argon Laser Innova</cite> 300C driver is in <cite>lantz.drivers.coherent</cite> under the name <cite>ArgonInnova300C</cite>. We follow Python style guide (PEP8) to name packages and modules (lowercase) and classes (CamelCase).</p>
-<p>Our simulated device is under the company <cite>examples</cite> and is named <cite>LantzSignalGenerator</cite>. Create a python script named <cite>test_fungen.py</cite> and type:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+<p>Our simulated device is under the company <cite>examples</cite> and is named <cite>LantzSignalGeneratorTCP</cite>. Create a python script named <cite>test_fungen.py</cite> and type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
 
-<span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
+<span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
 <span class="n">inst</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 <span class="k">print</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
 <span class="n">inst</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Let&#8217;s look at the code line-by-line. First we import the class into our script:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
 </pre></div>
 </div>
 <p>Then we create an instance of the class, setting the address to localhost and port to 5678:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This does not connects to the device. To do so, you call the <cite>initialize</cite> method:</p>
@@ -110,9 +110,9 @@
 <p>In the window where <cite>sim-fungen.py</cite> is running you will see the message exchange. You normally don&#8217;t see this in real instruments. Having a simulated instrument allow us to peek into it and understand what is going on: when we called <cite>inst.idn</cite>, the driver sent message (<cite>?IDN</cite>) to the instrument and it answered back (<cite>FunctionGenerator Serial #12345</cite>). Notice that end of line characters were stripped by the driver.</p>
 <blockquote>
 <div><p>To find out which other properties and methods are available checkout the documentation. A nice feature of Lantz (thanks to sphinx) is that useful documentation is generated from the driver itself. <cite>idn</cite> is a <cite>Feat</cite> of the driver. Think of a <cite>Feat</cite> as a pimped property. It works just like python properties but it wraps its call with some utilities (more on this later). <cite>idn</cite> is a read-only and as the documentation states it gets the identification information from the device. As <cite>idn</cite> is read-only, the following code will raise an exception:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
 
-<span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
+<span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
 <span class="n">inst</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 <span class="n">inst</span><span class="o">.</span><span class="n">idn</span> <span class="o">=</span> <span class="s">&#39;A new identification&#39;</span> <span class="c"># &lt;- This will fail as idn is read-only</span>
 <span class="n">inst</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
@@ -120,9 +120,9 @@
 </div>
 </div></blockquote>
 <p>The problem is that finalize will never be called possibly leaving resources open. You need to wrap your possible failing code into a try-except-finally structure:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
 
-<span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
+<span class="n">inst</span> <span class="o">=</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
 <span class="n">inst</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">inst</span><span class="o">.</span><span class="n">idn</span> <span class="o">=</span> <span class="s">&#39;A new identification&#39;</span> <span class="c"># &lt;- This will fail as idn is read-only</span>
@@ -133,9 +133,9 @@
 </pre></div>
 </div>
 <p>All lantz drivers are also context managers and there fore you can write this in a much more compact way:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
 
-<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
     <span class="n">inst</span><span class="o">.</span><span class="n">idn</span> <span class="o">=</span> <span class="s">&#39;A new identification&#39;</span> <span class="c"># &lt;- This will fail as idn is read-only</span>
 </pre></div>
 </div>
@@ -143,9 +143,9 @@
 <div class="section" id="lantz-feat-in-depth">
 <h2>1.1. Lantz Feat in depth<a class="headerlink" href="#lantz-feat-in-depth" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s query all parameters and print them state:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
 
-<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&#39;idn: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">))</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&#39;frequency: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">frequency</span><span class="p">))</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&#39;amplitude: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span><span class="p">))</span>
@@ -186,9 +186,9 @@ din[8]: False</pre>
 <div class="section" id="multiple-queries">
 <h2>1.2. Multiple queries<a class="headerlink" href="#multiple-queries" title="Permalink to this headline">¶</a></h2>
 <p>You can actually make it simpler. All lantz feats of a given instrument are registered within the driver. You can call the <cite>refresh</cite> method to get them all at once:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
 
-<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -272,7 +272,7 @@ din[8]: False</pre>
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Jul 13, 2012.
+    Last updated on Aug 22, 2012.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

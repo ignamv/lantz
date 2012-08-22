@@ -36,7 +36,9 @@ Drivers
 
 :mod:`Lantz Examples. <lantz.drivers.examples>`
 
-- :class:`Lantz Signal Generator <lantz.drivers.examples.LantzSignalGenerator>`
+- :class:`LantzSignalGeneratorSerial <lantz.drivers.examples.LantzSignalGeneratorSerial>`
+- :class:`LantzSignalGeneratorSerialVisa <lantz.drivers.examples.LantzSignalGeneratorSerialVisa>`
+- :class:`LantzSignalGeneratorTCP <lantz.drivers.examples.LantzSignalGeneratorTCP>`
 
 
 :mod:`Kentech Instruments Ltd. <lantz.drivers.kentech>`

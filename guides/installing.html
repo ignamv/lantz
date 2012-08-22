@@ -66,19 +66,19 @@
             
   <div class="section" id="installing">
 <span id="id1"></span><h1>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h1>
-<p>Lantz core requires only Python 3.2+. This guide also assumes that you have installed <a class="reference external" href="http://www.virtualenv.org/en/latest/index.html">virtualenv</a> and <a class="reference external" href="http://www.pip-installer.org/en/latest/index.html">pip</a>. If not, please install them by typing:</p>
-<div class="highlight-python"><pre>$ easy_install virtualenv pip</pre>
-</div>
-<p>(By the way, check out virtualenv wrapper as a way to easy handle your virtual environments)</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Remember that if you have multiple version of python installed in your system, you must always use python 3.
-Instead of <cite>pip</cite> you need to write <cite>pip-3.2</cite> and instead of <cite>easy_install</cite> you need to write <cite>easy_install-3.2</cite>.</p>
+<p>This guide describes Lantz requirements and provides platform specific
+installation guides. Examples are given for Python 3.2, installing all
+optional requirements as site-packages and Lantz in a virtual environment
+using <a class="reference external" href="http://www.pip-installer.org/en/latest/index.html">pip</a> and <a class="reference external" href="http://git-scm.com/">git</a></p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>Lantz core requires only <a class="reference external" href="http://www.python.org/getit/">Python</a> 3.2+.</p>
 </div>
 <div class="section" id="optional-requirements">
 <h2>Optional requirements<a class="headerlink" href="#optional-requirements" title="Permalink to this headline">¶</a></h2>
-<p>Some lantz subpackages have other requirements which are listed below together with a small explanation of where are used.
-Short installation instructions are given, but we refer you to the package documentation for more information. For some
+<p>Some lantz subpackages have other requirements which are listed below together
+with a small explanation of where are used. Short installation instructions are
+given, but we refer you to the package documentation for more information. For some
 packages, a link to the binary distribution is given.</p>
 <blockquote>
 <div><ul>
@@ -125,38 +125,98 @@ You can install it using:</p>
 </div>
 <p>or use the <a class="reference external" href="http://sourceforge.net/projects/numpy/files/">NumPy binaries</a></p>
 </li>
+<li><p class="first"><a class="reference external" href="http://www.ni.com/visa/">VISA</a> National Instruments Library for communicating via  GPIB, VXI, PXI,
+Serial, Ethernet, and/or USB interfaces</p>
+</li>
 </ul>
 </div></blockquote>
-<div class="section" id="installing-lantz">
-<h3>Installing Lantz<a class="headerlink" href="#installing-lantz" title="Permalink to this headline">¶</a></h3>
-<p>If you just want want to use <cite>Lantz</cite>, you can just:</p>
-<div class="highlight-python"><pre>$ pip install git+gitolite@glugcen.dc.uba.ar:lantz.git#egg=lantz</pre>
 </div>
-<p>or from <a class="reference external" href="https://github.com/hgrecco/lantz">Lantz at Github</a>:</p>
-<div class="highlight-python"><pre>$ pip install git+git://github.com/hgrecco/lantz.git#egg=lantz</pre>
+<div class="section" id="linux">
+<h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p>Most linux distributions provide packages for Python 3.2, NumPy, PyQt (or PySide)
+and git. Install them.</p>
+<p>Download and install <a class="reference external" href="http://www.ni.com/visa/">VISA</a>.</p>
+<p>Open a terminal to install pip and virtualenv:</p>
+<div class="highlight-python"><pre>$ curl http://python-distribute.org/distribute_setup.py | python3.2
+$ curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python3.2</pre>
 </div>
+<p>Using pip, install all other optional dependencies:</p>
+<div class="highlight-python"><pre>$ pip-3.2 install virtualenv colorama sphinx pyserial</pre>
 </div>
-<div class="section" id="building-your-lantz-development-environment">
-<h3>Building your Lantz development environment<a class="headerlink" href="#building-your-lantz-development-environment" title="Permalink to this headline">¶</a></h3>
-<p>If you want to develop <cite>Lantz</cite>, install the sources.</p>
-</div>
-</div>
-<div class="section" id="linux-or-mac">
-<h2>Linux or Mac<a class="headerlink" href="#linux-or-mac" title="Permalink to this headline">¶</a></h2>
-<p>Open a terminal and change to the folder where you will create your virtual environment. In this case, we have chosen the home directory:</p>
+<p>Change to the folder where you will create your virtual environment. In this
+case, we have chosen the home directory:</p>
 <div class="highlight-python"><pre>$ cd ~
-$ virtualenv -p python3 --system-site-packages lantzenv
+$ virtualenv -p python3.2 --system-site-packages lantzenv
 $ cd lantzenv
 $ source bin/activate</pre>
 </div>
 <p>and then install an editable package:</p>
 <div class="highlight-python"><pre>$ pip install -e git+gitolite@glugcen.dc.uba.ar:lantz.git#egg=lantz</pre>
 </div>
+<p>or from <a class="reference external" href="https://github.com/hgrecco/lantz">Lantz at Github</a>:</p>
+<div class="highlight-python"><pre>$ pip install -e git+git://github.com/hgrecco/lantz.git#egg=lantz</pre>
+</div>
 <p>You will find the code in <cite>~/lantzenv/src/lantz</cite>.</p>
+<p>The folder is a normal git repository from where you can pull and push to keep
+the repo in sync.</p>
+</div>
+<div class="section" id="mac">
+<h2>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h2>
+<p>Download and install <a class="reference external" href="http://www.python.org/getit/">Python</a>, <a class="reference external" href="http://sourceforge.net/projects/numpy/files/">NumPy binaries</a>, <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download/">PyQt binaries</a>, <a class="reference external" href="http://www.ni.com/visa/">VISA</a>
+and <a class="reference external" href="http://git-scm.com/downloads">git binaries</a></p>
+<p>Open a terminal to install pip and virtualenv:</p>
+<div class="highlight-python"><pre>$ curl http://python-distribute.org/distribute_setup.py | python3.2
+$ curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python3.2</pre>
+</div>
+<p>Using pip, install all other optional dependencies:</p>
+<div class="highlight-python"><pre>$ pip-3.2 install virtualenv colorama sphinx pyserial</pre>
+</div>
+<dl class="docutils">
+<dt>Change to the folder where you will create your virtual environment. In this</dt>
+<dd><p class="first">case, we have chosen the home directory:</p>
+<div class="last highlight-python"><pre>$ cd ~
+$ virtualenv -p python3.2 --system-site-packages lantzenv
+$ cd lantzenv
+$ source bin/activate</pre>
+</div>
+</dd>
+</dl>
+<p>and then install an editable package:</p>
+<div class="highlight-python"><pre>$ pip install -e git+gitolite@glugcen.dc.uba.ar:lantz.git#egg=lantz</pre>
+</div>
+<p>or from <a class="reference external" href="https://github.com/hgrecco/lantz">Lantz at Github</a>:</p>
+<div class="highlight-python"><pre>$ pip install -e git+git://github.com/hgrecco/lantz.git#egg=lantz</pre>
+</div>
+<p>You will find the code in <cite>~/lantzenv/src/lantz</cite>.</p>
+<p>The folder is a normal git repository from where you can pull and push to keep
+the repo in sync.</p>
 </div>
 <div class="section" id="windows">
 <h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
-<p>Open a command windows and change to the folder where you will create your virtual environemnt. In this case, we have chosen the desktop:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>We provide a simple script to run all the steps provided below. Download
+<a class="reference external" href="https://raw.github.com/hgrecco/lantz/master/scripts/get-lantz.py">get-lantz</a> to the folder in which you want to create the virtual environment.
+The run the sript using a 32 bit version of <a class="reference external" href="http://www.python.org/getit/">Python</a> 3.2+.</p>
+<p>In some of the steps, an installer application will pop-up. Just select all
+default options except when installing git. There you must choose the options
+shown in the images below.</p>
+<p class="last">As the script will download and install only necessary packages, it does not
+need a clean Python to start.</p>
+</div>
+<p>Install <a class="reference external" href="http://www.python.org/getit/">Python</a>, <a class="reference external" href="http://sourceforge.net/projects/numpy/files/">NumPy binaries</a>, <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download/">PyQt binaries</a>, <a class="reference external" href="http://www.ni.com/visa/">VISA</a> and <a class="reference external" href="http://git-scm.com/downloads">git binaries</a>.</p>
+<p>When installing Git</p>
+<img alt="Options in Git" src="../_images/git1.png" />
+<img alt="Options in Git" src="../_images/git2.png" />
+<p>Download and run with Python 3.2:</p>
+<div class="highlight-python"><pre>- http://python-distribute.org/distribute_setup.py
+- https://raw.github.com/pypa/pip/master/contrib/get-pip.py</pre>
+</div>
+<p>In the command prompt install using pip all other optional dependencies:</p>
+<div class="highlight-python"><pre>$ C:\Python3.2\Scripts\pip install virtualenv colorama sphinx pyserial</pre>
+</div>
+<p>Open a command windows and change to the folder where you will create your
+virtual environment. In this case, we have chosen the desktop:</p>
 <div class="highlight-python"><pre>cd  %USERPROFILE%\Desktop
 C:\Python32\Scripts\virtualenv --system-site-packages lantzenv
 cd lantzenv\Scripts
@@ -165,8 +225,12 @@ activate</pre>
 <p>and then install an editable package:</p>
 <div class="highlight-python"><pre>pip install -e git+gitolite@glugcen.dc.uba.ar:lantz.git#egg=lantz</pre>
 </div>
+<p>or from <a class="reference external" href="https://github.com/hgrecco/lantz">Lantz at Github</a>:</p>
+<div class="highlight-python"><pre>$ pip install -e git+git://github.com/hgrecco/lantz.git#egg=lantz</pre>
+</div>
 <p>You will find the code in <cite>%USERPROFILE%\Desktop\lantzenv\src\lantz</cite>.</p>
-<p>The folder is a normal git repository from where you can pull and push to keep the repo in sync.</p>
+<p>The folder is a normal git repository from where you can pull and push to keep
+the repo in sync.</p>
 </div>
 </div>
 
@@ -182,12 +246,10 @@ activate</pre>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Installing</a><ul>
-<li><a class="reference internal" href="#optional-requirements">Optional requirements</a><ul>
-<li><a class="reference internal" href="#installing-lantz">Installing Lantz</a></li>
-<li><a class="reference internal" href="#building-your-lantz-development-environment">Building your Lantz development environment</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#linux-or-mac">Linux or Mac</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#optional-requirements">Optional requirements</a></li>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+<li><a class="reference internal" href="#mac">Mac</a></li>
 <li><a class="reference internal" href="#windows">Windows</a></li>
 </ul>
 </li>
@@ -246,7 +308,7 @@ activate</pre>
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Jul 13, 2012.
+    Last updated on Aug 22, 2012.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

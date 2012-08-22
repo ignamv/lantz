@@ -82,7 +82,7 @@
 <span class="kn">from</span> <span class="nn">Qt.uic</span> <span class="kn">import</span> <span class="n">loadUi</span>
 
 <span class="c"># From lantz we import the driver ...</span>
-<span class="kn">from</span> <span class="nn">lantz.drivers.examples.fungen</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+<span class="kn">from</span> <span class="nn">lantz.drivers.examples.fungen</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
 
 <span class="c"># and a function named connect_feat that does the work.</span>
 <span class="kn">from</span> <span class="nn">lantz.ui.qtwidgets</span> <span class="kn">import</span> <span class="n">connect_feat</span>
@@ -96,7 +96,7 @@
 <span class="n">frequency_widget</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">findChild</span><span class="p">((</span><span class="n">QWidget</span><span class="p">,</span> <span class="p">),</span> <span class="s">&#39;frequency&#39;</span><span class="p">)</span>
 <span class="n">amplitude_widget</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">findChild</span><span class="p">((</span><span class="n">QWidget</span><span class="p">,</span> <span class="p">),</span> <span class="s">&#39;amplitude&#39;</span><span class="p">)</span>
 
-<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
 
     <span class="c"># We connect each widget to each feature</span>
     <span class="c"># The syntax arguments are widget, target (driver), Feat name</span>
@@ -127,7 +127,7 @@
 <span class="kn">from</span> <span class="nn">Qt.uic</span> <span class="kn">import</span> <span class="n">loadUi</span>
 
 <span class="c"># From lantz we import the driver ...</span>
-<span class="kn">from</span> <span class="nn">lantz.drivers.examples.fungen</span> <span class="kn">import</span> <span class="n">LantzSignalGenerator</span>
+<span class="kn">from</span> <span class="nn">lantz.drivers.examples.fungen</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
 
 <span class="c"># and a function named connect_feat that does the work.</span>
 <span class="kn">from</span> <span class="nn">lantz.ui.qtwidgets</span> <span class="kn">import</span> <span class="n">connect_feat</span>
@@ -137,7 +137,7 @@
 <span class="c"># We load the UI from the QtDesigner file. You can also use pyuic4 to generate a class.</span>
 <span class="n">main</span> <span class="o">=</span> <span class="n">loadUi</span><span class="p">(</span><span class="s">&#39;connect_test.ui&#39;</span><span class="p">)</span>
 
-<span class="k">with</span> <span class="n">LantzSignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
 
     <span class="c"># We connect the parent widget (main) to the instrument.</span>
     <span class="n">connect_driver</span><span class="p">(</span><span class="n">main</span><span class="p">,</span> <span class="n">inst</span><span class="p">)</span>
@@ -225,7 +225,7 @@
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Jul 13, 2012.
+    Last updated on Aug 22, 2012.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
