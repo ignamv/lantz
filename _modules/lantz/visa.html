@@ -250,8 +250,26 @@
 
 </div></div>
 <span class="k">class</span> <span class="nc">GPIBVisaDriver</span><span class="p">(</span><span class="n">MessageVisaDriver</span><span class="p">):</span>
-    <span class="k">pass</span>
 
+
+    <span class="k">def</span> <span class="nf">raw_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Receive raw bytes to the instrument.</span>
+
+<span class="sd">        :param size: number of bytes to receive</span>
+<span class="sd">        :return: received bytes</span>
+<span class="sd">        :return type: bytes</span>
+
+<span class="sd">        If a timeout is set, it may return less bytes than requested.</span>
+<span class="sd">        If size == -1, then the number of available bytes will be read.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">size</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visa</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vi</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span>
 
 <span class="k">class</span> <span class="nc">TCPVisaDriver</span><span class="p">(</span><span class="n">MessageVisaDriver</span><span class="p">):</span>
     <span class="k">pass</span>
@@ -306,7 +324,7 @@
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Aug 22, 2012.
+    Last updated on Oct 05, 2012.
     <a href="../../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

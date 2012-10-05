@@ -39,11 +39,16 @@ Drivers
 - :class:`LantzSignalGeneratorSerial <lantz.drivers.examples.LantzSignalGeneratorSerial>`
 - :class:`LantzSignalGeneratorSerialVisa <lantz.drivers.examples.LantzSignalGeneratorSerialVisa>`
 - :class:`LantzSignalGeneratorTCP <lantz.drivers.examples.LantzSignalGeneratorTCP>`
+- :class:`Lantz Signal Generator <lantz.drivers.examples.LantzVoltmeterTCP>`
 
 
 :mod:`Kentech Instruments Ltd. <lantz.drivers.kentech>`
 
 - :class:`Kentech High Repetition Rate Image Intensifier. <lantz.drivers.kentech.HRI>`
+
+
+:mod:`National Instruments <lantz.drivers.ni>`
+
 
 
 :mod:`Olympus. <lantz.drivers.olympus>`
