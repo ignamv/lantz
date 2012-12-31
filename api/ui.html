@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>UI &mdash; Lantz 0.1 documentation</title>
+    <title>UI</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
-    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="top" title="None" href="../index.html" />
     <link rel="up" title="API" href="index.html" />
     <link rel="next" title="Support" href="support.html" />
     <link rel="prev" title="Interfacing to instruments" href="interfaces.html" />
@@ -53,7 +53,7 @@
              accesskey="P">previous</a> |</li>
         <li><img src="../_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
 
           <li><a href="index.html" accesskey="U">API</a> &raquo;</li> 
       </ul>
@@ -313,7 +313,7 @@ can be mixed.</p>
 </pre></div>
 </div>
 <p>In any case, after wrapping a widget you need to bind it to a feat:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">_lantz_feat</span><span class="p">[</span><span class="n">feat_name</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">feats</span><span class="p">[</span><span class="n">feat_name</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span><span class="o">.</span><span class="n">bind_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -330,7 +330,7 @@ can be mixed.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>feat</strong> &#8211; a lantz feature, the result of inst._lantz_feat[feat_name].</li>
+<li><strong>feat</strong> &#8211; a lantz feature proxy, the result of inst.feats[feat_name].</li>
 <li><strong>parent</strong> &#8211; parent widget.</li>
 </ul>
 </td>
@@ -348,13 +348,13 @@ When &#8216;r&#8217; is pressed, get new value from the driver.</p>
 
 <dl class="method">
 <dt id="lantz.ui.qtwidgets.WidgetMixin.on_feat_value_changed">
-<tt class="descname">on_feat_value_changed</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.on_feat_value_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.on_feat_value_changed" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">on_feat_value_changed</tt><big>(</big><em>value</em>, <em>old_value=MISSING</em>, <em>other=MISSING</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.on_feat_value_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.on_feat_value_changed" title="Permalink to this definition">¶</a></dt>
 <dd><p>When the driver value is changed, update the widget if necessary.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lantz.ui.qtwidgets.WidgetMixin.on_widget_value_changed">
-<tt class="descname">on_widget_value_changed</tt><big>(</big><em>new_value</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.on_widget_value_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.on_widget_value_changed" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">on_widget_value_changed</tt><big>(</big><em>value</em>, <em>old_value=MISSING</em>, <em>other=MISSING</em><big>)</big><a class="reference internal" href="../_modules/lantz/ui/qtwidgets.html#WidgetMixin.on_widget_value_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lantz.ui.qtwidgets.WidgetMixin.on_widget_value_changed" title="Permalink to this definition">¶</a></dt>
 <dd><p>When the widget is changed by the user, update the driver with
 the new value.</p>
 </dd></dl>
@@ -591,7 +591,7 @@ generated for the driver.</p>
              >previous</a> |</li>
         <li><img src="../_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
 
           <li><a href="index.html" >API</a> &raquo;</li> 
       </ul>
@@ -599,7 +599,7 @@ generated for the driver.</p>
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Oct 05, 2012.
+    Last updated on Dec 31, 2012.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

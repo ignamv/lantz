@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lantz.drivers.rgblasersystems</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="None" href="../index.html" />
+    <link rel="up" title="Drivers" href="index.html" />
+    <link rel="next" title="lantz.drivers.sutter" href="lantz.drivers.sutter.html" />
+    <link rel="prev" title="lantz.drivers.pco" href="lantz.drivers.pco.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.sutter.html" title="lantz.drivers.sutter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.pco.html" title="lantz.drivers.pco"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Drivers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-lantz.drivers.rgblasersystems"></span><div class="section" id="lantz-drivers-rgblasersystems">
+<h1>lantz.drivers.rgblasersystems<a class="headerlink" href="#lantz-drivers-rgblasersystems" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">company:</th><td class="field-body">RGB Lasersysteme GmbH.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">Lasers and Lasers Systems.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">website:</th><td class="field-body"><a class="reference external" href="http://www.rgb-laser.com/">http://www.rgb-laser.com/</a></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">2012 by Lantz Authors, see AUTHORS for more details.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">BSD, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo">
+<em class="property">class </em><tt class="descclassname">lantz.drivers.rgblasersystems.</tt><tt class="descname">MiniLasEvo</tt><big>(</big><em>port=1</em>, <em>timeout=1</em>, <em>write_timeout=1</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../api/interfaces.html#lantz.serial.SerialDriver" title="lantz.serial.SerialDriver"><tt class="xref py py-class docutils literal"><span class="pre">lantz.serial.SerialDriver</span></tt></a></p>
+<p>Driver for any RGB Lasersystems MiniLas Evo laser.</p>
+<dl class="method">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.initialize">
+<tt class="descname">initialize</tt><big>(</big><big>)</big><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.query">
+<tt class="descname">query</tt><big>(</big><em>command</em>, <em>send_args</em>, <em>recv_args</em><big>)</big><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send query to the laser and return the answer, after handling
+possible errors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>command</strong> (<a class="reference external" href="http://docs.python.org/3.2/library/string.html#string" title="(in Python v3.2)"><em>string</em></a>) &#8211; command to be sent to the instrument</li>
+<li><strong>send_args</strong> &#8211; (termination, encoding) to override class defaults</li>
+<li><strong>recv_args</strong> &#8211; (termination, encoding) to override class defaults</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.BAUDRATE">
+<tt class="descname">BAUDRATE</tt><em class="property"> = 57600</em><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.BAUDRATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.BYTESIZE">
+<tt class="descname">BYTESIZE</tt><em class="property"> = 8</em><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.BYTESIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.DSRDTR">
+<tt class="descname">DSRDTR</tt><em class="property"> = False</em><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.DSRDTR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.ENCODING">
+<tt class="descname">ENCODING</tt><em class="property"> = 'ascii'</em><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.ENCODING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.PARITY">
+<tt class="descname">PARITY</tt><em class="property"> = 'none'</em><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.PARITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.RECV_TERMINATION">
+<tt class="descname">RECV_TERMINATION</tt><em class="property"> = '\r\n'</em><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.RECV_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.RTSCTS">
+<tt class="descname">RTSCTS</tt><em class="property"> = False</em><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.RTSCTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.SEND_TERMINATION">
+<tt class="descname">SEND_TERMINATION</tt><em class="property"> = '\r\n'</em><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.SEND_TERMINATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.STOPBITS">
+<tt class="descname">STOPBITS</tt><em class="property"> = 1</em><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.STOPBITS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.XONXOFF">
+<tt class="descname">XONXOFF</tt><em class="property"> = False</em><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.XONXOFF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.available_features">
+<tt class="descname">available_features</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.available_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Available features (reserved for future use)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.control_mode">
+<tt class="descname">control_mode</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.control_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Active current (power) control</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.emission_wavelenght">
+<tt class="descname">emission_wavelenght</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.emission_wavelenght" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emission wavelenght in nm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.enabled">
+<tt class="descname">enabled</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Values :</th><td class="field-body">{False: &#8216;0&#8217;, True: &#8216;1&#8217;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.idn">
+<tt class="descname">idn</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.idn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identification of the device</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.maximum_power">
+<tt class="descname">maximum_power</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.maximum_power" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">mW</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.operating_hours">
+<tt class="descname">operating_hours</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.operating_hours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total operating hours [hhhh:mm]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.power">
+<tt class="descname">power</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.power" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Units :</th><td class="field-body">mW</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.software_version">
+<tt class="descname">software_version</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.software_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Software version</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.status">
+<tt class="descname">status</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current device status</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.temperature">
+<tt class="descname">temperature</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current temperature in ºC</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.temperature_max">
+<tt class="descname">temperature_max</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.temperature_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Highest operating temperature in ºC</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lantz.drivers.rgblasersystems.MiniLasEvo.temperature_min">
+<tt class="descname">temperature_min</tt><a class="headerlink" href="#lantz.drivers.rgblasersystems.MiniLasEvo.temperature_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lowest operating temperature in ºC</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lantz.drivers.pco.html"
+                        title="previous chapter">lantz.drivers.pco</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lantz.drivers.sutter.html"
+                        title="next chapter">lantz.drivers.sutter</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/drivers/lantz.drivers.rgblasersystems.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.sutter.html" title="lantz.drivers.sutter"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lantz.drivers.pco.html" title="lantz.drivers.pco"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
+
+          <li><a href="index.html" >Drivers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Dec 31, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

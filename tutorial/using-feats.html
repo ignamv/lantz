@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Using Feats</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="None" href="../index.html" />
+    <link rel="up" title="Tutorials" href="index.html" />
+    <link rel="next" title="4. Building your own drivers" href="building.html" />
+    <link rel="prev" title="2. Using lantz drivers" href="using.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="building.html" title="4. Building your own drivers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="using.html" title="2. Using lantz drivers"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="using-feats">
+<span id="tutorial-using-feats"></span><h1>3. Using Feats<a class="headerlink" href="#using-feats" title="Permalink to this headline">¶</a></h1>
+<p>Let&#8217;s query all parameters and print their state in a nice format:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;idn: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;frequency: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">frequency</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;amplitude: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;offset: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">offset</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;output_enabled: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">output_enabled</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;waveform: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">waveform</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;dout[{}]: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">inst</span><span class="o">.</span><span class="n">dout</span><span class="p">[</span><span class="n">channel</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;din[{}]: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">inst</span><span class="o">.</span><span class="n">din</span><span class="p">[</span><span class="n">channel</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>If you run the program you will get something like:</p>
+<div class="highlight-python"><pre>idn: FunctionGenerator Serial #12345
+frequency: 1000.0 hertz
+amplitude: 0.0 volt
+offset: 0.0 volt
+output_enabled: False
+waveform: sine
+dout[1]: False
+dout[2]: False
+dout[3]: False
+dout[4]: False
+dout[5]: False
+dout[6]: False
+dout[7]: False
+dout[8]: False
+din[1]: False
+din[2]: False
+din[3]: False
+din[4]: False
+din[5]: False
+din[6]: False
+din[7]: False
+din[8]: False</pre>
+</div>
+<div class="section" id="valid-values">
+<h2>3.1. Valid values<a class="headerlink" href="#valid-values" title="Permalink to this headline">¶</a></h2>
+<p>You can set property like <cite>output_enabled</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;output_enabled: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">output_enabled</span><span class="p">))</span>
+    <span class="n">inst</span><span class="o">.</span><span class="n">output_enabled</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;output_enabled: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">output_enabled</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>If you check the documentation for lantz.drivers.examples.LantzSignalGeneratorTCP),
+<cite>output_enabled</cite> accepts only <cite>True</cite> or <cite>False</cite>. If your provide a different value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="n">inst</span><span class="o">.</span><span class="n">output_enabled</span> <span class="o">=</span> <span class="s">&#39;Yes&#39;</span>
+</pre></div>
+</div>
+<p>you will get an error message:</p>
+<div class="highlight-python"><pre>Traceback (most recent call last):
+  File "using7.py", line 5, in &lt;module&gt;
+    inst.output_enabled = 'Yes'
+...
+ValueError: 'Yes' not in (False, True)</pre>
+</div>
+</div>
+<div class="section" id="units">
+<h2>3.2. Units<a class="headerlink" href="#units" title="Permalink to this headline">¶</a></h2>
+<p>Feats corresponding to physical quantities (magnitude and units), are declared
+with a default unit. If try to set a number to them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Lantz will issue a warning:</p>
+<div class="highlight-python"><pre>DimensionalityWarning: Assuming units `volt` for 1</pre>
+</div>
+<p>Lantz uses the <a class="reference external" href="https://pint.readthedocs.org/">Pint</a> package to declare units:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
+<span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Q_</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Volts&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;amplitude: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>the output is:</p>
+<div class="highlight-python"><pre>amplitude: 1.0 volt</pre>
+</div>
+<p>The nice thing is that this will work even if the instruments and you program
+opeate in different units. The conversion is done internally, minimizing errors
+and allowing better interoperability:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.drivers.examples</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
+<span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Q_</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;decivolt&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;amplitude: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>the output is:</p>
+<div class="highlight-python"><pre>amplitude: 0.1 volt</pre>
+</div>
+<p>Numerical Feats can also define the valid limits, for amplitude is 0 - 10 Volts.
+If you provide a value out of range:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="s">&#39;volt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>you get:</p>
+<div class="highlight-python"><pre>Traceback (most recent call last):
+  File "using10.py", line 6, in &lt;module&gt;
+    inst.amplitude = Q_(20, 'volt')
+...
+ValueError: 20 not in range (0, 10)</pre>
+</div>
+<p class="rubric">While Lantz aims to provide drivers for most common instruments,
+sometimes you will need to build your own drivers.
+Learn how in the next part of the tutorial: <a class="reference internal" href="building.html#tutorial-building"><em>Building your own drivers</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. Using Feats</a><ul>
+<li><a class="reference internal" href="#valid-values">3.1. Valid values</a></li>
+<li><a class="reference internal" href="#units">3.2. Units</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="using.html"
+                        title="previous chapter">2. Using lantz drivers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="building.html"
+                        title="next chapter">4. Building your own drivers</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorial/using-feats.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="building.html" title="4. Building your own drivers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="using.html" title="2. Using lantz drivers"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
+
+          <li><a href="index.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Dec 31, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

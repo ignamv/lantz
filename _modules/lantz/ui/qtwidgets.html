@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>lantz.ui.qtwidgets &mdash; Lantz 0.1 documentation</title>
+    <title>lantz.ui.qtwidgets</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/sidebar.js"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
-    <link rel="top" title="Lantz 0.1 documentation" href="../../../index.html" />
+    <link rel="top" title="None" href="../../../index.html" />
     <link rel="up" title="lantz" href="../../lantz.html" />
     <link rel="shortcut icon" type="image/png" href="../../../_static/lantz16.png" />
  
@@ -45,7 +45,7 @@
              >modules</a> |</li>
         <li><img src="../../../_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="../../../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Lantz</a> &raquo;</li>
 
           <li><a href="../../index.html" >Module code</a> &raquo;</li>
           <li><a href="../../lantz.html" accesskey="U">lantz</a> &raquo;</li> 
@@ -165,7 +165,7 @@
 
 <span class="sd">    In any case, after wrapping a widget you need to bind it to a feat::</span>
 
-<span class="sd">    &gt;&gt;&gt; feat = driver._lantz_feat[feat_name]</span>
+<span class="sd">    &gt;&gt;&gt; feat = driver.feats[feat_name]</span>
 <span class="sd">    &gt;&gt;&gt; widget.bind_feat(feat)</span>
 
 <span class="sd">    Finally, you need to</span>
@@ -239,14 +239,14 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">fset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
 </div>
     <span class="nd">@Slot</span><span class="p">(</span><span class="n">QVariant</span><span class="p">)</span>
-<div class="viewcode-block" id="WidgetMixin.on_widget_value_changed"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.on_widget_value_changed">[docs]</a>    <span class="k">def</span> <span class="nf">on_widget_value_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+<div class="viewcode-block" id="WidgetMixin.on_widget_value_changed"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.on_widget_value_changed">[docs]</a>    <span class="k">def</span> <span class="nf">on_widget_value_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">old_value</span><span class="o">=</span><span class="n">MISSING</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="n">MISSING</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;When the widget is changed by the user, update the driver with</span>
 <span class="sd">        the new value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_on_change</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">value_to_feat</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="WidgetMixin.on_feat_value_changed"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.on_feat_value_changed">[docs]</a>    <span class="k">def</span> <span class="nf">on_feat_value_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="WidgetMixin.on_feat_value_changed"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.on_feat_value_changed">[docs]</a>    <span class="k">def</span> <span class="nf">on_feat_value_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">old_value</span><span class="o">=</span><span class="n">MISSING</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="n">MISSING</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;When the driver value is changed, update the widget if necessary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
@@ -261,10 +261,12 @@
     <span class="nd">@feat_key.setter</span>
 <div class="viewcode-block" id="WidgetMixin.feat_key"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.feat_key">[docs]</a>    <span class="k">def</span> <span class="nf">feat_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">:</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&#39;_changed&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="o">.</span><span class="n">del_on_changed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="o">.</span><span class="n">add_on_changed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span><span class="p">)</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&#39;_changed&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">)</span>
+            <span class="c">#self._lantz_target.add_on_changed(self._feat.name, self.on_feat_value_changed, self._feat_key)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value_from_feat</span><span class="p">()</span>
 </div>
     <span class="nd">@property</span>
@@ -276,11 +278,13 @@
     <span class="nd">@lantz_target.setter</span>
 <div class="viewcode-block" id="WidgetMixin.lantz_target"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.lantz_target">[docs]</a>    <span class="k">def</span> <span class="nf">lantz_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="o">.</span><span class="n">del_on_changed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span><span class="p">)</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&#39;_changed&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">)</span>
+            <span class="c">#self._lantz_target.del_on_changed(self._feat.name, self.on_feat_value_changed, self._feat_key)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span> <span class="o">=</span> <span class="n">target</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="o">.</span><span class="n">add_on_changed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span><span class="p">)</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lantz_target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&#39;_changed&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_feat_value_changed</span><span class="p">)</span>
+            <span class="c">#self._lantz_target.add_on_changed(self._feat.name, self.on_feat_value_changed, self._feat_key)</span>
             <span class="c">#if feat_key is MISSING:</span>
             <span class="c">#    self.on_feat_value_changed(self._lantz_target.recall(self._feat.name))</span>
             <span class="c">#else:</span>
@@ -290,7 +294,15 @@
 </div>
     <span class="k">def</span> <span class="nf">bind_feat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_feat</span> <span class="o">=</span> <span class="n">feat</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span> <span class="o">=</span> <span class="n">MISSING</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">keys</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_feat_key</span> <span class="o">=</span> <span class="n">MISSING</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setReadOnly</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">writable</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
@@ -313,7 +325,7 @@
 <div class="viewcode-block" id="WidgetMixin.from_feat"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.WidgetMixin.from_feat">[docs]</a>    <span class="k">def</span> <span class="nf">from_feat</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return a widget appropriate to represent a lantz feature.</span>
 
-<span class="sd">        :param feat: a lantz feature, the result of inst._lantz_feat[feat_name].</span>
+<span class="sd">        :param feat: a lantz feature proxy, the result of inst.feats[feat_name].</span>
 <span class="sd">        :param parent: parent widget.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -391,11 +403,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span> <span class="o">=</span> <span class="n">wid</span>
 
     <span class="nd">@Slot</span><span class="p">(</span><span class="n">QVariant</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">_combobox_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_combobox_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">old_value</span><span class="o">=</span><span class="n">MISSING</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="n">MISSING</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">feat_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keys</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_key_widget</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()]</span>
 
     <span class="nd">@Slot</span><span class="p">(</span><span class="n">QVariant</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">_lineedit_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_lineedit_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">old_value</span><span class="o">=</span><span class="n">MISSING</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="n">MISSING</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_value_widget</span><span class="o">.</span><span class="n">feat_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key_widget</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
 
 <div class="viewcode-block" id="DictFeatWidget.value"><a class="viewcode-back" href="../../../api/ui.html#lantz.ui.qtwidgets.DictFeatWidget.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -571,7 +583,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="c"># Feat</span>
-        <span class="k">for</span> <span class="n">feat_name</span><span class="p">,</span> <span class="n">feat</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">_lantz_features</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">for</span> <span class="n">feat_name</span><span class="p">,</span> <span class="n">feat</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">feats</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">feat_widget</span> <span class="o">=</span> <span class="n">LabeledFeatWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">feat</span><span class="p">)</span>
 
@@ -598,7 +610,7 @@
         <span class="n">actions_label</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">actions_combo</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actions_combo</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">_lantz_actions</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions_combo</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
 
         <span class="n">actions_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">actions_button</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
@@ -694,7 +706,7 @@
         <span class="n">widget</span><span class="o">.</span><span class="n">lantz_target</span> <span class="o">=</span> <span class="n">target</span>
         <span class="k">return</span>
 
-    <span class="n">feat</span> <span class="o">=</span>  <span class="n">target</span><span class="o">.</span><span class="n">_lantz_features</span><span class="p">[</span><span class="n">feat_name</span><span class="p">]</span>
+    <span class="n">feat</span> <span class="o">=</span>  <span class="n">target</span><span class="o">.</span><span class="n">feats</span><span class="p">[</span><span class="n">feat_name</span><span class="p">]</span>
 
     <span class="n">WidgetMixin</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
     <span class="n">widget</span><span class="o">.</span><span class="n">bind_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
@@ -725,7 +737,7 @@
             <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">):]</span>
         <span class="k">if</span> <span class="n">sep</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
             <span class="n">name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">_lantz_features</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">feats</span><span class="p">:</span>
             <span class="n">connect_feat</span><span class="p">(</span><span class="n">wid</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
 </div>
@@ -1258,7 +1270,7 @@
              >modules</a> |</li>
         <li><img src="../../../_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="../../../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Lantz</a> &raquo;</li>
 
           <li><a href="../../index.html" >Module code</a> &raquo;</li>
           <li><a href="../../lantz.html" >lantz</a> &raquo;</li> 
@@ -1267,7 +1279,7 @@
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Oct 05, 2012.
+    Last updated on Dec 31, 2012.
     <a href="../../../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

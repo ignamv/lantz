@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Building your own drivers &mdash; Lantz 0.1 documentation</title>
+    <title>4. Building your own drivers</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,10 +27,10 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
-    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="top" title="None" href="../index.html" />
     <link rel="up" title="Tutorials" href="index.html" />
-    <link rel="next" title="Guides" href="../guides/index.html" />
-    <link rel="prev" title="1. Using lantz drivers" href="using.html" />
+    <link rel="next" title="5. A simple command line app" href="cli-app.html" />
+    <link rel="prev" title="3. Using Feats" href="using-feats.html" />
     <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
  
 
@@ -46,14 +46,14 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../guides/index.html" title="Guides"
+          <a href="cli-app.html" title="5. A simple command line app"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="using.html" title="1. Using lantz drivers"
+          <a href="using-feats.html" title="3. Using Feats"
              accesskey="P">previous</a> |</li>
         <li><img src="../_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
 
           <li><a href="index.html" accesskey="U">Tutorials</a> &raquo;</li> 
       </ul>
@@ -65,10 +65,23 @@
           <div class="body">
             
   <div class="section" id="building-your-own-drivers">
-<span id="tutorial-building"></span><h1>2. Building your own drivers<a class="headerlink" href="#building-your-own-drivers" title="Permalink to this headline">¶</a></h1>
+<span id="tutorial-building"></span><h1>4. Building your own drivers<a class="headerlink" href="#building-your-own-drivers" title="Permalink to this headline">¶</a></h1>
+<p>In this part of the tutorial, we are going to build the driver of an hypothetical signal
+generator. Following a tutorial about building a driver to communicate with
+an instrument that you do not have is not much fun. That&#8217;s why we have created
+a virtual version of this instrument. From the command line, run the following
+command:</p>
+<div class="highlight-python"><pre>$ lantz-sim fungen tcp</pre>
+</div>
+<p>This will start an application that listens for incoming TCP packages on port 5678 from <cite>localhost</cite>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you have done the previous tutorial, you will build from scratch the
+same driver that is included in Lantz.</p>
+</div>
 <div class="section" id="the-instrument">
-<h2>2.1. The instrument<a class="headerlink" href="#the-instrument" title="Permalink to this headline">¶</a></h2>
-<p>In this tutorial, we are going to build the driver of hypothetical signal generator with the following characteristics:</p>
+<h2>4.1. The instrument<a class="headerlink" href="#the-instrument" title="Permalink to this headline">¶</a></h2>
+<p>The signal generator has the following characteristics:</p>
 <ul>
 <li><p class="first">1 Analog output</p>
 <blockquote>
@@ -191,17 +204,16 @@ or the state of the analog ourput (0 off/disabled, 1 on/enabled)</li>
 <p>The response to successful <strong>GET</strong> commands is the requested value.
 The response to successful <strong>SET</strong> commands is the string OK.
 If the command is invalid or an occurs in the instrument, the instrument will respond with the string ERROR. For example, the command <tt class="docutils literal"><span class="pre">?DIS</span> <span class="pre">19</span></tt> is invalid because the parameter <em>B</em> should be in [1, 8].</p>
-<p>One more thing, following a tutorial about building a driver to communicate with an instrument that you do not have is not much fun. That&#8217;s why we have created a virtual version of this instrument. From the command line, run the following command:</p>
-<p>$ sim-fungen.py tcp</p>
-<p>This will start an application that listens for incoming TCP packages on port 5678 from <cite>localhost</cite>.</p>
 </div>
 <div class="section" id="a-basic-driver">
-<h2>2.2. A basic driver<a class="headerlink" href="#a-basic-driver" title="Permalink to this headline">¶</a></h2>
-<p>Having look at the instrument, we will now create the driver. First create a python file named <cite>tutorial.py</cite> in your folder of choice and edit it to look like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Feat</span>
+<h2>4.2. A basic driver<a class="headerlink" href="#a-basic-driver" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Having look at the instrument, we will now create the driver. Open the project folder that you created in the previous tutorial (<a class="reference internal" href="using.html#tutorial-using"><em>Using lantz drivers</em></a>). Create a python file named <cite>mydriver.py</cite> (I know is a bad name but it is just to stress that</dt>
+<dd><p class="first">it is yours) and change it to look like this:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Feat</span>
 <span class="kn">from</span> <span class="nn">lantz.network</span> <span class="kn">import</span> <span class="n">TCPDriver</span>
 
-<span class="k">class</span> <span class="nc">SignalGenerator</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Lantz Signal Generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -216,27 +228,35 @@ If the command is invalid or an occurs in the instrument, the instrument will re
 
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="k">with</span> <span class="n">SignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;The identification of this instrument is : &#39;</span> <span class="o">+</span> <span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
 </pre></div>
 </div>
+</dd>
+</dl>
 <p>The code is straight forward. We first import TCPDriver from lantz.network (the Lantz module for network related functions).
 TCPDriver is a base class (derived from Driver) that implements methods to communicate via TCP protocol. Our driver will derive from this.</p>
 <p>We also import Feat from lantz. Feat is the Lantz pimped property and you use Feat just like you use <cite>property</cite>.
 By convention Feats are named using nouns or adjectives.
 Inside the method (in this case is a getter) goes the code to communicate with the instrument. In this case we use <cite>query</cite>, a function present in all based classes for message drivers (TCPDriver, SerialDriver, etc). <cite>query</cite> sends a message to the instrument, waits for a response and returns it. The argument is the command to be sent to the instrument. Lantz takes care of formatting (encoding, endings) and transmitting the command appropriately. That&#8217;s why we define ENCODING, RECV_TERMINATION, SEND_TERMINATION at the beginning of the class.</p>
 <p>Finally, inside the <cite>__name__ == &#8216;__main__&#8217;</cite> we instantiate the SignalGenerator specifying host and port (these are arguments of the TCPDriver constructor, more on this later) and we print the identification.</p>
-<p>If you have <cite>sim-fungen.py</cite> running in your computer, you can test your new driver. From the command line, cd into your working directory and then run the following command:</p>
-<div class="highlight-python"><pre>$ python tutorial.py</pre>
+<p>If you have the simulator running, you can test your new driver. From the command line, cd into the project directory and then run the following command:</p>
+<div class="highlight-python"><pre>$ python mydriver.py</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you have different versions of python installed, remember to use
+the one in which you have installed Lantz. You might need to use
+<cite>python3</cite> instead of <cite>python</cite>.</p>
 </div>
 <p>You should see <cite>LSG Serial #1234</cite>.</p>
-<p>Lantz uses the python logging module. Let&#8217;s see what&#8217;s its going on under the hood by logging to screen in debug mode:</p>
+<p>Let&#8217;s see what&#8217;s its going on under the hood by logging to screen in debug mode:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.log</span> <span class="kn">import</span> <span class="n">log_to_screen</span><span class="p">,</span> <span class="n">DEBUG</span>  <span class="c"># &lt;-- This is new</span>
 
 <span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Feat</span>
 <span class="kn">from</span> <span class="nn">lantz.network</span> <span class="kn">import</span> <span class="n">TCPDriver</span>
 
-<span class="k">class</span> <span class="nc">SignalGenerator</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Lantz Signal Generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -254,7 +274,7 @@ Inside the method (in this case is a getter) goes the code to communicate with t
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">log_to_screen</span><span class="p">(</span><span class="n">DEBUG</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">SignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;The identification of this instrument is : &#39;</span> <span class="o">+</span> <span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -295,8 +315,7 @@ Inside the method (in this case is a getter) goes the code to communicate with t
     <span class="kn">from</span> <span class="nn">lantz.log</span> <span class="kn">import</span> <span class="n">log_to_screen</span><span class="p">,</span> <span class="n">DEBUG</span>
 
     <span class="n">log_to_screen</span><span class="p">(</span><span class="n">DEBUG</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">SignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
-        <span class="n">inst</span> <span class="o">=</span> <span class="n">SignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;The identification of this instrument is : &#39;</span> <span class="o">+</span> <span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;Setting amplitude to 3&#39;</span><span class="p">)</span>
         <span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="mi">3</span>
@@ -307,29 +326,49 @@ Inside the method (in this case is a getter) goes the code to communicate with t
 </div>
 <p>We have defined another Feat, now with a getter and a setter. The getter sends <cite>?AMP</cite> and waits for the answer which is converted to float and returned to the caller. The setter send <cite>!AMP</cite> concatenated with the float formatted to string with two decimals. Run the script. Check also the window running <cite>sim-fungen.py</cite>. You should see the amplitude changing!.</p>
 <p>In the current version of this driver, if we try to set the amplitude to 20 V the command will fill in the instrument but the driver will not know. Lets add some error checking:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@amplitude.setter</span>
-<span class="k">def</span> <span class="nf">amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;!AMP {:.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="o">!=</span> <span class="s">&quot;OK&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># import ...</span>
+
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+
+    <span class="c"># Code from previous example</span>
+    <span class="c"># ...</span>
+
+    <span class="nd">@amplitude.setter</span>
+    <span class="k">def</span> <span class="nf">amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;!AMP {:.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="o">!=</span> <span class="s">&quot;OK&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span>
 </pre></div>
 </div>
-<p>Is that simple. We just check the response. If different from <cite>OK</cite> we raise an Exception. Change the script to set the amplitude to 20 and run it one more time. You should something like this:</p>
+<p>Is that simple. We just check the response. If different from <cite>OK</cite> we raise an Exception. Change the script to set the amplitude to 20 and run it one more time. You should something like this in the log:</p>
 <div class="highlight-python"><pre>Exception: While setting amplitude to 20.</pre>
 </div>
-<p>We do not know why the command has failed but we know which command has failed. Lantz has filled the description of the exception to say that the driver failed while setting the amplitude to 20.</p>
-<p>Because all commands should be checked for <cite>ERROR</cite>, we will override query to do it. Add the following import to the top of the file, and the query function to the class:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz.errors</span> <span class="kn">import</span> <span class="n">InstrumentError</span>
+<p>We do not know why the command has failed but we know which command has failed.</p>
+<p>Because all commands should be checked for <cite>ERROR</cite>, we will override query to do it. Reset amplitude to the original and add the following, add the following import to the top of the file, and redefine the query function to the class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># import ...</span>
+<span class="kn">from</span> <span class="nn">lantz.errors</span> <span class="kn">import</span> <span class="n">InstrumentError</span>
 
-<span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">send_args</span><span class="o">=</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="n">recv_args</span><span class="o">=</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)):</span>
-    <span class="n">answer</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">send_args</span><span class="o">=</span><span class="n">send_args</span><span class="p">,</span> <span class="n">recv_args</span><span class="o">=</span><span class="n">recv_args</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">answer</span> <span class="o">==</span> <span class="s">&#39;ERROR&#39;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">InstrumentError</span>
-    <span class="k">return</span> <span class="n">answer</span>
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+
+    <span class="c"># Code from previous example</span>
+    <span class="c"># ...</span>
+
+    <span class="nd">@amplitude.setter</span>
+    <span class="k">def</span> <span class="nf">amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;!AMP {:.1f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">send_args</span><span class="o">=</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="n">recv_args</span><span class="o">=</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)):</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">send_args</span><span class="o">=</span><span class="n">send_args</span><span class="p">,</span> <span class="n">recv_args</span><span class="o">=</span><span class="n">recv_args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">answer</span> <span class="o">==</span> <span class="s">&#39;ERROR&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InstrumentError</span>
+        <span class="k">return</span> <span class="n">answer</span>
 </pre></div>
 </div>
+<p>The <cite>query</cite> function mediates all queries to the instrument. In our redefined
+version, we call the original first (<cite>super().query(...)</cite>) and then we check
+for errors. In this way we have added error checking for all queries!.</p>
 </div>
 <div class="section" id="putting-units-to-work">
-<h2>2.3. Putting units to work<a class="headerlink" href="#putting-units-to-work" title="Permalink to this headline">¶</a></h2>
+<h2>4.3. Putting units to work<a class="headerlink" href="#putting-units-to-work" title="Permalink to this headline">¶</a></h2>
 <p>Hoping that the Mars Orbiter story convinced you that using units is worth it, let&#8217;s modify the driver to use them:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Feat</span>
 <span class="kn">from</span> <span class="nn">lantz.network</span> <span class="kn">import</span> <span class="n">TCPDriver</span>
@@ -375,7 +414,7 @@ Inside the method (in this case is a getter) goes the code to communicate with t
     <span class="n">milivolt</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;mV&#39;</span><span class="p">)</span>
 
     <span class="n">log_to_screen</span><span class="p">(</span><span class="n">DEBUG</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">SignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;The identification of this instrument is : &#39;</span> <span class="o">+</span> <span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;Setting amplitude to 3&#39;</span><span class="p">)</span>
         <span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">volt</span>
@@ -384,13 +423,22 @@ Inside the method (in this case is a getter) goes the code to communicate with t
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;Current amplitude: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>We have just added in the Feat definition that the units is Volts. Lantz uses the quantities package to manage units. We now import <cite>Q_</cite> which is a shortcut for <cite>quantities.Quantity</cite> and we declare the volt and the milivolt. We now set the amplitude to 3 Volts and 1000 milivolts.</p>
+<p>We have just added in the Feat definition that the units is Volts. Lantz uses the <a class="reference external" href="https://pint.readthedocs.org/">Pint</a> package to manage units. We now import <cite>Q_</cite> which is a shortcut for <cite>Pint.Quantity</cite> and we declare the volt and the milivolt. We now set the amplitude to 3 Volts and 1000 milivolts.</p>
 <p>Run the script and notice how Lantz will do the conversion for you. This allows to use the output of one instrument as the output of another without handling the unit conversion. Additionally, it allows you to replace this signal generator by another that might require the amplitude in different units without changing your code.</p>
 </div>
 <div class="section" id="limits">
-<h2>2.4. Limits<a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h2>
-<p>When the communication round-trip to the instrument is too long, you might want to catch some of the errors before hand. You can use <cite>limits</cite> to check:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Feat</span><span class="p">,</span>
+<h2>4.4. Limits<a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h2>
+<p>When the communication round-trip to the instrument is too long, you might want to catch some of the errors before hand. You can use <cite>limits</cite> to check for valid range of the parameter. Limits syntax is:</p>
+<div class="highlight-python"><pre>limits([start,] stop[, step])
+
+limits(10)          # means from 0 to 10 (the 10 is valid)
+limits(2, 10)       # means from 2 to 10 (the 10 is valid)
+limits(2, 10, 2)    # means from 2 to 10, with a step of 2 (the 10 is valid)</pre>
+</div>
+<p>If you provide a value outside the valid range, Lantz will raise a ValueError.
+If the steps parameter is set but you provide a value not compatible with it,
+it will be silently rounded. Let&#8217;s put this to work for amplitude, frequency and offset:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Feat</span>
 <span class="kn">from</span> <span class="nn">lantz.network</span> <span class="kn">import</span> <span class="n">TCPDriver</span>
 <span class="kn">from</span> <span class="nn">lantz.errors</span> <span class="kn">import</span> <span class="n">InstrumentError</span>
 
@@ -444,10 +492,17 @@ Inside the method (in this case is a getter) goes the code to communicate with t
         <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;!FRE {:.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>If you try to set a value outside the valid range, a ValueErorr will be raised and the command will never be sent to the instrument.</p>
+<p>If you try to set a value outside the valid range, a ValueErorr will be raised and the command will never be sent to the instrument. Give it a try:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="mi">20</span>
+</pre></div>
+</div>
+<p>Automatic rounding:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">inst</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="mf">0.012</span> <span class="c"># rounded to 0.01</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="mapping-values">
-<h2>2.5. Mapping values<a class="headerlink" href="#mapping-values" title="Permalink to this headline">¶</a></h2>
+<h2>4.5. Mapping values<a class="headerlink" href="#mapping-values" title="Permalink to this headline">¶</a></h2>
 <p>We will define offset and frequency like we did with amplitude, and we will also define output enabled and waveform:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Feat</span><span class="p">,</span> <span class="n">DictFeat</span>
 <span class="kn">from</span> <span class="nn">lantz.network</span> <span class="kn">import</span> <span class="n">TCPDriver</span>
@@ -530,7 +585,7 @@ Inside the method (in this case is a getter) goes the code to communicate with t
     <span class="n">Hz</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Hz&#39;</span><span class="p">)</span>
 
     <span class="n">log_to_screen</span><span class="p">(</span><span class="n">DEBUG</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">SignalGenerator</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;The identification of this instrument is : &#39;</span> <span class="o">+</span> <span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&#39;Setting amplitude to 3&#39;</span><span class="p">)</span>
         <span class="n">inst</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">volt</span>
@@ -550,17 +605,24 @@ Inside the method (in this case is a getter) goes the code to communicate with t
 <p>This means that we can write the body of the getter/setter expecting a instrument compatible value (1 or 0) but the user actually sees a much more friendly interface (True or False). The same happens with <cite>waveform</cite>. Instead of asking the user to memorize which number corresponds to &#8216;sine&#8217; or implement his own mapping, we provide this within the feat.</p>
 </div>
 <div class="section" id="properties-with-items-dictfeat">
-<h2>2.6. Properties with items: DictFeat<a class="headerlink" href="#properties-with-items-dictfeat" title="Permalink to this headline">¶</a></h2>
+<h2>4.6. Properties with items: DictFeat<a class="headerlink" href="#properties-with-items-dictfeat" title="Permalink to this headline">¶</a></h2>
 <p>It is quite common that scientific equipment has many of certain features (such as axes, channels, etc). For example, this signal generator has 8 digital outputs. A simple solution would be to access them as feats named dout1, dout2 and so on. But this is not elegant (consider a DAQ with 32 digital inputs) and makes coding to programatically access to channel N very annoying. To solve this Lantz provides a dictionary like feature named <tt class="xref py py-class docutils literal"><span class="pre">DictFeat</span></tt>. Let&#8217;s see this in action:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@DictFeat</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="bp">True</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
-<span class="k">def</span> <span class="nf">dout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Digital output state.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;?DOU {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># import ...</span>
 
-<span class="nd">@dout.setter</span>
-<span class="k">def</span> <span class="nf">dout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;!DOU {} {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+
+    <span class="c"># Code from previous example</span>
+    <span class="c"># ...</span>
+
+    <span class="nd">@DictFeat</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="bp">True</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">dout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Digital output state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;?DOU {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span>
+
+    <span class="nd">@dout.setter</span>
+    <span class="k">def</span> <span class="nf">dout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;!DOU {} {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>In the driver definition, very little has changed. <tt class="xref py py-class docutils literal"><span class="pre">DictFeat</span></tt> acts like the standard Feat decorator but operates on a method that contains one extra parameter for the get and the set in the second position.</p>
@@ -569,15 +631,22 @@ Inside the method (in this case is a getter) goes the code to communicate with t
 </pre></div>
 </div>
 <p>By default, any key (in this case, channel) is valid and Lantz leaves to the underlying instrument to reject invalid ones. In some cases, for example when the instrument does not deal properly with unexpected parameters, you might want to restrict them using the optional parameter <cite>keys</cite></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@DictFeat</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="bp">True</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span> <span class="n">keys</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
-<span class="k">def</span> <span class="nf">dout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Digital output state.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;?DOU {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># import ...</span>
 
-<span class="nd">@dout.setter</span>
-<span class="k">def</span> <span class="nf">dout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;!DOU {} {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+
+    <span class="c"># Code from previous example</span>
+    <span class="c"># ...</span>
+
+    <span class="nd">@DictFeat</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="bp">True</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span> <span class="n">keys</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
+    <span class="k">def</span> <span class="nf">dout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Digital output state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;?DOU {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span>
+
+    <span class="nd">@dout.setter</span>
+    <span class="k">def</span> <span class="nf">dout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;!DOU {} {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Remember that range(1, 9) excludes 9. In this way, Lantz will Raise an exception without talking to the instrument when the following code:</p>
@@ -588,16 +657,23 @@ Inside the method (in this case is a getter) goes the code to communicate with t
 </pre></div>
 </div>
 <p>We will create now a read-read only DictFeat for the digital input:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@DictFeat</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="bp">True</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span> <span class="n">keys</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
-<span class="k">def</span> <span class="nf">din</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Digital input state.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;?DIN {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># import ...</span>
+
+<span class="k">class</span> <span class="nc">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">):</span>
+
+    <span class="c"># Code from previous example</span>
+    <span class="c"># ...</span>
+
+    <span class="nd">@DictFeat</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">{</span><span class="bp">True</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span> <span class="n">keys</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)))</span>
+    <span class="k">def</span> <span class="nf">din</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Digital input state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;?DIN {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="drivers-methods-action">
-<h2>2.7. Drivers methods: Action<a class="headerlink" href="#drivers-methods-action" title="Permalink to this headline">¶</a></h2>
+<h2>4.7. Drivers methods: Action<a class="headerlink" href="#drivers-methods-action" title="Permalink to this headline">¶</a></h2>
 <p>Bound methods that will trigger interaction with the instrument are decorated with <tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Feat</span><span class="p">,</span> <span class="n">DictFeat</span><span class="p">,</span> <span class="n">Action</span>
 </pre></div>
@@ -608,6 +684,8 @@ Inside the method (in this case is a getter) goes the code to communicate with t
     <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;!CAL&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p class="rubric">You can use the the driver that you have created in you projects.
+Learn how in the next part of the tutorial: <a class="reference internal" href="cli-app.html#tutorial-cli-app"><em>A simple command line app</em></a>.</p>
 </div>
 </div>
 
@@ -622,24 +700,24 @@ Inside the method (in this case is a getter) goes the code to communicate with t
 
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">2. Building your own drivers</a><ul>
-<li><a class="reference internal" href="#the-instrument">2.1. The instrument</a></li>
-<li><a class="reference internal" href="#a-basic-driver">2.2. A basic driver</a></li>
-<li><a class="reference internal" href="#putting-units-to-work">2.3. Putting units to work</a></li>
-<li><a class="reference internal" href="#limits">2.4. Limits</a></li>
-<li><a class="reference internal" href="#mapping-values">2.5. Mapping values</a></li>
-<li><a class="reference internal" href="#properties-with-items-dictfeat">2.6. Properties with items: DictFeat</a></li>
-<li><a class="reference internal" href="#drivers-methods-action">2.7. Drivers methods: Action</a></li>
+<li><a class="reference internal" href="#">4. Building your own drivers</a><ul>
+<li><a class="reference internal" href="#the-instrument">4.1. The instrument</a></li>
+<li><a class="reference internal" href="#a-basic-driver">4.2. A basic driver</a></li>
+<li><a class="reference internal" href="#putting-units-to-work">4.3. Putting units to work</a></li>
+<li><a class="reference internal" href="#limits">4.4. Limits</a></li>
+<li><a class="reference internal" href="#mapping-values">4.5. Mapping values</a></li>
+<li><a class="reference internal" href="#properties-with-items-dictfeat">4.6. Properties with items: DictFeat</a></li>
+<li><a class="reference internal" href="#drivers-methods-action">4.7. Drivers methods: Action</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="using.html"
-                        title="previous chapter">1. Using lantz drivers</a></p>
+  <p class="topless"><a href="using-feats.html"
+                        title="previous chapter">3. Using Feats</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../guides/index.html"
-                        title="next chapter">Guides</a></p>
+  <p class="topless"><a href="cli-app.html"
+                        title="next chapter">5. A simple command line app</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/tutorial/building.txt"
@@ -672,14 +750,14 @@ Inside the method (in this case is a getter) goes the code to communicate with t
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../guides/index.html" title="Guides"
+          <a href="cli-app.html" title="5. A simple command line app"
              >next</a> |</li>
         <li class="right" >
-          <a href="using.html" title="1. Using lantz drivers"
+          <a href="using-feats.html" title="3. Using Feats"
              >previous</a> |</li>
         <li><img src="../_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
 
           <li><a href="index.html" >Tutorials</a> &raquo;</li> 
       </ul>
@@ -687,7 +765,7 @@ Inside the method (in this case is a getter) goes the code to communicate with t
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Oct 05, 2012.
+    Last updated on Dec 31, 2012.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

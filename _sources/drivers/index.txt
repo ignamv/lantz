@@ -63,6 +63,11 @@ Drivers
 - :class:`PCO Sensicam <lantz.drivers.pco.Sensicam>`
 
 
+:mod:`RGB Lasersysteme GmbH. <lantz.drivers.rgblasersystems>`
+
+- :class:`Driver for any RGB Lasersystems MiniLas Evo laser. <lantz.drivers.rgblasersystems.MiniLasEvo>`
+
+
 :mod:`Sutter Instrument. <lantz.drivers.sutter>`
 
 - :class:`High performance, microprocessor-controlled multi-filter wheel system <lantz.drivers.sutter.Lambda103>`

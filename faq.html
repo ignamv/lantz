@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>FAQs &mdash; Lantz 0.1 documentation</title>
+    <title>FAQs</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
-    <link rel="top" title="Lantz 0.1 documentation" href="index.html" />
+    <link rel="top" title="None" href="index.html" />
     <link rel="next" title="Drivers" href="drivers/index.html" />
     <link rel="prev" title="Connecting two (or more) drivers" href="guides/ui-two-drivers.html" />
     <link rel="shortcut icon" type="image/png" href="_static/lantz16.png" />
@@ -52,7 +52,7 @@
              accesskey="P">previous</a> |</li>
         <li><img src="_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="index.html">Lantz 0.1 documentation</a> &raquo;</li>
+        <li><a href="index.html">Lantz</a> &raquo;</li>
  
       </ul>
     </div>  
@@ -84,7 +84,7 @@ trivial in most general-purpose   languages.</li>
 <p>On the other hand, Matlab is a text based programming language with focus in numerical methods. It provides a set of additional function via its instrumentation toolbox.</p>
 <p>Common to these two plataforms is that they have <em>evolved</em> a full fledged programming language from domain specific one while trying to maintain backwards compatibility. Many of the weird ways of doing things in these languages arise from this organic growth.</p>
 <p>Unlike LabVIEW, LabWindows/CVI is ANSI C plus a set of convenient libraries for instrumentation. It brings all the goodies of C but it also all the difficulties such as memmory management.</p>
-<p>Last but not least, these languages are propietary and expensive locking your development. We need a free, open source toolkit for instrumentation build using a proven, mature, cross-plataform and well-though programming language.</p>
+<p>Last but not least, these languages are propietary and expensive, locking your development. We need a free, open source toolkit for instrumentation build using a proven, mature, cross-plataform and well-though programming language.</p>
 </div>
 <div class="section" id="but-there-are-a-lot-of-drivers-already-available-for-these-languages">
 <h2>But ... there are a lot of drivers already available for these languages<a class="headerlink" href="#but-there-are-a-lot-of-drivers-already-available-for-these-languages" title="Permalink to this headline">¶</a></h2>
@@ -97,7 +97,7 @@ trivial in most general-purpose   languages.</li>
 </div>
 <div class="section" id="isn-t-python-slow">
 <h2>Isn&#8217;t Python slow?<a class="headerlink" href="#isn-t-python-slow" title="Permalink to this headline">¶</a></h2>
-<p>In instrumentation software the communication with the instrument is (by far) the rate limiting step. Sending a serial command that modifies the instrument function and receiving a response can easily take a few miliseconds and frequently much longer. While this might be fast in human terms, is an eternity for a computer. For this reason rapid prototyping, good coding practices and maintainability are more important for an instrumentation toolkit than speed.</p>
+<p>Python is not slow. But even if it was, in instrumentation software the communication with the instrument is (by far) the rate limiting step. Sending a serial command that modifies the instrument function and receiving a response can easily take a few miliseconds and frequently much longer. While this might be fast in human terms, is an eternity for a computer. For this reason rapid prototyping, good coding practices and maintainability are more important for an instrumentation toolkit than speed.</p>
 </div>
 <div class="section" id="but-i-do-a-lot-of-mathematical-operations">
 <h2>But I do a lot of mathematical operations!<a class="headerlink" href="#but-i-do-a-lot-of-mathematical-operations" title="Permalink to this headline">¶</a></h2>
@@ -105,15 +105,16 @@ trivial in most general-purpose   languages.</li>
 </div>
 <div class="section" id="how-do-i-start">
 <h2>How do I start?<a class="headerlink" href="#how-do-i-start" title="Permalink to this headline">¶</a></h2>
-<p>Getting started is a good place.</p>
+<p>The <em class="xref std std-ref">tutorial</em> is a good place.</p>
 </div>
 <div class="section" id="i-want-to-help-what-can-i-do">
 <h2>I want to help. What can I do?<a class="headerlink" href="#i-want-to-help-what-can-i-do" title="Permalink to this headline">¶</a></h2>
-<p>Please send comments and bug reports allowing us to make the code and documentation better.</p>
+<p>Please send comments and bug reports allowing us to make the code and documentation better to the <a class="reference external" href="https://github.com/hgrecco/lantz/issues">issue tracker in GitHub</a></p>
 <p>If you want to contribute with code, the drivers are a good place to start. If you have a programmed a new driver o improved an existing one, let us know.</p>
 <p>If you have been using Lantz for a while, you can also write or clarify documentation helping people to use the toolkit.</p>
 <p>The user interface also can use some help. We aim to provide widgets for common instrumentation scenarios.</p>
 <p>Finally, talk to us if you have an idea that can be added to the core. We aim to keep the core small, robust and easy to maintain. However, patterns that appear recurrently when we work on drivers are factored out to the core after proven right.</p>
+<p>Take a look at the <a class="reference internal" href="contributing.html#contributing"><em>Contributing</em></a> section for more information.</p>
 </div>
 <div class="section" id="where-does-the-name-comes-from">
 <h2>Where does the name comes from?<a class="headerlink" href="#where-does-the-name-comes-from" title="Permalink to this headline">¶</a></h2>
@@ -191,14 +192,14 @@ trivial in most general-purpose   languages.</li>
              >previous</a> |</li>
         <li><img src="_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="index.html">Lantz 0.1 documentation</a> &raquo;</li>
+        <li><a href="index.html">Lantz</a> &raquo;</li>
  
       </ul>
     </div>
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Oct 05, 2012.
+    Last updated on Dec 31, 2012.
     <a href="bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

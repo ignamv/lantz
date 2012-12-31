@@ -1,0 +1,16 @@
+.. _using-lantz:
+
+Using Lantz in your projects
+============================
+
+This section assumes that you have a basic understanding of `virtualenv`_
+and installed Lantz following the :ref:`installing`.
+
+~/lantzenv/src/lantz
+
+
+
+.. _installation guide: :ref:`installing`
+.. _virtualenv: http://www.virtualenv.org/en/latest/index.html
+
+

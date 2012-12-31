@@ -8,30 +8,27 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installing &mdash; Lantz 0.1 documentation</title>
+    <title>Installation guide &mdash; Lantz 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
+        URL_ROOT:    '',
         VERSION:     '0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/sidebar.js"></script>
-    <link rel="author" title="About these documents" href="../about.html" />
-    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
-    <link rel="up" title="Guides" href="index.html" />
-    <link rel="next" title="Connecting a custom UI to a driver" href="ui-driver.html" />
-    <link rel="prev" title="Guides" href="index.html" />
-    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="Lantz 0.1 documentation" href="index.html" />
+    <link rel="shortcut icon" type="image/png" href="_static/lantz16.png" />
  
 
   </head>
@@ -40,22 +37,15 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="ui-driver.html" title="Connecting a custom UI to a driver"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Guides"
-             accesskey="P">previous</a> |</li>
-        <li><img src="../_static/lantz16.png" alt=""
+        <li><img src="_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
-
-          <li><a href="index.html" accesskey="U">Guides</a> &raquo;</li> 
+        <li><a href="index.html">Lantz 0.1 documentation</a> &raquo;</li>
+ 
       </ul>
     </div>  
 
@@ -64,8 +54,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="installing">
-<span id="id1"></span><h1>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="installation-guide">
+<span id="installing"></span><h1>Installation guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h1>
 <p>This guide describes Lantz requirements and provides platform specific
 installation guides. Examples are given for Python 3.2, installing all
 optional requirements as site-packages and Lantz in a virtual environment
@@ -79,62 +69,65 @@ using <a class="reference external" href="http://www.pip-installer.org/en/latest
 <p>Some lantz subpackages have other requirements which are listed below together
 with a small explanation of where are used. Short installation instructions are
 given, but we refer you to the package documentation for more information. For some
-packages, a link to the binary distribution is given.</p>
+packages, a link to the binary distribution is given. Specifi</p>
 <blockquote>
-<div><ul>
-<li><p class="first"><a class="reference external" href="http://pypi.python.org/pypi/colorama/">Colorama</a> is used to colorize terminal output.
-It is optional when logging to screen and mandatory if you want to use <cite>lantz-monitor</cite>, the text-based log viewer.
-You can install it using:</p>
-<div class="highlight-python"><pre>$ pip install colorama</pre>
-</div>
-</li>
-<li><p class="first"><a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> is used generate the documentation.
-It is optional and only needed if you want to generate the documentation yourself.
-You can install it using:</p>
-<div class="highlight-python"><pre>$ pip install sphinx</pre>
-</div>
-</li>
-<li><p class="first"><a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> is used to transform the RST documentation to HTML which is then provided as tooltips in the GUI.
+<div><ul class="simple">
+<li><a class="reference external" href="http://pypi.python.org/pypi/colorama/">Colorama</a> is used to colorize terminal output.
+It is optional when logging to screen and mandatory if you want to use <cite>lantz-monitor</cite>, the text-based log viewer.</li>
+<li><a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> is used generate the documentation.
+It is optional and only needed if you want to generate the documentation yourself.</li>
+<li><a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> is used to transform the RST documentation to HTML which is then provided as tooltips in the GUI.
 It is optional. If not installed, unformatted documentation will be shown as tooltips.
-It will be already installed if you install Sphinx. To install it independently:</p>
-<div class="highlight-python"><pre>$ pip install docutils</pre>
-</div>
-</li>
-<li><p class="first"><a class="reference external" href="http://pyserial.sourceforge.net/">pySerial</a> it is to communicate via serial port.
-It is optional and only needed if you are using a driver that uses lantz.serial.
-You can install it using:</p>
-<div class="highlight-python"><pre>$ pip install pyserial</pre>
-</div>
-<p>Or use the <a class="reference external" href="http://pyserial.sourceforge.net/pyserial.html#packages">PySerial binaries</a></p>
-</li>
-<li><p class="first"><a class="reference external" href="http://qt.nokia.com/products/">Qt4</a> is used to generate the graphical user interfaces. Due to a license issue there
-are two python bindings for Qt: <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt">PyQt</a> and <a class="reference external" href="http://www.pyside.org/">PySide</a>.
-Both are compatible with Lantz.
-To install pyQt:</p>
-<div class="highlight-python"><pre>$ pip install pyqt</pre>
-</div>
-<p>or use the <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download/">PyQt binaries</a></p>
-<blockquote>
-<div><p>$ pip install pyside</p>
-</div></blockquote>
-<p>or use the <a class="reference external" href="http://qt-project.org/wiki/Category:LanguageBindings::PySide::Downloads">PySide binaries</a></p>
-</li>
-<li><p class="first"><a class="reference external" href="http://numpy.scipy.org/">NumPy</a> is used by many drivers to perform numerical calculations.
-You can install it using:</p>
-<div class="highlight-python"><pre>$ pip install numpy</pre>
-</div>
-<p>or use the <a class="reference external" href="http://sourceforge.net/projects/numpy/files/">NumPy binaries</a></p>
-</li>
-<li><p class="first"><a class="reference external" href="http://www.ni.com/visa/">VISA</a> National Instruments Library for communicating via  GPIB, VXI, PXI,
-Serial, Ethernet, and/or USB interfaces</p>
-</li>
+It will be already installed if you install Sphinx.</li>
+<li><a class="reference external" href="http://pyserial.sourceforge.net/">pySerial</a> it is to communicate via serial port.
+It is optional and only needed if you are using a driver that uses lantz.serial.</li>
+<li><a class="reference external" href="http://qt.nokia.com/products/">Qt4</a> is used to generate the graphical user interfaces. Due to a license issue there
+are two python bindings for Qt: <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt">PyQt</a> and <a class="reference external" href="http://www.pyside.org/">PySide</a>.</li>
+<li><a class="reference external" href="http://numpy.scipy.org/">NumPy</a> is used by many drivers to perform numerical calculations.</li>
+<li><a class="reference external" href="http://www.ni.com/visa/">VISA</a> National Instruments Library for communicating via  GPIB, VXI, PXI,
+Serial, Ethernet, and/or USB interfaces</li>
 </ul>
 </div></blockquote>
 </div>
+</div>
+<div class="section" id="os-specific-instructions">
+<h1>OS specific instructions<a class="headerlink" href="#os-specific-instructions" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="#linux"><em>Linux</em></a></li>
+<li><a class="reference internal" href="#mac"><em>Mac</em></a></li>
+<li><a class="reference internal" href="#windows"><em>Windows</em></a></li>
+</ul>
 <div class="section" id="linux">
-<h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
 <p>Most linux distributions provide packages for Python 3.2, NumPy, PyQt (or PySide)
-and git. Install them.</p>
+and git. There might be some other useful packages. For some distributions, you will
+find specific instructions below.</p>
+<div class="section" id="ubuntu-12-04">
+<h3>Ubuntu 12.04<a class="headerlink" href="#ubuntu-12-04" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>$ sudo apt-get python3 git
+$ sudo apt-get install python3-pkg-resources python3-pyqt4 python3-setuptools python3-sphinx
+$ sudo apt-get install python3-numpy</pre>
+</div>
+<p>and skip the installation of <cite>sphinx</cite>.</p>
+</div>
+<div class="section" id="ubuntu-12-10">
+<h3>Ubuntu 12.10<a class="headerlink" href="#ubuntu-12-10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>$ sudo apt-get python3 git
+$ sudo apt-get install python3-pkg-resources python3-pyqt4 python3-setuptools python3-sphinx python3-pip
+$ sudo apt-get install python3-numpy</pre>
+</div>
+<p>and skip the installation of <cite>pip</cite> and <cite>sphinx</cite>.</p>
+</div>
+<div class="section" id="opensuse-12-2">
+<h3>openSUSE 12.2<a class="headerlink" href="#opensuse-12-2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>$ sudo zypper install python3 git
+$ sudo zypper install python3-pip python3-pyqt4 python3-Sphinx python-distutils-extra
+$ sudo zypper install python3-numpy</pre>
+</div>
+</div>
+<div class="section" id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<p>Install Python3 and git</p>
 <p>Download and install <a class="reference external" href="http://www.ni.com/visa/">VISA</a>.</p>
 <p>Open a terminal to install pip and virtualenv:</p>
 <div class="highlight-python"><pre>$ curl http://python-distribute.org/distribute_setup.py | python3.2
@@ -160,10 +153,11 @@ $ source bin/activate</pre>
 <p>The folder is a normal git repository from where you can pull and push to keep
 the repo in sync.</p>
 </div>
+</div>
 <div class="section" id="mac">
-<h2>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h2>
-<p>Download and install <a class="reference external" href="http://www.python.org/getit/">Python</a>, <a class="reference external" href="http://sourceforge.net/projects/numpy/files/">NumPy binaries</a>, <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download/">PyQt binaries</a>, <a class="reference external" href="http://www.ni.com/visa/">VISA</a>
-and <a class="reference external" href="http://git-scm.com/downloads">git binaries</a></p>
+<span id="id2"></span><h2>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h2>
+<p>Download and install <a class="reference external" href="http://www.python.org/getit/">Python</a>, <a class="reference external" href="http://sourceforge.net/projects/numpy/files/">NumPy binaries</a>,  <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download/">PyQt binaries</a> (or <cite>PySide binaries</cite>),
+<a class="reference external" href="http://www.ni.com/visa/">VISA</a> and <a class="reference external" href="http://git-scm.com/downloads">git binaries</a></p>
 <p>Open a terminal to install pip and virtualenv:</p>
 <div class="highlight-python"><pre>$ curl http://python-distribute.org/distribute_setup.py | python3.2
 $ curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python3.2</pre>
@@ -171,16 +165,13 @@ $ curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python3.2</pr
 <p>Using pip, install all other optional dependencies:</p>
 <div class="highlight-python"><pre>$ pip-3.2 install virtualenv colorama sphinx pyserial</pre>
 </div>
-<dl class="docutils">
-<dt>Change to the folder where you will create your virtual environment. In this</dt>
-<dd><p class="first">case, we have chosen the home directory:</p>
-<div class="last highlight-python"><pre>$ cd ~
+<p>Change to the folder where you will create your virtual environment. In this
+case, we have chosen the home directory:</p>
+<div class="highlight-python"><pre>$ cd ~
 $ virtualenv -p python3.2 --system-site-packages lantzenv
 $ cd lantzenv
 $ source bin/activate</pre>
 </div>
-</dd>
-</dl>
 <p>and then install an editable package:</p>
 <div class="highlight-python"><pre>$ pip install -e git+gitolite@glugcen.dc.uba.ar:lantz.git#egg=lantz</pre>
 </div>
@@ -192,22 +183,23 @@ $ source bin/activate</pre>
 the repo in sync.</p>
 </div>
 <div class="section" id="windows">
-<h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<span id="id3"></span><h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>We provide a simple script to run all the steps provided below. Download
 <a class="reference external" href="https://raw.github.com/hgrecco/lantz/master/scripts/get-lantz.py">get-lantz</a> to the folder in which you want to create the virtual environment.
-The run the sript using a 32 bit version of <a class="reference external" href="http://www.python.org/getit/">Python</a> 3.2+.</p>
+The run the script using a 32 bit version of <a class="reference external" href="http://www.python.org/getit/">Python</a> 3.2+.</p>
 <p>In some of the steps, an installer application will pop-up. Just select all
 default options except when installing git. There you must choose the options
 shown in the images below.</p>
 <p class="last">As the script will download and install only necessary packages, it does not
 need a clean Python to start.</p>
 </div>
-<p>Install <a class="reference external" href="http://www.python.org/getit/">Python</a>, <a class="reference external" href="http://sourceforge.net/projects/numpy/files/">NumPy binaries</a>, <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download/">PyQt binaries</a>, <a class="reference external" href="http://www.ni.com/visa/">VISA</a> and <a class="reference external" href="http://git-scm.com/downloads">git binaries</a>.</p>
+<p>Install <a class="reference external" href="http://www.python.org/getit/">Python</a>, <a class="reference external" href="http://sourceforge.net/projects/numpy/files/">NumPy binaries</a>, <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download/">PyQt binaries</a> (or <cite>PySide binaries</cite>), <a class="reference external" href="http://www.ni.com/visa/">VISA</a>
+and <a class="reference external" href="http://git-scm.com/downloads">git binaries</a>.</p>
 <p>When installing Git</p>
-<img alt="Options in Git" src="../_images/git1.png" />
-<img alt="Options in Git" src="../_images/git2.png" />
+<img alt="Options in Git" src="../_static/guides/git1.png" />
+<img alt="Options in Git" src="../_static/guides/git2.png" />
 <p>Download and run with Python 3.2:</p>
 <div class="highlight-python"><pre>- http://python-distribute.org/distribute_setup.py
 - https://raw.github.com/pypa/pip/master/contrib/get-pip.py</pre>
@@ -239,36 +231,39 @@ the repo in sync.</p>
         </div>
       </div>
       <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
-  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+        <div class="sphinxsidebarwrapper"><p><a href="index.html">
+  <img src="_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
 </a></p>
 
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Installing</a><ul>
+<li><a class="reference internal" href="#">Installation guide</a><ul>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
 <li><a class="reference internal" href="#optional-requirements">Optional requirements</a></li>
-<li><a class="reference internal" href="#linux">Linux</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#os-specific-instructions">OS specific instructions</a><ul>
+<li><a class="reference internal" href="#linux">Linux</a><ul>
+<li><a class="reference internal" href="#ubuntu-12-04">Ubuntu 12.04</a></li>
+<li><a class="reference internal" href="#ubuntu-12-10">Ubuntu 12.10</a></li>
+<li><a class="reference internal" href="#opensuse-12-2">openSUSE 12.2</a></li>
+<li><a class="reference internal" href="#general">General</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#mac">Mac</a></li>
 <li><a class="reference internal" href="#windows">Windows</a></li>
 </ul>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Guides</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="ui-driver.html"
-                        title="next chapter">Connecting a custom UI to a driver</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/guides/installing.txt"
+    <li><a href="_sources/installincontg.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
+    <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -287,29 +282,22 @@ the repo in sync.</p>
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="ui-driver.html" title="Connecting a custom UI to a driver"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Guides"
-             >previous</a> |</li>
-        <li><img src="../_static/lantz16.png" alt=""
+        <li><img src="_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
-
-          <li><a href="index.html" >Guides</a> &raquo;</li> 
+        <li><a href="index.html">Lantz 0.1 documentation</a> &raquo;</li>
+ 
       </ul>
     </div>
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Oct 05, 2012.
-    <a href="../bugs.html">Found a bug</a>?
+    Last updated on Dec 29, 2012.
+    <a href="bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>

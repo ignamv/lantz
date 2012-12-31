@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>lantz.processors &mdash; Lantz 0.1 documentation</title>
+    <title>lantz.processors</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
-    <link rel="top" title="Lantz 0.1 documentation" href="../index.html" />
+    <link rel="top" title="None" href="../index.html" />
     <link rel="up" title="Support" href="support.html" />
     <link rel="next" title="lantz.visalib" href="visalib.html" />
     <link rel="prev" title="lantz.stats" href="stats.html" />
@@ -53,7 +53,7 @@
              accesskey="P">previous</a> |</li>
         <li><img src="../_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
 
           <li><a href="index.html" >API</a> &raquo;</li>
           <li><a href="support.html" accesskey="U">Support</a> &raquo;</li> 
@@ -284,6 +284,20 @@ incompatible. Same options as <cite>on_dimensionless</cite></li>
 </dd></dl>
 
 <dl class="function">
+<dt id="lantz.processors.get_mapping">
+<tt class="descclassname">lantz.processors.</tt><tt class="descname">get_mapping</tt><big>(</big><em>container</em><big>)</big><a class="headerlink" href="#lantz.processors.get_mapping" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">getter</span> <span class="o">=</span> <span class="n">get_mapping</span><span class="p">({</span><span class="s">&#39;A&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">:</span> <span class="mi">43</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">getter</span><span class="p">(</span><span class="s">&#39;A&#39;</span><span class="p">)</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">0 not in (&#39;A&#39;, &#39;B&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="lantz.processors.getitem">
 <tt class="descclassname">lantz.processors.</tt><tt class="descname">getitem</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="headerlink" href="#lantz.processors.getitem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a[b] or if not found a[type(b)]</p>
@@ -345,7 +359,7 @@ incompatible. Same options as <cite>on_dimensionless</cite></li>
              >previous</a> |</li>
         <li><img src="../_static/lantz16.png" alt=""
                  style="vertical-align: middle; margin-top: -1px"/></li>
-        <li><a href="../index.html">Lantz 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
 
           <li><a href="index.html" >API</a> &raquo;</li>
           <li><a href="support.html" >Support</a> &raquo;</li> 
@@ -354,7 +368,7 @@ incompatible. Same options as <cite>on_dimensionless</cite></li>
     <div class="footer">
     &copy; Copyright 2012, Lantz Authors.
     <br />
-    Last updated on Oct 05, 2012.
+    Last updated on Dec 31, 2012.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.

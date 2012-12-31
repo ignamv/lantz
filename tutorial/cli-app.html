@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. A simple command line app</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="None" href="../index.html" />
+    <link rel="up" title="Tutorials" href="index.html" />
+    <link rel="next" title="6. A simple GUI app" href="gui-app.html" />
+    <link rel="prev" title="4. Building your own drivers" href="building.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gui-app.html" title="6. A simple GUI app"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="building.html" title="4. Building your own drivers"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="a-simple-command-line-app">
+<span id="tutorial-cli-app"></span><h1>5. A simple command line app<a class="headerlink" href="#a-simple-command-line-app" title="Permalink to this headline">¶</a></h1>
+<p>In this part of the tutorial you will build a simple command line application
+to do a frequency scan.</p>
+<p>Start the simulated instrument running the following command:</p>
+<div class="highlight-python"><pre>$ lantz-sim fungen tcp</pre>
+</div>
+<p>Open the folder in which you have created the driver (<a class="reference internal" href="building.html#tutorial-building"><em>Building your own drivers</em></a>)
+and create a python file named <cite>scanfrequency.py</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Q_</span>
+
+<span class="kn">from</span> <span class="nn">mydriver</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
+
+<span class="n">Hz</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Hz&#39;</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">Hz</span>
+<span class="n">stop</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">Hz</span>
+<span class="n">step</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">Hz</span>
+<span class="n">wait</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
+
+    <span class="n">current</span> <span class="o">=</span> <span class="n">start</span>
+
+    <span class="c"># This loop scans the frequency</span>
+    <span class="k">while</span> <span class="n">current</span> <span class="o">&lt;</span> <span class="n">stop</span><span class="p">:</span>
+        <span class="n">inst</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">current</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Changed to {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">wait</span><span class="p">)</span>
+        <span class="n">current</span> <span class="o">+=</span> <span class="n">step</span>
+</pre></div>
+</div>
+<p>First we the <cite>time</cite> module, the quantities class and the driver that you created
+in the previous tutorial. We could have used the driver included in Lantz, but
+we will work as if the driver was not in Lantz and you have built it yourself
+for your project. We create an instance of it using a context manager
+(the <cite>with</cite> statement) to make sure that all resources will be properly closed
+even if an error occurs. Finally, we just step through all the frequencies,
+changing the instrument and waiting at each step.</p>
+<p>Run it using:</p>
+<div class="highlight-python"><pre>$ python scanfrequency.py</pre>
+</div>
+<div class="section" id="using-command-line-arguments">
+<h2>5.1. Using command line arguments<a class="headerlink" href="#using-command-line-arguments" title="Permalink to this headline">¶</a></h2>
+<p>In our first implementation the scan range and the waiting time were fixed. We
+will now add mandatory command line arguments to set the start and stop frequency
+and optionally the step size and the waiting time. To do this, we will import
+the <cite>argparse</cite> module and create a parser object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Q_</span>
+
+<span class="kn">from</span> <span class="nn">mydriver</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;start&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s">&#39;Start frequency [Hz]&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;stop&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s">&#39;Stop frequency [Hz]&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;step&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s">&#39;Step frequency [Hz]&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;wait&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s">&#39;Waiting time at each step [s]&#39;</span><span class="p">)</span>
+
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="n">Hz</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Hz&#39;</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">start</span> <span class="o">*</span> <span class="n">Hz</span>
+<span class="n">stop</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">stop</span> <span class="o">*</span> <span class="n">Hz</span>
+<span class="n">step</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">step</span> <span class="o">*</span> <span class="n">Hz</span>
+<span class="n">wait</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">wait</span>
+
+<span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5678</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
+
+    <span class="n">current</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="n">current</span> <span class="o">&lt;</span> <span class="n">stop</span><span class="p">:</span>
+        <span class="n">inst</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">current</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Changed to {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">wait</span><span class="p">)</span>
+        <span class="n">current</span> <span class="o">+=</span> <span class="n">step</span>
+</pre></div>
+</div>
+<p>A nice thing about Python argparse package is that you get the help:</p>
+<div class="highlight-python"><pre>$ python scanfrequency.py</pre>
+</div>
+<p>or in more detail:</p>
+<div class="highlight-python"><pre>python scanfrequency.py -h</pre>
+</div>
+<p>Try it again specifying the start, stop, step and waiting time:</p>
+<div class="highlight-python"><pre>$ python scanfrequency.py 2 8 2 .1</pre>
+</div>
+</div>
+<div class="section" id="refactoring-for-reusability">
+<h2>5.2. Refactoring for reusability<a class="headerlink" href="#refactoring-for-reusability" title="Permalink to this headline">¶</a></h2>
+<p>Finally we will add a couple of lines to allow the user to define the host
+and port number of the TCP function generator. We will also refactor the
+code to extract the function that perform the actual frequency scan apart:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">scan_frequency</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">wait</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan frequency in an instrument.</span>
+
+<span class="sd">    :param start: Start frequency.</span>
+<span class="sd">    :type start: Quantity</span>
+<span class="sd">    :param stop: Stop frequency.</span>
+<span class="sd">    :type stop: Quantity</span>
+<span class="sd">    :param step: Step frequency.</span>
+<span class="sd">    :type step: Quantity</span>
+<span class="sd">    :param wait: Waiting time.</span>
+<span class="sd">    :type wait: Quantity</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">in_secs</span> <span class="o">=</span> <span class="n">wait</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;seconds&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="n">current</span> <span class="o">&lt;</span> <span class="n">stop</span><span class="p">:</span>
+        <span class="n">inst</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">current</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">in_secs</span><span class="p">)</span>
+        <span class="n">current</span> <span class="o">+=</span> <span class="n">step</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">argparse</span>
+
+    <span class="kn">from</span> <span class="nn">lantz</span> <span class="kn">import</span> <span class="n">Q_</span>
+
+    <span class="kn">from</span> <span class="nn">mydriver</span> <span class="kn">import</span> <span class="n">LantzSignalGeneratorTCP</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+    <span class="c"># Configure</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-H&#39;</span><span class="p">,</span> <span class="s">&#39;--host&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&#39;TCP hostname&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-p&#39;</span><span class="p">,</span> <span class="s">&#39;--port&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">5678</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&#39;TCP port&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;start&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Start frequency [Hz]&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;stop&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Stop frequency [Hz]&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;step&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Step frequency [Hz]&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;wait&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Waiting time at each step [s]&#39;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">Hz</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Hz&#39;</span><span class="p">)</span>
+    <span class="n">sec</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;sec&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">print_change</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="n">old</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Changed from {} to {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">))</span>
+
+    <span class="k">with</span> <span class="n">LantzSignalGeneratorTCP</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">port</span><span class="p">)</span> <span class="k">as</span> <span class="n">inst</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">idn</span><span class="p">)</span>
+
+        <span class="n">inst</span><span class="o">.</span><span class="n">frequency_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">print_change</span><span class="p">)</span>
+
+        <span class="n">scan_frequency</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">start</span> <span class="o">*</span> <span class="n">Hz</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">stop</span> <span class="o">*</span> <span class="n">Hz</span><span class="p">,</span>
+                       <span class="n">args</span><span class="o">.</span><span class="n">step</span> <span class="o">*</span> <span class="n">Hz</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">wait</span> <span class="o">*</span> <span class="n">sec</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first change you will notice is that we have now used a Quantity for the
+time. It might be meaningless as the script ask for the waiting time in
+seconds and the function used to wait (<cite>time.sleep</cite>) expects the time in
+seconds. But using a Quantity allows the caller of the function how the
+waiting is implemented.</p>
+<p>Also notice that we have removed the print statement from inside the function
+to be able to reuse it in other applications. For example, we might want to use
+it in a silent command line application or in a GUI application.
+To know that the frequency has changed we have connected a reporting function
+(<cite>print_change</cite>) to a signal (<cite>frequency_changed</cite>). Lantz will call the
+function every time that the frequency changes. Every Feat has an associated
+signal that can be accessed by appending <cite>_changed</cite> to the name.</p>
+<p class="rubric">If you have installed PyQt4 (or PySide) you can use Lantz helpers to build
+a GUI app.
+Learn how in the next part of the tutorial: <a class="reference internal" href="gui-app.html#tutorial-gui-app"><em>A simple GUI app</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5. A simple command line app</a><ul>
+<li><a class="reference internal" href="#using-command-line-arguments">5.1. Using command line arguments</a></li>
+<li><a class="reference internal" href="#refactoring-for-reusability">5.2. Refactoring for reusability</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="building.html"
+                        title="previous chapter">4. Building your own drivers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gui-app.html"
+                        title="next chapter">6. A simple GUI app</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorial/cli-app.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gui-app.html" title="6. A simple GUI app"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="building.html" title="4. Building your own drivers"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
+
+          <li><a href="index.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Dec 31, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>

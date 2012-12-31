@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Installation guide</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="None" href="../index.html" />
+    <link rel="up" title="Tutorials" href="index.html" />
+    <link rel="next" title="2. Using lantz drivers" href="using.html" />
+    <link rel="prev" title="Tutorials" href="index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/lantz16.png" />
+ 
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="using.html" title="2. Using lantz drivers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Tutorials"
+             accesskey="P">previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation-guide">
+<span id="tutorial-installing"></span><h1>1. Installation guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h1>
+<p>This guide describes Lantz requirements and provides platform specific
+installation guides. Examples are given for Python 3.2 installing all
+optional requirements as site-packages.</p>
+<div class="section" id="requirements">
+<h2>1.1. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>Lantz core requires only <a class="reference external" href="http://www.python.org/getit/">Python</a> 3.2+.</p>
+</div>
+<div class="section" id="optional-requirements">
+<h2>1.2. Optional requirements<a class="headerlink" href="#optional-requirements" title="Permalink to this headline">¶</a></h2>
+<p>Some lantz subpackages have other requirements which are listed below together
+with a small explanation of where are used. Short installation instructions are
+given, but we refer you to the package documentation for more information. For some
+packages, a link to the binary distribution is given. Specifi</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://pypi.python.org/pypi/colorama/">Colorama</a> is used to colorize terminal output.
+It is optional when logging to screen and mandatory if you want to use <cite>lantz-monitor</cite>, the text-based log viewer.</li>
+<li><a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> is used generate the documentation.
+It is optional and only needed if you want to generate the documentation yourself.</li>
+<li><a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> is used to transform the RST documentation to HTML which is then provided as tooltips in the GUI.
+It is optional. If not installed, unformatted documentation will be shown as tooltips.
+It will be already installed if you install Sphinx.</li>
+<li><a class="reference external" href="http://pyserial.sourceforge.net/">pySerial</a> it is to communicate via serial port.
+It is optional and only needed if you are using a driver that uses lantz.serial.</li>
+<li><a class="reference external" href="http://qt.nokia.com/products/">Qt4</a> is used to generate the graphical user interfaces. Due to a license issue there
+are two python bindings for Qt: <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt">PyQt</a> and <a class="reference external" href="http://www.pyside.org/">PySide</a>.</li>
+<li><a class="reference external" href="http://numpy.scipy.org/">NumPy</a> is used by many drivers to perform numerical calculations.</li>
+<li><a class="reference external" href="http://www.ni.com/visa/">VISA</a> National Instruments Library for communicating via  GPIB, VXI, PXI,
+Serial, Ethernet, and/or USB interfaces</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><a class="reference internal" href="#linux"><em>Linux</em></a></li>
+<li><a class="reference internal" href="#mac"><em>OSX</em></a></li>
+<li><a class="reference internal" href="#windows"><em>Windows</em></a></li>
+</ul>
+</div>
+<div class="section" id="linux">
+<span id="id1"></span><h2>1.3. Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p>Most linux distributions provide packages for Python 3.2, NumPy, PyQt (or PySide).
+There might be some other useful packages. For some distributions, you will find
+specific instructions below.</p>
+<div class="section" id="ubuntu-12-04">
+<h3>1.3.1. Ubuntu 12.04<a class="headerlink" href="#ubuntu-12-04" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>$ sudo apt-get python3
+$ sudo apt-get install python3-pkg-resources python3-pyqt4 python3-setuptools python3-sphinx
+$ sudo apt-get install python3-numpy</pre>
+</div>
+<p>and continue to to step 4 in OSX</p>
+</div>
+<div class="section" id="ubuntu-12-10">
+<h3>1.3.2. Ubuntu 12.10<a class="headerlink" href="#ubuntu-12-10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>$ sudo apt-get python3
+$ sudo apt-get install python3-pkg-resources python3-pyqt4 python3-setuptools python3-sphinx python3-pip
+$ sudo apt-get install python3-numpy</pre>
+</div>
+<p>and continue to to step 5 in OSX</p>
+</div>
+<div class="section" id="opensuse-12-2">
+<h3>1.3.3. openSUSE 12.2<a class="headerlink" href="#opensuse-12-2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>$ sudo zypper install python3
+$ sudo zypper install python3-pip python3-pyqt4 python3-Sphinx python-distutils-extra
+$ sudo zypper install python3-numpy</pre>
+</div>
+<p>and continue to to step 5 in OSX</p>
+</div>
+</div>
+<div class="section" id="osx">
+<span id="mac"></span><h2>1.4. OSX<a class="headerlink" href="#osx" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Install Python 3.2</p>
+</li>
+<li><p class="first">(optionally) Install <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt">PyQt</a>, <a class="reference external" href="http://numpy.scipy.org/">NumPy</a></p>
+</li>
+<li><p class="first">(optionally) Install <a class="reference external" href="http://www.ni.com/visa/">VISA</a></p>
+</li>
+<li><p class="first">Open a terminal to install pip:</p>
+<div class="highlight-python"><pre>$ curl http://python-distribute.org/distribute_setup.py | python3.2
+$ curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python3.2</pre>
+</div>
+</li>
+<li><p class="first">Using pip, install Lantz and its dependencies other optional dependencies:</p>
+<div class="highlight-python"><pre>$ pip-3.2 install -r https://github.com/hgrecco/lantz/requirements-full.txt</pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="windows">
+<span id="id2"></span><h2>1.5. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>We provide a simple script to run all the steps provided below. Download
+<a class="reference external" href="https://raw.github.com/hgrecco/lantz/master/scripts/get-lantz.py">get-lantz</a> to the folder in which you want to create the virtual environment.
+The run the script using a 32 bit version of <a class="reference external" href="http://www.python.org/getit/">Python</a> 3.2+.</p>
+<p>In some of the steps, an installer application will pop-up. Just select all
+default options.</p>
+<p class="last">As the script will download and install only necessary packages, it does not
+need a clean Python to start.</p>
+</div>
+<p>Install <a class="reference external" href="http://www.python.org/getit/">Python</a>, <a class="reference external" href="http://sourceforge.net/projects/numpy/files/">NumPy binaries</a>, <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download/">PyQt binaries</a> (or <cite>PySide binaries</cite>), <a class="reference external" href="http://www.ni.com/visa/">VISA</a>.</p>
+<p>Download and run with Python 3.2:</p>
+<div class="highlight-python"><pre>- http://python-distribute.org/distribute_setup.py
+- https://raw.github.com/pypa/pip/master/contrib/get-pip.py</pre>
+</div>
+<p>In the command prompt install using pip all other optional dependencies:</p>
+<div class="highlight-python"><pre>$ C:\Python3.2\Scripts\pip install -r https://github.com/hgrecco/lantz/requirements-full.txt</pre>
+</div>
+<p class="rubric">If the driver from your instrument is available, you can start to use it right away.
+Learn how in the next part of the tutorial: <a class="reference internal" href="using.html#tutorial-using"><em>Using lantz drivers</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><p><a href="../index.html">
+  <img src="../_images/lantz_logo.png" alt="Logo" style="width:80%;height:80%"/>
+</a></p>
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. Installation guide</a><ul>
+<li><a class="reference internal" href="#requirements">1.1. Requirements</a></li>
+<li><a class="reference internal" href="#optional-requirements">1.2. Optional requirements</a></li>
+<li><a class="reference internal" href="#linux">1.3. Linux</a><ul>
+<li><a class="reference internal" href="#ubuntu-12-04">1.3.1. Ubuntu 12.04</a></li>
+<li><a class="reference internal" href="#ubuntu-12-10">1.3.2. Ubuntu 12.10</a></li>
+<li><a class="reference internal" href="#opensuse-12-2">1.3.3. openSUSE 12.2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#osx">1.4. OSX</a></li>
+<li><a class="reference internal" href="#windows">1.5. Windows</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Tutorials</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="using.html"
+                        title="next chapter">2. Using lantz drivers</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorial/installing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="using.html" title="2. Using lantz drivers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Tutorials"
+             >previous</a> |</li>
+        <li><img src="../_static/lantz16.png" alt=""
+                 style="vertical-align: middle; margin-top: -1px"/></li>
+        <li><a href="../index.html">Lantz</a> &raquo;</li>
+
+          <li><a href="index.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    &copy; Copyright 2012, Lantz Authors.
+    <br />
+    Last updated on Dec 31, 2012.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+
+  </body>
+</html>
