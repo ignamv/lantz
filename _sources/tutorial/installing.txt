@@ -10,7 +10,7 @@ optional requirements as site-packages.
 Requirements
 ------------
 
-Lantz core requires only `Python`_ 3.2+.
+Lantz core requires `Python`_ 3.2+, Pint_ and stringparser_
 
 
 Optional requirements
@@ -101,7 +101,7 @@ OSX
 
 5. Using pip, install Lantz and its dependencies other optional dependencies::
 
-    $ pip-3.2 install -r https://raw.github.com/hgrecco/lantz/master/requirements-full.txt
+    $ pip-3.2 install colorama sphinx pyserial lantz
 
 
 .. _windows:
@@ -132,7 +132,7 @@ Download and run with Python 3.2::
 
 In the command prompt install using pip all other optional dependencies::
 
-    $ C:\Python3.2\Scripts\pip install -r https://raw.github.com/hgrecco/lantz/master/requirements-full.txt
+    $ C:\Python3.2\Scripts\pip install colorama sphinx pyserial lantz
 
 
 .. rubric::
@@ -159,3 +159,5 @@ In the command prompt install using pip all other optional dependencies::
 .. _VISA: http://www.ni.com/visa/
 .. _git: http://git-scm.com/
 .. _git binaries: http://git-scm.com/downloads
+.. _Pint:: https://pint.readthedocs.org/en/latest/
+.. _stringparser: https://github.com/hgrecco/stringparser
