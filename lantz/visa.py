@@ -187,6 +187,7 @@ class SerialVisaDriver(MessageVisaDriver):
 
 class GPIBVisaDriver(MessageVisaDriver):
 
+    RECV_BUFFER_SIZE = 1<<16
 
     def raw_recv(self, size):
         """Receive raw bytes to the instrument.
@@ -200,11 +201,16 @@ class GPIBVisaDriver(MessageVisaDriver):
 
         """
 
-        if not size:
-            size = 1
-
-        data = self.visa.read(self.vi, 1)
-
+        if not size or size == -1:
+            buffer = b''
+            while True:
+                data = self.visa.read(self.vi, self.RECV_BUFFER_SIZE)
+                buffer = buffer + data
+                if len(data) < self.RECV_BUFFER_SIZE:
+                    # Timeout or terminator
+                    return buffer
+        
+        data = self.visa.read(self.vi, size)
         return data
 
     def read_block(self):
