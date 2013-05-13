@@ -202,13 +202,12 @@ class GPIBVisaDriver(MessageVisaDriver):
         """
 
         if not size or size == -1:
-            buffer = b''
+            buffer = []
             while True:
-                data = self.visa.read(self.vi, self.RECV_BUFFER_SIZE)
-                buffer = buffer + data
-                if len(data) < self.RECV_BUFFER_SIZE:
+                buffer.append(self.visa.read(self.vi, self.RECV_BUFFER_SIZE))
+                if len(buffer[-1]) < self.RECV_BUFFER_SIZE:
                     # Timeout or terminator
-                    return buffer
+                    return b''.join(buffer)
         
         data = self.visa.read(self.vi, size)
         return data
