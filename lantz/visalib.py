@@ -813,8 +813,8 @@ class VisaLibrary(object):
             user_handle_p = ct.POINTER(type(user_handle))
 
         Types.Hndlr = FUNCTYPE(Types.Status, Types.Session, Types.EventType, Types.Event, user_handle_p)
-        self.lib.internal.viInstallHandler.argtypes = [Types.Session, Types.EventType, Types.Hndlr, user_handle_p]
-        self.lib.internal.viUninstallHandler.argtypes = [Types.Session, Types.EventType, Types.Hndlr, user_handle_p]
+        getattr(self.lib, 'viInstallHandler').argtypes = [Types.Session, Types.EventType, Types.Hndlr, user_handle_p]
+        getattr(self.lib, 'viUninstallHandler').argtypes = [Types.Session, Types.EventType, Types.Hndlr, user_handle_p]
 
     def assert_interrupt_signal(self, session, mode, status_id):
         """Asserts the specified interrupt or signal.
