@@ -187,7 +187,9 @@ class SerialVisaDriver(MessageVisaDriver):
 
 class GPIBVisaDriver(MessageVisaDriver):
 
-    RECV_BUFFER_SIZE = 1<<16
+    # When RECV_CHUNK==-1, read all available data, RECV_BUFFER_SIZE bytes at a
+    # time.
+    RECV_BUFFER_SIZE = 1<<8
 
     def raw_recv(self, size):
         """Receive raw bytes to the instrument.
@@ -227,7 +229,10 @@ class GPIBVisaDriver(MessageVisaDriver):
                             str(header[0])))
         nlength = int(self.raw_recv(1))
         length = int(self.raw_recv(nlength))
-        return self.raw_recv(length)
+        ret = self.raw_recv(length)
+        self.log_debug('Received a IEEE488.2 # block of length {:d}', length)
+        return ret
+
 
 class TCPVisaDriver(MessageVisaDriver):
     pass
