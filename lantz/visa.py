@@ -61,6 +61,10 @@ class MessageVisaDriver(TextualMixin, Driver):
     ENCODING = 'ascii'
 
     RECV_CHUNK = -1
+    # When RECV_CHUNK==-1, read all available data, RECV_BUFFER_SIZE bytes at a
+    # time.
+    RECV_BUFFER_SIZE = 1<<8
+
 
     def __init__(self, resource_name, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -110,6 +114,30 @@ class MessageVisaDriver(TextualMixin, Driver):
 
     def is_open(self):
         return self.vi is not None
+
+    def raw_recv(self, size):
+        """Receive raw bytes to the instrument.
+
+        :param size: number of bytes to receive
+        :return: received bytes
+        :return type: bytes
+
+        If a timeout is set, it may return less bytes than requested.
+        If size == -1, then the number of available bytes will be read.
+
+        """
+
+        if not size or size == -1:
+            buffers = []
+            while True:
+                data = self.visa.read(self.vi, self.RECV_BUFFER_SIZE)
+                buffers.append(data)
+                if len(data) < self.RECV_BUFFER_SIZE:
+                    # Timeout or terminator
+                    return b''.join(buffers)
+        else:
+            data = self.visa.read(self.vi, size)
+            return data
 
 
 class SerialVisaDriver(MessageVisaDriver):
@@ -186,34 +214,6 @@ class SerialVisaDriver(MessageVisaDriver):
 
 
 class GPIBVisaDriver(MessageVisaDriver):
-
-    # When RECV_CHUNK==-1, read all available data, RECV_BUFFER_SIZE bytes at a
-    # time.
-    RECV_BUFFER_SIZE = 1<<8
-
-    def raw_recv(self, size):
-        """Receive raw bytes to the instrument.
-
-        :param size: number of bytes to receive
-        :return: received bytes
-        :return type: bytes
-
-        If a timeout is set, it may return less bytes than requested.
-        If size == -1, then the number of available bytes will be read.
-
-        """
-
-        if not size or size == -1:
-            buffer = b''
-            while True:
-                data = self.visa.read(self.vi, self.RECV_BUFFER_SIZE)
-                buffer = buffer + data
-                if len(data) < self.RECV_BUFFER_SIZE:
-                    # Timeout or terminator
-                    return buffer
-        
-        data = self.visa.read(self.vi, size)
-        return data
 
     def read_block(self):
         """Read a block of data in IEEE488.2 # format
