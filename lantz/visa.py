@@ -207,6 +207,23 @@ class GPIBVisaDriver(MessageVisaDriver):
 
         return data
 
+    def read_block(self):
+        """Read a block of data in IEEE488.2 # format
+
+        Read a block of data with the format
+        #<D><length><data>
+        <D>: number of digits in <length> (ASCII digit)
+        <length>: number of bytes in <data> (ASCII digits)
+        """
+        header = self.raw_recv(1)
+        if header != b'#':
+            raise Exception('Unexpected block header: {}'.format(
+                            str(header[0])))
+        nlength = int(self.raw_recv(1))
+        length = int(self.raw_recv(nlength))
+        return self.raw_recv(length)
+
+
 class TCPVisaDriver(MessageVisaDriver):
     pass
 
