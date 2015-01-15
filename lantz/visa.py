@@ -68,7 +68,7 @@ class MessageVisaDriver(TextualMixin, Driver):
 
         self._init_attributes = {}
 
-        library_path = kwargs.get('library_path', None)
+        library_path = kwargs.get('library_path', '')
         self.resource_manager = visa.ResourceManager(library_path)
 
         self.resource = None
