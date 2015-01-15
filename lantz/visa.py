@@ -62,6 +62,9 @@ class MessageVisaDriver(TextualMixin, Driver):
     ENCODING = 'ascii'
 
     RECV_CHUNK = -1
+    # When RECV_CHUNK==-1, read all available data, RECV_BUFFER_SIZE bytes at a
+    # time.
+    RECV_BUFFER_SIZE = 1<<8
 
     def __init__(self, resource_name, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -87,6 +90,30 @@ class MessageVisaDriver(TextualMixin, Driver):
             self.resource.write_raw(data)
         except Exception as e:
             raise Exception(str(e))
+
+    def raw_recv(self, size):
+        """Receive raw bytes to the instrument.
+
+        :param size: number of bytes to receive
+        :return: received bytes
+        :return type: bytes
+
+        If a timeout is set, it may return less bytes than requested.
+        If size == -1, then the number of available bytes will be read.
+
+        """
+
+        if not size or size == -1:
+            buffers = []
+            while True:
+                data = self.resource.read_raw(self.RECV_BUFFER_SIZE)
+                buffers.append(data)
+                if len(data) < self.RECV_BUFFER_SIZE:
+                    # Timeout or terminator
+                    return b''.join(buffers)
+        else:
+            data = self.resource.read_raw(size)
+            return data
 
     def initialize(self):
         """Open port
@@ -187,26 +214,7 @@ class SerialVisaDriver(MessageVisaDriver):
 
 
 class GPIBVisaDriver(MessageVisaDriver):
-
-
-    def raw_recv(self, size):
-        """Receive raw bytes to the instrument.
-
-        :param size: number of bytes to receive
-        :return: received bytes
-        :return type: bytes
-
-        If a timeout is set, it may return less bytes than requested.
-        If size == -1, then the number of available bytes will be read.
-
-        """
-
-        if not size:
-            size = 1
-
-        data = self.resource.read_raw(1)
-
-        return data
+    pass
 
 class TCPVisaDriver(MessageVisaDriver):
     pass
