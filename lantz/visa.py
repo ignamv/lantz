@@ -14,6 +14,7 @@ from .driver import TextualMixin
 from .errors import LantzTimeoutError
 
 import visa
+import pyvisa.constants
 
 
 class LantzVisaTimeoutError(LantzTimeoutError):
@@ -138,6 +139,23 @@ class MessageVisaDriver(TextualMixin, Driver):
         if self.resource is None:
             return False
         return self.resource.session is not None
+
+    def read_block(self):
+        """Read a block of data in IEEE488.2 # format
+
+        Read a block of data with the format
+        #<D><length><data>
+        <D>: number of digits in <length> (ASCII digit)
+        <length>: number of bytes in <data> (ASCII digits)
+        """
+        with self.resource.ignore_warning(pyvisa.constants.VI_SUCCESS_MAX_CNT):
+            header = self.raw_recv(1)
+            if header != b'#':
+                raise Exception('Unexpected block header: {}'.format(
+                                str(header[0])))
+            nlength = int(self.raw_recv(1))
+            length = int(self.raw_recv(nlength))
+            return self.raw_recv(length)
 
 
 class SerialVisaDriver(MessageVisaDriver):
