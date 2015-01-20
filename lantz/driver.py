@@ -8,12 +8,14 @@
     :copyright: 2015 by Lantz Authors, see AUTHORS for more details.
     :license: BSD, see LICENSE for more details.
 """
+import asyncio
 import copy
 import atexit
 import logging
 import threading
-from functools import wraps
+from functools import wraps, partial
 from concurrent import futures
+from quamash import QThreadExecutor
 from collections import defaultdict
 
 from .utils.qt import MetaQObject, SuperQObject, QtCore
@@ -265,13 +267,16 @@ class Driver(SuperQObject, metaclass=_DriverType):
         return self._submit(getattr(self, fname), *args, **kwargs)
 
     def _first_submit(self, fn, *args, **kwargs):
+        self.log_debug('_first_submit')
         self._executor = futures.ThreadPoolExecutor(max_workers=1)
+        #self._executor = QThreadExecutor(max_workers=1)
         self._submit = self._notfirst_submit
         return self._notfirst_submit(fn, *args, **kwargs)
 
     def _notfirst_submit(self, fn, *args, **kwargs):
         self.__unfinished_tasks += 1
-        fut = self._executor.submit(fn, *args, **kwargs)
+        fut = asyncio.get_event_loop().run_in_executor(self._executor,
+                partial(fn, *args, **kwargs))
         fut.add_done_callback(self._decrease_unfinished_tasks)
         return fut
 
