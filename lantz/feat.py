@@ -483,4 +483,7 @@ class _DictFeatAccesor(object):
         DictFeat.setitem(self.df, self.instance, key, value)
 
     def __repr__(self):
-        return repr(self.df.value[self.instance])
+        try:
+            return repr(self.df.value[self.instance])
+        except KeyError:
+            return 'MISSING'
