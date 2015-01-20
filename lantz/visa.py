@@ -232,7 +232,8 @@ class SerialVisaDriver(MessageVisaDriver):
 
 
 class GPIBVisaDriver(MessageVisaDriver):
-    pass
+    def read_status(self):
+        return self.resource.read_stb()
 
 class TCPVisaDriver(MessageVisaDriver):
     pass
