@@ -8,13 +8,14 @@
     :copyright: 2013 by Lantz Authors, see AUTHORS for more details.
     :license: BSD, see LICENSE for more details.
 """
+import asyncio
 import time
 import copy
 import atexit
 import logging
 import threading
 
-from functools import wraps
+from functools import wraps, partial
 from concurrent import futures
 from collections import defaultdict
 
@@ -274,7 +275,8 @@ class Driver(SuperQObject, metaclass=_DriverType):
 
     def _notfirst_submit(self, fn, *args, **kwargs):
         self.__unfinished_tasks += 1
-        fut = self._executor.submit(fn, *args, **kwargs)
+        fut = asyncio.get_event_loop().run_in_executor(self._executor,
+                partial(fn, *args, **kwargs))
         fut.add_done_callback(self._decrease_unfinished_tasks)
         return fut
 
