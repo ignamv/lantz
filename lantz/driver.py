@@ -383,7 +383,11 @@ class Driver(SuperQObject, metaclass=_DriverType):
             raise ValueError("update() called with an empty dictionary")
 
         for key, value in newstate.items():
-            self._lantz_features[key].set(self, value, force)
+            if isinstance(value, dict):
+                for _key, _value in value.items():
+                    self._lantz_features[key].set(self, _value, force, key=_key)
+            else:
+                self._lantz_features[key].set(self, value, force)
 
     def update_async(self, newstate=None, *, force=False, callback=None, **kwargs):
         """Asynchronous update driver.
@@ -414,20 +418,28 @@ class Driver(SuperQObject, metaclass=_DriverType):
         :param keys: a string or list of strings with the properties to refresh.
                      Default None, meaning all properties.
                      If keys is a string, returns the value.
-                     If keys is a list/tuple, returns a tuple.
+                     If keys is a (dictfeat, key) tuple, returns the value
+                     If keys is a list, returns a list
                      If keys is a dict, returns a dict.
         :type keys: str or list or tuple or dict
         """
-        if keys:
-            if isinstance(keys, (list, tuple)):
-                return tuple(getattr(self, key) for key in keys)
-            elif isinstance(keys, dict):
-                return {key: getattr(self, key) for key in keys.keys()}
-            elif isinstance(keys, str):
-                return getattr(self, keys)
+        if keys is None:
+            keys = self._lantz_features
+        if isinstance(keys, str):
+            feat = self._lantz_features[keys]
+            if isinstance(feat, DictFeat):
+                _keys = feat._dget(self.modifiers, instance, key)['keys']
+                return {key: feat[key] for key in _keys}
             else:
-                raise ValueError('keys must be a (str, list, tuple or dict)')
-        return {key: getattr(self, key) for key in self._lantz_features}
+                return getattr(self, keys)
+        elif isinstance(keys, tuple):
+            return getattr(self, keys[0])[keys[1]]
+        elif isinstance(keys, list):
+            return list(self.refresh(key) for key in keys)
+        elif isinstance(keys, dict):
+            return {key: self.refresh(key) for key in keys.keys()}
+        else:
+            raise ValueError('keys must be a (str, list, tuple or dict)')
 
     def refresh_async(self, keys=None, *, callback=None):
         """Asynchronous refresh cache by reading values from the instrument.

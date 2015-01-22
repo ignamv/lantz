@@ -11,12 +11,13 @@ WAIT = .2
 
 
 class aDriver(Driver):
-
+    dict_keys = list(range(10))
     def __init__(self, slow=False, *args, **kwargs):
         super().__init__()
         self.slow = slow
         self._eggs = None
         self._ham = None
+        self._dict = dict(zip(self.dict_keys, (k * 10 for k in self.dict_keys)))
 
     @Feat()
     def eggs(self):
@@ -41,6 +42,18 @@ class aDriver(Driver):
         if self.slow:
             sleep(SLEEP)
         self._ham = value
+
+    @DictFeat(keys=dict_keys)
+    def dictfeat(self, key):
+        if self.slow:
+            sleep(SLEEP)
+        return self._dict[key]
+
+    @dictfeat.setter
+    def dictfeat(self, key, value):
+        if self.slow:
+            sleep(SLEEP)
+        self._dict[key] = value
 
     @Action()
     def run(self):
@@ -91,6 +104,11 @@ class DriverTest(unittest.TestCase):
         self.assertEqual(obj.eggs, 2)
         self.assertEqual(obj.ham, 21)
 
+        obj.update(eggs=3, ham=22, dictfeat={3: 9})
+        self.assertEqual(obj.eggs, 3)
+        self.assertEqual(obj.ham, 22)
+        self.assertEqual(obj.dictfeat[3], 9)
+
     def test_update_dict(self):
         "Update using a dictionary"
         obj = aDriver()
@@ -100,6 +118,11 @@ class DriverTest(unittest.TestCase):
         obj.update({'eggs': 4, 'ham': 22})
         self.assertEqual(obj.eggs, 4)
         self.assertEqual(obj.ham, 22)
+
+        obj.update(dict(eggs=5, ham=26, dictfeat={2: 7}))
+        self.assertEqual(obj.eggs, 5)
+        self.assertEqual(obj.ham, 26)
+        self.assertEqual(obj.dictfeat[2], 7)
 
     def test_update_async_kw(self):
         "Update async using keyword arguments"
@@ -115,6 +138,15 @@ class DriverTest(unittest.TestCase):
         sleep(2 * SLEEP + WAIT)
         self.assertEqual(obj._eggs, 2)
         self.assertEqual(obj._ham, 21)
+
+        obj.update_async(eggs=3, ham=28, dictfeat={1: 4})
+        self.assertNotEqual(obj._eggs, 3)
+        self.assertNotEqual(obj._ham, 28)
+        self.assertNotEqual(obj._dict[1], 4)
+        sleep(3 * SLEEP + WAIT)
+        self.assertEqual(obj._eggs, 3)
+        self.assertEqual(obj._ham, 28)
+        self.assertEqual(obj._dict[1], 4)
 
     def test_update_async_dict(self):
         "Update async using a dictionary"
@@ -148,23 +180,29 @@ class DriverTest(unittest.TestCase):
         obj = aDriver()
         obj._eggs = 1
         self.assertEqual(obj.refresh('eggs'), 1)
+        obj._dict[6] = -3
+        self.assertEqual(obj.refresh(('dictfeat', 6)), -3)
         obj._eggs = 2
         obj._ham = 22
-        self.assertEqual(obj.refresh(('eggs', 'ham')), (2, 22))
+        self.assertEqual(obj.refresh(['eggs', 'ham']), [2, 22])
         obj._eggs = 3
         obj._ham = 23
         self.assertEqual(obj.refresh({'eggs': None, 'ham': None}), {'eggs': 3, 'ham': 23})
+
 
     def test_refresh_async(self):
         obj = aDriver()
         obj._eggs = 1
         fut = obj.refresh_async('eggs')
         self.assertEqual(asyncio.get_event_loop().run_until_complete(fut), 1)
+        obj._dict[6] = -4
+        fut = obj.refresh_async(('dictfeat', 6))
+        self.assertEqual(asyncio.get_event_loop().run_until_complete(fut), -4)
         obj._eggs = 2
         obj._ham = 22
-        fut = obj.refresh_async(('eggs', 'ham'))
+        fut = obj.refresh_async(['eggs', 'ham'])
         self.assertEqual(asyncio.get_event_loop().run_until_complete(fut),
-                (2,22))
+                [2,22])
         obj._eggs = 3
         obj._ham = 23
         fut = obj.refresh_async({'eggs': None, 'ham': None})
