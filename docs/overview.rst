@@ -165,18 +165,18 @@ Lantz also provides out of the box asynchronous capabilities for all methods des
     >>> fungen.update_async({'ac_mode': True, 'amplitude': Q(42, 'V')})
     >>> print('I am not blocked!')
 
-will update `ac_mode` and `amplitude` without blocking, so the print statement is executed even if the update has not finished. This is useful when updating multiple independent instruments. The state of the operation can be verified using the returned :py:class:`concurrent.futures.Future` object:
+will update `ac_mode` and `amplitude` without blocking, so the print statement is executed even if the update has not finished. This is useful when updating multiple independent instruments. The state of the operation can be verified using the returned :py:class:`asyncio.Future` object:
 
     >>> result1 = fungen.update_async({'ac_mode': True, 'amplitude': Q(42, 'V')})
     >>> result2 = another_fungen.update_async({'ac_mode': True, 'amplitude': Q(42, 'V')})
     >>> while not result1.done() and not result2.done()
     ...     DoSomething()
 
-Just like `update_async`, you can use `refresh_async` to obtain the value of one or more features. The result is again a :py:class:`concurrent.futures.Future` object whose value can be queried using the result method :py:meth:`concurrent.futures.Future.result`
+Just like `update_async`, you can use `refresh_async` to obtain the value of one or more features. The result is again a :py:class:`asyncio.Future` object whose value can be queried using the event loop's method :py:meth:`BaseEventLoop.run_until_complete`
 
     >>> fut = obj.refresh_async('eggs')
     >>> DoSomething()
-    >>> print(fut.result())
+    >>> print(asyncio.get_event_loop().run_until_complete(fut))
 
 Async methods accept also a callback argument to define a method that will be used
 
