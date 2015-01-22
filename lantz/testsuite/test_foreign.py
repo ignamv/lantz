@@ -17,7 +17,7 @@ class Array(array):
 
 class MyDriver(LibraryDriver):
 
-    LIBRARY_NAME = 'simplelib.dylib'
+    LIBRARY_NAME = './simplelib.so'
 
 class MyWrongDriver(LibraryDriver):
 
@@ -107,3 +107,5 @@ class ForeignTest(unittest.TestCase):
         self.assertEqual((ret, value, type(value)), (1, 7., float))
 
 
+if __name__ == '__main__':
+    unittest.main()
