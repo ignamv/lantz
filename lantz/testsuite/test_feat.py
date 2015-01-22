@@ -259,7 +259,7 @@ class FeatTest(unittest.TestCase):
         obj.eggs = x
         obj.eggs = x + 1
 
-        self.assertEqual(hdl.history, ['Created Spam17',
+        self.assertEqual(hdl.history, ['Created ' + obj.name,
                                        'Getting eggs',
                                        '(raw) Got 9 for eggs',
                                        'Got 9 for eggs',

@@ -1,4 +1,5 @@
 import unittest
+import asyncio
 from time import sleep
 
 from lantz import Driver, Feat, DictFeat, Action, Q_
@@ -133,14 +134,14 @@ class DriverTest(unittest.TestCase):
     def test_update_async_unfinished_tasks(self):
         obj = aDriver(True)
         self.assertEqual(obj.unfinished_tasks, 0)
-        obj.update_async({'eggs': 4})
+        fut = obj.update_async({'eggs': 4})
         self.assertEqual(obj.unfinished_tasks, 1)
-        sleep(SLEEP + WAIT)
+        asyncio.get_event_loop().run_until_complete(asyncio.sleep(SLEEP + WAIT))
         self.assertEqual(obj.unfinished_tasks, 0)
         obj.update_async({'eggs': 5})
         obj.update_async({'ham': 23})
         self.assertEqual(obj.unfinished_tasks, 2)
-        sleep(2 * SLEEP + WAIT)
+        asyncio.get_event_loop().run_until_complete(asyncio.sleep(2*SLEEP + WAIT))
         self.assertEqual(obj.unfinished_tasks, 0)
 
     def test_refresh(self):
@@ -158,15 +159,17 @@ class DriverTest(unittest.TestCase):
         obj = aDriver()
         obj._eggs = 1
         fut = obj.refresh_async('eggs')
-        self.assertEqual(fut.result(), 1)
+        self.assertEqual(asyncio.get_event_loop().run_until_complete(fut), 1)
         obj._eggs = 2
         obj._ham = 22
         fut = obj.refresh_async(('eggs', 'ham'))
-        self.assertEqual(fut.result(), (2, 22))
+        self.assertEqual(asyncio.get_event_loop().run_until_complete(fut),
+                (2,22))
         obj._eggs = 3
         obj._ham = 23
         fut = obj.refresh_async({'eggs': None, 'ham': None})
-        self.assertEqual(fut.result(), {'eggs': 3, 'ham': 23})
+        self.assertEqual(asyncio.get_event_loop().run_until_complete(fut), 
+                {'eggs': 3, 'ham': 23})
 
     def test_derived_class(self):
 

@@ -1,3 +1,4 @@
+import asyncio
 import unittest
 from time import sleep
 
@@ -40,9 +41,10 @@ class ActionTest(unittest.TestCase):
     def test_action_async(self):
         obj = aDriver()
         fut = obj.run_async()
-        self.assertEqual(fut.result(), 42)
+        self.assertEqual(asyncio.get_event_loop().run_until_complete(fut), 42)
         fut = obj.run2_async(2)
-        self.assertEqual(fut.result(), 42 * 2)
+        self.assertEqual(asyncio.get_event_loop().run_until_complete(fut),
+                42 * 2)
 
     def test_multiple_values(self):
         obj = aDriver()
