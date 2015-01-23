@@ -473,7 +473,8 @@ class Driver(SuperQObject, metaclass=_DriverType):
             if isinstance(keys, (list, tuple, set)):
                 return {key: self._lantz_features[key].get_cache(self) for key in keys}
             return self._lantz_features[keys].get_cache(self)
-        return {key: value.get_cache(self) for key, value in self._lantz_features.keys()}
+        return {key: value.get_cache(self) for key, value in
+                self._lantz_features.items()}
 
     @property
     def feats(self):
