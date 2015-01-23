@@ -157,6 +157,11 @@ class MessageVisaDriver(TextualMixin, Driver):
             length = int(self.raw_recv(nlength))
             return self.raw_recv(length)
 
+    def trigger(self):
+        """Assert software trigger"""
+        self.resource.visalib.viAssertTrigger(self.resource.session,
+                pyvisa.constants.VI_TRIG_PROT_DEFAULT)
+
 
 class SerialVisaDriver(MessageVisaDriver):
     """Base class for drivers that communicate with instruments
