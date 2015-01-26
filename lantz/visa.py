@@ -155,7 +155,16 @@ class MessageVisaDriver(TextualMixin, Driver):
                                 str(header[0])))
             nlength = int(self.raw_recv(1))
             length = int(self.raw_recv(nlength))
-            return self.raw_recv(length)
+            # Binary data follows, ignore terminators
+            asrl_end_in = self.resource.get_visa_attribute(
+                pyvisa.constants.VI_ATTR_ASRL_END_IN)
+            self.resource.set_visa_attribute(
+                    pyvisa.constants.VI_ATTR_ASRL_END_IN, 
+                    pyvisa.constants.VI_ASRL_END_NONE)
+            ret = self.raw_recv(length)
+            self.resource.set_visa_attribute(
+                pyvisa.constants.VI_ATTR_ASRL_END_IN, asrl_end_in)
+            return ret
 
     def trigger(self):
         """Assert software trigger"""
