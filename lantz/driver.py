@@ -21,7 +21,7 @@ from collections import defaultdict
 
 from .utils.qt import MetaQObject, SuperQObject, QtCore
 
-from .feat import Feat, DictFeat, MISSING, FeatProxy
+from .feat import Feat, DictFeat, MISSING, FeatProxy, _dget
 from .action import Action, ActionProxy
 from .stats import RunningStats
 from .errors import LantzTimeoutError
@@ -428,8 +428,8 @@ class Driver(SuperQObject, metaclass=_DriverType):
         if isinstance(keys, str):
             feat = self._lantz_features[keys]
             if isinstance(feat, DictFeat):
-                _keys = feat._dget(self.modifiers, instance, key)['keys']
-                return {key: feat[key] for key in _keys}
+                _keys = _dget(feat.modifiers)['keys']
+                return {key: feat.getitem(self, key) for key in _keys}
             else:
                 return getattr(self, keys)
         elif isinstance(keys, tuple):
